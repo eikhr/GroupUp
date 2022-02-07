@@ -37,6 +37,15 @@ Ktlint:
     - mvn antrun:run@ktlint
   retry: 1
 
+Maven Test:
+  image: maven:3-openjdk-17
+  stage: Kotlin test
+  needs: [ Kotlin Build ]
+  script:
+    - cd backend
+    - mvn test
+  retry: 1
+
 Yarn Build:
   image: node:17.4.0
   stage: Webapp build
