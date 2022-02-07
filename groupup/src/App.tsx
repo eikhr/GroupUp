@@ -1,15 +1,13 @@
-import Typography from '@mui/material/Typography';
-import React from 'react';
-import './App.css';
+import Typography from '@mui/material/Typography'
+import React from 'react'
+import './App.css'
 
-function App() {
+const App = () => {
   return (
     <div className="App">
-      <Typography variant="h3">
-        Create GroupUp App 
-      </Typography>
+      <Typography variant="h3">Create GroupUp App</Typography>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
