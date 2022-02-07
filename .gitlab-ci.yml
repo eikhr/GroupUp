@@ -1,5 +1,6 @@
 stages:
   - Kotlin build
+  - Kotlin test
   - Webapp build
   - Webapp test
 
@@ -10,12 +11,21 @@ cache:
     - .yarn
     - node_modules/
 
-Build:
+Kotlin Build:
   image: maven:3-openjdk-17
   stage: Kotlin build
   script:
     - cd backend
     - mvn compile
+  retry: 1
+
+Detekt:
+  image: maven:3-openjdk-17
+  stage: Kotlin test
+  needs: [Kotlin Build]
+  script:
+    - cd backend
+    - mvn detekt:check
   retry: 1
 
 Yarn Build:

@@ -1,4 +1,4 @@
-package com.groupup.GroupUp
+package com.groupUp.groupUp
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class GroupUpApplication
 
 fun main(args: Array<String>) {
-	runApplication<GroupUpApplication>(*args)
+    runApplication<GroupUpApplication>(args = args)
 }
