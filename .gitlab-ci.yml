@@ -28,6 +28,15 @@ Detekt:
     - mvn detekt:check
   retry: 1
 
+Ktlint:
+  image: maven:3-openjdk-17
+  stage: Kotlin test
+  needs: [Kotlin Build]
+  script:
+    - cd backend
+    - mvn antrun:run@ktlint
+  retry: 1
+
 Yarn Build:
   image: node:17.4.0
   stage: Webapp build
