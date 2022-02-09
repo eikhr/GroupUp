@@ -176,6 +176,7 @@ empty-blocks:
     allowedExceptionNameRegex: '_|(ignore|expected).*'
   EmptyClassBlock:
     active: true
+    excludes: ['**/EventRepository.kt']
   EmptyDefaultConstructor:
     active: true
   EmptyDoWhileBlock:
