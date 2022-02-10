@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "/endpoints/events.schema.json",
+  "title": "Endpoint /events",
+  "description": "A list of events returned by the /events route in the GroupUp API",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "$ref": "../object-schemas/event.schema.json"
+  }
+}
