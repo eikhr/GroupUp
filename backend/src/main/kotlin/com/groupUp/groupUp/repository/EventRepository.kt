@@ -1,9 +1,8 @@
-package com.groupUp.groupUp.repo
+package com.groupUp.groupUp.repository
 
 import com.groupUp.groupUp.model.Event
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
-//@Repository
-interface EventRepository : JpaRepository<Event, Long> {
-}
+@Repository
+interface EventRepository : JpaRepository<Event, Long>
