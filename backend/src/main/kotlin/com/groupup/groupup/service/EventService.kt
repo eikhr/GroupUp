@@ -1,7 +1,7 @@
-package com.groupUp.groupUp.service
+package com.groupup.groupup.service
 
-import com.groupUp.groupUp.model.Event
-import com.groupUp.groupUp.repository.EventRepository
+import com.groupup.groupup.model.Event
+import com.groupup.groupup.repository.EventRepository
 import org.springframework.stereotype.Service
 
 @Service

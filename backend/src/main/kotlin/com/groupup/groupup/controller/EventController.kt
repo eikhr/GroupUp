@@ -1,7 +1,7 @@
-package com.groupUp.groupUp.controller
+package com.groupup.groupup.controller
 
-import com.groupUp.groupUp.model.Event
-import com.groupUp.groupUp.service.EventService
+import com.groupup.groupup.model.Event
+import com.groupup.groupup.service.EventService
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -24,7 +24,7 @@ class EventController(private val eventService: EventService) {
     }
 
     @PostMapping("/add")
-    fun createEvent(@RequestBody event: Event): Long {
+    fun createEvent(@RequestBody event: Event): Long? {
         return eventService.createEvent(event).id
     }
 }

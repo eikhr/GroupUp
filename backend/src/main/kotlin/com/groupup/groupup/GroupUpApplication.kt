@@ -1,4 +1,4 @@
-package com.groupUp.groupUp
+package com.groupup.groupup
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication

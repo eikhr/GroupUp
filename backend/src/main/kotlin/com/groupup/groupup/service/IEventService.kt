@@ -1,6 +1,6 @@
-package com.groupUp.groupUp.service
+package com.groupup.groupup.service
 
-import com.groupUp.groupUp.model.Event
+import com.groupup.groupup.model.Event
 
 interface IEventService {
     /**
