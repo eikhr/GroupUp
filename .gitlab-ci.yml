@@ -52,7 +52,7 @@ Maven Test:
   needs: [ Kotlin Build ]
   script:
     - cd backend
-    - mvn test -Dspring.datasource.url=spring_datasource_url
+    - mvn test -Dspring.datasource.url=$spring_datasource_url
   retry: 1
 
 Yarn Build:
