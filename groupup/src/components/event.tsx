@@ -1,4 +1,5 @@
 import { Card, CardContent, Typography } from '@mui/material'
+import moment from 'moment'
 import React from 'react'
 
 interface IProps {
@@ -19,6 +20,11 @@ function Event(props: IProps) {
         <Typography data-testid="description" variant="body2" color="text.secondary">
           {props.data.description}
         </Typography>
+        {props.data.time && (
+          <Typography data-testid="time" variant="body2" color="text.secondary">
+            {moment(props.data.time).format('LLLL')}
+          </Typography>
+        )}
       </CardContent>
     </Card>
   )
