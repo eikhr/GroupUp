@@ -11,6 +11,7 @@ variables:
   POSTGRES_DB: groupupdb
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: groupup
+  spring_datasource_url: "jdbc:postgresql://postgres:5432/groupupdb"
 
 cache:
   paths:
@@ -49,11 +50,9 @@ Maven Test:
   image: maven:3-openjdk-17
   stage: Kotlin test
   needs: [ Kotlin Build ]
-  variables:
-    spring.datasource.url: "jdbc:postgresql://postgres:5432/groupupdb"
   script:
     - cd backend
-    - mvn test
+    - mvn test -Dspring.datasource.url=spring_datasource_url
   retry: 1
 
 Yarn Build:
