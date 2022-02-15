@@ -4,6 +4,15 @@ stages:
   - Webapp build
   - Webapp test
 
+services:
+  - postgres:latest
+
+variables:
+  POSTGRES_DB: groupupdb
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: groupup
+  spring_datasource_url: "jdbc:postgresql://postgres:5432/groupupdb"
+
 cache:
   paths:
     - .m2/repository/
@@ -43,7 +52,7 @@ Maven Test:
   needs: [ Kotlin Build ]
   script:
     - cd backend
-    - mvn test
+    - mvn test -Dspring.datasource.url=$spring_datasource_url
   retry: 1
 
 Yarn Build:
