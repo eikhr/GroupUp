@@ -4,6 +4,14 @@ stages:
   - Webapp build
   - Webapp test
 
+services:
+  - postgres:latest
+
+variables:
+  POSTGRES_DB: groupupdb
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: groupup
+
 cache:
   paths:
     - .m2/repository/
