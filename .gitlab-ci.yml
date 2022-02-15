@@ -49,8 +49,9 @@ Maven Test:
   image: maven:3-openjdk-17
   stage: Kotlin test
   needs: [ Kotlin Build ]
+  variables:
+    spring.datasource.url: jdbc:postgresql://postgres:5432/groupupdb
   script:
-    - spring.datasource.url=jdbc:postgresql://postgres:5432/groupupdb
     - cd backend
     - mvn test
   retry: 1
