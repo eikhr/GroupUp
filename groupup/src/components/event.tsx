@@ -1,18 +1,14 @@
 import { Card, CardContent, Typography } from '@mui/material'
 import moment from 'moment'
 import React from 'react'
+import IEvent from '../models/event'
 
 interface IProps {
-  data: {
-    id: number
-    title: string
-    description: string
-    time?: string
-  }
+  data: IEvent
 }
 function Event(props: IProps) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card data-testid={'event-' + props.data.id} sx={{ width: 345 }}>
       <CardContent>
         <Typography data-testid="title" gutterBottom variant="h5" component="div">
           {props.data.title}
