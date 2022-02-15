@@ -9,11 +9,11 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 import javax.persistence.Table
 
-private const val DefaultYear = 2022
+private const val DEFAULT_YEAR = 2022
 
-private const val DefaultMonth = 4
+private const val DEFAULT_MONTH = 4
 
-private const val DefaultDay = 13
+private const val DEFAULT_DAY = 13
 
 @Entity
 @Table(name = "events")
@@ -28,5 +28,5 @@ open class Event {
     open var description: String = ""
     @Column
     @DateTimeFormat
-    open var date: GregorianCalendar = GregorianCalendar(DefaultYear, DefaultMonth, DefaultDay)
+    open var date: GregorianCalendar = GregorianCalendar(DEFAULT_YEAR, DEFAULT_MONTH, DEFAULT_DAY)
 }
