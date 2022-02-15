@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material'
 import IEvent from '../models/event'
 import React from 'react'
-import Event from './event'
+import EventCard from './eventCard'
 
 interface IProps {
   events: IEvent[]
@@ -12,7 +12,7 @@ const EventList = (props: IProps) => {
     <Grid container spacing={2} justifyContent="center">
       {props.events.map((event) => (
         <Grid item key={event.id}>
-          <Event data={event} />
+          <EventCard data={event} />
         </Grid>
       ))}
     </Grid>

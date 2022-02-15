@@ -6,7 +6,7 @@ import IEvent from '../models/event'
 interface IProps {
   data: IEvent
 }
-function Event(props: IProps) {
+const EventCard = (props: IProps) => {
   return (
     <Card data-testid={'event-' + props.data.id} sx={{ width: 345 }}>
       <CardContent>
@@ -26,4 +26,4 @@ function Event(props: IProps) {
   )
 }
 
-export default Event
+export default EventCard
