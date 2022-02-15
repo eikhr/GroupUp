@@ -1,5 +1,7 @@
 package com.groupup.groupup.model
 
+import org.springframework.format.annotation.DateTimeFormat
+import java.util.Date
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -18,4 +20,7 @@ open class Event {
     open lateinit var title: String
     @Column
     open lateinit var description: String
+    @Column
+    @DateTimeFormat
+    open lateinit var date: Date
 }
