@@ -11,6 +11,8 @@ variables:
   POSTGRES_DB: groupupdb
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: groupup
+  spring.datasource.url: jdbc:postgresql://postgres:5432/groupupdb
+
 
 cache:
   paths:
