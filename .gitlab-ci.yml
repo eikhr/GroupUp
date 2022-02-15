@@ -74,3 +74,13 @@ Eslint:
     - yarn install --frozen-lockfile --cache-folder .yarn
     - yarn lint
   retry: 1
+
+Yarn Test:
+  image: node:17.4.0
+  stage: Webapp test
+  needs: []
+  script:
+    - cd groupup
+    - yarn install --frozen-lockfile --cache-folder .yarn
+    - yarn test
+  retry: 1 
