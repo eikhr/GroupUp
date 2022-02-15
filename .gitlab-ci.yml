@@ -50,7 +50,7 @@ Maven Test:
   stage: Kotlin test
   needs: [ Kotlin Build ]
   variables:
-    spring.datasource.url: jdbc:postgresql://postgres:5432/groupupdb
+    spring.datasource.url: "jdbc:postgresql://postgres:5432/groupupdb"
   script:
     - cd backend
     - mvn test
