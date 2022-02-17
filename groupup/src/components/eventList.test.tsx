@@ -2,6 +2,7 @@ import { render } from '@testing-library/react'
 import EventList from './eventList'
 import React from 'react'
 import { act } from 'react-dom/test-utils'
+import { resolve } from 'path/posix'
 
 it('renders a list events', async () => {
   const events = [
@@ -21,13 +22,15 @@ it('renders a list events', async () => {
       json: () => Promise.resolve(events),
     } as any)
   )
-  let container: HTMLElement
+
+  const container = render(<EventList />).container
+  expect(container.querySelector("[data-testid='loadingtext']")).not.toBeNull()
   await act(async () => {
-    container = render(<EventList />).container
+    await new Promise((resolve) => setTimeout(resolve, 0))
   })
 
   for (const event of events) {
     expect(container.querySelector(`[data-testid='event-${event.id}']`)).not.toBeNull()
   }
-  global.fetch.mockRestore()
+  
 })
