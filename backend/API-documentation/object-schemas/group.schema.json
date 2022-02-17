@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "/object-schemas/product.schema.json",
+  "title": "Group",
+  "description": "An Group from the GroupUp API",
+  "type": "object",
+  "properties": {
+    "id": {
+      "description": "The unique identifier for an group",
+      "type": "integer"
+    },
+    "title": {
+      "description": "Title of the group",
+      "type": "string"
+    },
+    "description": {
+      "description": "Description of the group",
+      "type": "string"
+    },
+    "minAge": {
+      "descriotion": "Minimum age of the the groups members",
+      "type": "integer"
+    },
+    "maxAge": {
+      "descriotion": "Maximum age of the the groups members",
+      "type": "integer"
+    }
+  },
+    "required": [ "id", "title", "description", "minAge","maxAge" ]
+}
+
