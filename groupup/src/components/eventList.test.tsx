@@ -2,6 +2,7 @@ import { render } from '@testing-library/react'
 import EventList from './eventList'
 import React from 'react'
 import { act } from 'react-dom/test-utils'
+import mockFetch from "../utils/mockFetch";
 
 it('renders a list events', async () => {
   const events = [
@@ -16,11 +17,7 @@ it('renders a list events', async () => {
     { title: 'testevent', id: 9, description: 'Whatever' },
     { title: 'testevent', id: 10, description: 'Whatever' },
   ]
-  jest.spyOn(global, 'fetch').mockImplementation(() =>
-    Promise.resolve({
-      json: () => Promise.resolve(events),
-    } as any)
-  )
+  mockFetch(200, events)
 
   const container = render(<EventList />).container
   expect(container.querySelector("[data-testid='loadingtext']")).not.toBeNull()
