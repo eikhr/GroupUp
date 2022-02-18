@@ -2,7 +2,6 @@ import { render } from '@testing-library/react'
 import EventList from './eventList'
 import React from 'react'
 import { act } from 'react-dom/test-utils'
-import { resolve } from 'path/posix'
 
 it('renders a list events', async () => {
   const events = [
