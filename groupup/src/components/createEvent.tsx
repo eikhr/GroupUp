@@ -1,14 +1,17 @@
+import { DateTimePicker, LocalizationProvider } from '@mui/lab'
 import {
   Button,
   Grid,
+  Stack,
   TextField,
-  Typography,
+  Typography
 } from '@mui/material'
 import React, { useState } from 'react'
 
 const defaultValues = {
   name: '',
   description: '',
+  date: null
 }
 const Form = () => {
   const [formValues, setFormValues] = useState(defaultValues)
@@ -48,6 +51,21 @@ const Form = () => {
             onChange={handleInputChange}
           />
         </Grid>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <DateTimePicker
+                disablePast
+               //id="eventDate-input"
+                //name="date"
+                label="Choose your event date"
+                value={formValues.date}
+                onChange={handleInputChange}
+                onError={console.log}
+                minDate={new Date('2018-01-01T00:00')}
+                inputFormat="yyyy/MM/dd hh:mm a"
+                mask="___/__/__ __:__ _M"
+                renderInput={(params) => <TextField {...params} />}
+            />
+        </LocalizationProvider>
         <Button variant="contained" color="primary" type="submit">
           Submit
         </Button>
@@ -55,4 +73,7 @@ const Form = () => {
     </form>
   )
 }
-export default Form
+export default Form 
+
+
+
