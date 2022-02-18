@@ -1,6 +1,6 @@
 import { DateTimePicker, LocalizationProvider } from '@mui/lab'
 import { Button, Grid, Stack, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 
 const defaultValues = {
@@ -10,9 +10,8 @@ const defaultValues = {
 
 const Form = () => {
   const [formValues, setFormValues] = useState(defaultValues)
-  const [clearedDate, setClearedDate] = React.useState<Date | null>(null)
   const [dateValue, setValue] = React.useState<Date | null>(new Date())
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormValues({
       ...formValues,
@@ -20,7 +19,7 @@ const Form = () => {
     })
   }
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     console.log(formValues)
   }
@@ -30,24 +29,24 @@ const Form = () => {
       <Grid container alignItems="center" justifyContent="center" direction="column">
         <Stack spacing={3}>
           <Typography variant="h2"> Create your event </Typography>
-            <TextField
-              id="name-input"
-              name="name"
-              label="Event name"
-              type="text"
-              value={formValues.name}
-              onChange={handleInputChange}
-            />
-            <TextField
-              multiline
-              rows={4}
-              id="description-input"
-              name="description"
-              label="Describe your event"
-              type="text"
-              value={formValues.description}
-              onChange={handleInputChange}
-            />
+          <TextField
+            id="name-input"
+            name="name"
+            label="Event name"
+            type="text"
+            value={formValues.name}
+            onChange={handleInputChange}
+          />
+          <TextField
+            multiline
+            rows={4}
+            id="description-input"
+            name="description"
+            label="Describe your event"
+            type="text"
+            value={formValues.description}
+            onChange={handleInputChange}
+          />
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker
               disablePast
