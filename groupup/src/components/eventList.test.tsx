@@ -32,5 +32,4 @@ it('renders a list events', async () => {
   for (const event of events) {
     expect(container.querySelector(`[data-testid='event-${event.id}']`)).not.toBeNull()
   }
-  
 })

@@ -15,11 +15,15 @@ const EventList = () => {
 
   return (
     <Grid container spacing={2} justifyContent="center">
-      {events ? events.map((event) => (
-        <Grid item key={event.id}>
-          <EventCard data={event} />
-        </Grid>
-      )): <Typography data-testid="loadingtext">Loading...</Typography>}
+      {events ? (
+        events.map((event) => (
+          <Grid item key={event.id}>
+            <EventCard data={event} />
+          </Grid>
+        ))
+      ) : (
+        <Typography data-testid="loadingtext">Loading...</Typography>
+      )}
     </Grid>
   )
 }
