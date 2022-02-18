@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react'
 import EventList from './eventList'
 import React from 'react'
-import { act } from 'react-dom/test-utils'
-import mockFetch from "../utils/mockFetch";
+import mockFetch from '../utils/mockFetch'
+import awaitAsync from '../utils/awaitAsync'
 
 it('renders a list events', async () => {
   const events = [
@@ -20,12 +20,24 @@ it('renders a list events', async () => {
   mockFetch(200, events)
 
   const container = render(<EventList />).container
-  expect(container.querySelector("[data-testid='loadingtext']")).not.toBeNull()
-  await act(async () => {
-    await new Promise((resolve) => setTimeout(resolve, 0))
-  })
+
+  expect(container.querySelector("[data-testid='loading-text']")).not.toBeNull()
+
+  await awaitAsync()
 
   for (const event of events) {
     expect(container.querySelector(`[data-testid='event-${event.id}']`)).not.toBeNull()
   }
+})
+
+it('shows error on error', async () => {
+  mockFetch(500, {})
+
+  const container = render(<EventList />).container
+
+  expect(container.querySelector("[data-testid='loading-text']")).not.toBeNull()
+
+  await awaitAsync()
+
+  expect(container.querySelector(`[data-testid='error']`)).not.toBeNull()
 })
