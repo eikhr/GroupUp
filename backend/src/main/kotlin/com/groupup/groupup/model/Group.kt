@@ -5,6 +5,9 @@ import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.JoinTable
+import javax.persistence.ManyToMany
 import javax.persistence.Table
 
 private const val MIN_AGE = 18
@@ -26,4 +29,12 @@ open class Group {
 
     @Column
     var maxAge: Int = MAX_AGE
+
+    @ManyToMany
+    @JoinTable(
+        name = "group_events",
+        joinColumns = [JoinColumn(name = "group_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "event_id", referencedColumnName = "id")]
+    )
+    var events: MutableList<Event> = mutableListOf()
 }
