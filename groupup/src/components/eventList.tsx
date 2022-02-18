@@ -2,15 +2,13 @@ import { Grid, Typography } from '@mui/material'
 import IEvent from '../models/event'
 import React, { useEffect, useState } from 'react'
 import EventCard from './eventCard'
+import API from "../API";
 
 const EventList = () => {
   const [events, setEvents] = useState<IEvent[] | null>(null)
-  async function fetchEvents() {
-    const response = await fetch('http//localhost:8080/api/events')
-    setEvents(await response.json())
-  }
+
   useEffect(() => {
-    fetchEvents()
+    API.getAllEvents().then((events) => setEvents(events))
   }, [])
 
   return (
