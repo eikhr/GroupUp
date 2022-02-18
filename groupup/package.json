@@ -14,6 +14,8 @@
     "@types/node": "^16.7.13",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.9",
+    "date": "^1.0.2",
+    "date-fns": "^2.23.0",
     "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
