@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppBar, Toolbar } from '@mui/material'
+import { AppBar, Button, Link, Toolbar } from '@mui/material'
 import Logo from './Logo'
 
 const Header = () => {
@@ -7,8 +7,14 @@ const Header = () => {
 
   return (
     <>
-      <AppBar sx={{ height: height }}>
-        <Logo sx={{ height: 1, ml: 2 }} />
+      <AppBar sx={{ height: height, alignItems: 'flex-start' }}>
+        <Button
+          variant="outlined"
+          href="/"
+          sx={{ height: 1, width: 'auto', color: 'primary.contrastText' }}
+        >
+          <Logo sx={{ height: 1, textTransform: 'none' }} />
+        </Button>
       </AppBar>
       <Toolbar sx={{ height: height }} />
     </>
