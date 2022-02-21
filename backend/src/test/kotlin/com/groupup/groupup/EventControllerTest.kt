@@ -8,35 +8,35 @@ import com.groupup.groupup.repository.EventRepository
 import com.groupup.groupup.service.EventService
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.Mockito
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
-import org.springframework.boot.test.context.SpringBootTest
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.http.MediaType
-import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.junit.jupiter.SpringExtension
+import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.MvcResult
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers
 import java.util.GregorianCalendar
 
-@ExtendWith(SpringExtension::class)
-@SpringBootTest(classes = [EventController::class, EventRepository::class])
+@ContextConfiguration(classes = [EventController::class, EventRepository::class])
 @AutoConfigureMockMvc
-@ActiveProfiles("test")
+@WebMvcTest
 class EventControllerTest {
+    private fun <Event> anyEvent(): Event = Mockito.any()
+
     @Autowired
     private lateinit var mockMvc: MockMvc
 
     @MockBean
-    private lateinit var _eventService: EventService // Controller relies on service to run
+    private lateinit var eventService: EventService // Controller relies on service to run
 
     private val objectMapper: ObjectMapper = ObjectMapper()
 
     private fun apiUrl(vararg segments: String): String {
-        var url = StringBuilder("/" + "api")
+        val url = StringBuilder("/" + "api")
         for (segment in segments) {
             url.append("/").append(segment)
         }
@@ -59,6 +59,7 @@ class EventControllerTest {
     @Throws(Exception::class)
     private fun addEvent(event: Event) {
         val eventJson: String = objectMapper.writeValueAsString(event)
+        Mockito.doReturn(event).`when`(eventService).createEvent(anyEvent())
         mockMvc.perform(
             MockMvcRequestBuilders
                 .post(apiUrl("events", "add"))
