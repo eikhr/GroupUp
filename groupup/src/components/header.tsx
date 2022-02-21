@@ -1,6 +1,6 @@
 import React from 'react'
 import { AppBar, Button, Link, Toolbar } from '@mui/material'
-import Logo from './Logo'
+import Logo from './logo'
 
 const Header = () => {
   const height = 60
