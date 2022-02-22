@@ -1,7 +1,7 @@
 import { Card, CardContent, Typography } from '@mui/material'
 import moment from 'moment'
 import React from 'react'
-import IEvent from '../models/event'
+import IEvent from '../../models/event'
 
 interface IProps {
   data: IEvent

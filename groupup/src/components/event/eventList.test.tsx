@@ -1,8 +1,8 @@
 import { render } from '@testing-library/react'
 import EventList from './eventList'
 import React from 'react'
-import mockFetch from '../utils/mockFetch'
-import awaitAsync from '../utils/awaitAsync'
+import mockFetch from '../../utils/mockFetch'
+import awaitAsync from '../../utils/awaitAsync'
 
 it('renders a list events', async () => {
   const events = [
