@@ -1,8 +1,8 @@
 import { Card, Grid, Typography } from '@mui/material'
-import IEvent from '../models/event'
+import IEvent from '../../models/event'
 import React, { useEffect, useState } from 'react'
 import EventCard from './eventCard'
-import API, { APIError } from '../API'
+import API, { APIError } from '../../API'
 
 const EventList = () => {
   const [events, setEvents] = useState<IEvent[] | null>(null)

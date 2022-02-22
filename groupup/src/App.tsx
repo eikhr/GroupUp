@@ -1,8 +1,8 @@
 import Typography from '@mui/material/Typography'
 import React from 'react'
 import './App.css'
-import EventList from './components/eventList'
-import Form from './components/createEvent'
+import EventList from './components/event/eventList'
+import Form from './components/event/createEvent'
 
 const App = () => {
   return (
