@@ -1,13 +1,11 @@
 import React from 'react'
-import { AppBar, Button, Link, Toolbar } from '@mui/material'
+import { AppBar, Button, Toolbar } from '@mui/material'
 import Logo from './logo'
 
 const Header = () => {
-  const height = 60
-
   return (
     <>
-      <AppBar sx={{ height: height, alignItems: 'flex-start' }}>
+      <AppBar sx={{ height: 64, alignItems: 'flex-start' }}>
         <Button
           variant="outlined"
           href="/"
@@ -16,7 +14,7 @@ const Header = () => {
           <Logo sx={{ height: 1, textTransform: 'none' }} />
         </Button>
       </AppBar>
-      <Toolbar sx={{ height: height }} />
+      <Toolbar />
     </>
   )
 }
