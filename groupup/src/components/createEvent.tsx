@@ -26,7 +26,7 @@ const Form = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Grid container alignItems="center" justifyContent="center" direction="column">
+      <Grid container alignItems="center" justifyContent="center">
         <Stack spacing={3}>
           <Typography variant="h2"> Create your event </Typography>
           <TextField
@@ -50,13 +50,10 @@ const Form = () => {
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker
               disablePast
-              //id="eventDate-input"
-              //name="date"
               label="Choose your event date"
               value={dateValue}
               onChange={setValue}
               onError={console.log}
-              minDate={new Date('2018-01-01T00:00')}
               inputFormat="yyyy/MM/dd hh:mm a"
               mask="___/__/__ __:__ _M"
               renderInput={(params) => <TextField {...params} />}
