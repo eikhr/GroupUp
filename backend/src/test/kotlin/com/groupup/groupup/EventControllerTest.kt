@@ -62,6 +62,20 @@ class EventControllerTest {
     }
 
     @Throws(Exception::class)
+    private fun getEventById(event: Event): Event {
+        val eventId = event.id ?: throw IllegalArgumentException("Event must have id")
+        Mockito.doReturn(event).`when`(eventService).getEvent(eventId)
+        val result: MvcResult = mockMvc.perform(
+            MockMvcRequestBuilders
+                .get(apiUrl("events/$eventId"))
+                .accept(MediaType.APPLICATION_JSON)
+        )
+            .andExpect(MockMvcResultMatchers.status().isOk)
+            .andReturn()
+        return objectMapper.readValue(result.response.contentAsString, object : TypeReference<Event>() {})
+    }
+
+    @Throws(Exception::class)
     private fun addEvent(event: Event) {
         val eventJson: String = objectMapper.writeValueAsString(event)
         Mockito.doReturn(event).`when`(eventService).createEvent(anyEvent())
@@ -121,5 +135,20 @@ class EventControllerTest {
         event.description = "description"
         event.date = GregorianCalendar(2022, 4, 13, 12, 12, 12)
         addEvent(event)
+    }
+
+    @Test
+    fun getEventById() {
+        val event = Event()
+        event.id = 123
+        event.title = "testTitle"
+        event.description = "description"
+        event.date = GregorianCalendar(2022, 4, 13, 12, 12, 12)
+        val gottenEvent = getEventById(event)
+
+        assertEquals(event.id, gottenEvent.id)
+        assertEquals(event.title, gottenEvent.title)
+        assertEquals(event.description, gottenEvent.description)
+        assertEquals(event.date.time, gottenEvent.date.time)
     }
 }
