@@ -8,7 +8,7 @@ const App = () => {
   return (
     <div className="App">
       <Typography variant="h3">Create GroupUp App</Typography>
-      <EventList events={events} />
+      <EventList />
       <Form />
     </div>
   )
