@@ -50,8 +50,6 @@ const Form = () => {
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker
               disablePast
-              //id="eventDate-input"
-              //name="date"
               label="Choose your event date"
               value={dateValue}
               onChange={setValue}
