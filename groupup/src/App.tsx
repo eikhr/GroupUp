@@ -21,7 +21,7 @@ const App = () => {
     <div className="App">
       <Typography variant="h3">Create GroupUp App</Typography>
       <EventList events={events} />
-      <Form></Form>
+      <Form />
     </div>
   )
 }
