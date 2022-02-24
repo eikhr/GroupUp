@@ -1,10 +1,11 @@
 import { DateTimePicker, LocalizationProvider } from '@mui/lab'
-import { Button, Grid, Stack, TextField, Typography } from '@mui/material'
+import { Button, Card, Grid, Stack, TextField, Typography } from '@mui/material'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import IEvent from "../../models/event";
-import API from "../../API";
+import IEvent from '../../models/event'
+import API, { APIError } from "../../API";
 import { useNavigate } from 'react-router-dom'
+import ErrorCard from '../layout/errorCard'
 
 const defaultValues = {
   name: '',
@@ -12,9 +13,10 @@ const defaultValues = {
 }
 
 const Form = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const [formValues, setFormValues] = useState(defaultValues)
   const [dateValue, setValue] = React.useState<Date | null>(new Date())
+  const [error, setError] = React.useState<string | null>()
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormValues({
@@ -29,14 +31,14 @@ const Form = () => {
     const event: IEvent = {
       title: formValues.name,
       description: formValues.description,
-      time: dateValue?.toJSON()
+      time: dateValue?.toJSON(),
     }
     try {
       await API.addEvent(event)
-      navigate("/events")
-    } catch (err) {
-      console.log(err)
-      //TODO: better error-handling
+      navigate('/events')
+    } catch (err: unknown) {
+      const apiErr = err as APIError
+      setError(`${apiErr.message}, ${apiErr.status}`)
     }
   }
 
@@ -45,6 +47,7 @@ const Form = () => {
       <Grid container alignItems="center" justifyContent="center">
         <Stack spacing={3}>
           <Typography variant="h2"> Create your event </Typography>
+          {error && <ErrorCard message={error + ""} />}
           <TextField
             id="name-input"
             name="name"

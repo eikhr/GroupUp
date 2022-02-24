@@ -1,5 +1,5 @@
 import IEvent from '../models/event'
-import { json } from "stream/consumers";
+import { json } from 'stream/consumers'
 
 const baseUrl = 'http://localhost:8080/api'
 
@@ -27,7 +27,7 @@ const API = {
       method: 'GET',
     }
 
-    return await doRequest(url, options);
+    return await doRequest(url, options)
   },
   addEvent: async (event: IEvent): Promise<IEvent> => {
     const url = baseUrl + '/events/add'
@@ -35,11 +35,11 @@ const API = {
     const options: RequestInit = {
       method: 'POST',
       body: JSON.stringify(event),
-      headers: {'content-type': 'application/json'}
+      headers: { 'contnt-type': 'application/json' },
     }
 
-    return await doRequest(url, options);
-  }
+    return await doRequest(url, options)
+  },
 }
 
 export default API
