@@ -14,6 +14,10 @@ import {
   Typography,
 } from '@mui/material'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import API, { APIError } from '../../API'
+import Group from '../../models/group'
+import ErrorCard from '../layout/errorCard'
 import { Favorite, FavoriteBorder } from '@mui/icons-material'
 
 const defaultValues = {
@@ -24,8 +28,10 @@ const defaultValues = {
 const interestList = ['hiking', 'parties', 'horses', 'pokemon go']
 
 const Form = () => {
+  const navigate = useNavigate()
   const [formValues, setFormValues] = useState(defaultValues)
   const [interests, setInterest] = React.useState<string[]>([])
+  const [error, setError] = React.useState<string | null>()
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormValues({
@@ -39,8 +45,21 @@ const Form = () => {
     setInterest([...value])
     console.log(value)
   }
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const group: Group = {
+      name: formValues.name,
+      description: formValues.description,
+    }
+    try {
+      await API.addGroup(group)
+      navigate('/events')
+    } catch (err: unknown) {
+      const apiErr = err as APIError
+      setError(`${apiErr.message}, ${apiErr.status}`)
+    }
   }
 
   return (
@@ -48,6 +67,7 @@ const Form = () => {
       <Grid container alignItems="center" justifyContent="center">
         <Stack spacing={3}>
           <Typography variant="h2"> Create your group </Typography>
+          {error && <ErrorCard message={error + ''} />}
           <TextField
             id="name-input"
             name="name"
