@@ -1,5 +1,4 @@
 import IEvent from '../models/event'
-import { json } from 'stream/consumers'
 
 const baseUrl = 'http://localhost:8080/api'
 
