@@ -16,6 +16,7 @@ const LoggedInPage = (props: PropsWithChildren<Record<never, never>>) => {
         <Tabs value={location.pathname} onChange={onTabChange} orientation="vertical">
           <Tab label="Events" value="/events" />
           <Tab label="Add event" value="/addEvent" />
+          <Tab label="Create Group" value="/createGroup" />
         </Tabs>
       </Paper>
       <Box sx={{ width: 1, maxWidth: 1100, margin: '20px auto' }}>{props.children}</Box>
