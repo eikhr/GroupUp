@@ -7,6 +7,7 @@ import Header from './components/layout/header'
 import LoggedInPage from './components/layout/loggedInPage'
 import { Box, Stack } from '@mui/material'
 import CreateEvent from './components/event/createEvent'
+import CreateGroup from './components/groups/createGroup'
 
 const App = () => {
   return (
@@ -28,6 +29,14 @@ const App = () => {
             element={
               <LoggedInPage>
                 <CreateEvent />
+              </LoggedInPage>
+            }
+          />
+          <Route
+            path="/createGroup"
+            element={
+              <LoggedInPage>
+                <CreateGroup />
               </LoggedInPage>
             }
           />
