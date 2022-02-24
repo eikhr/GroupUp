@@ -1,5 +1,6 @@
 package com.groupup.groupup.model
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.springframework.format.annotation.DateTimeFormat
 import java.util.GregorianCalendar
 import javax.persistence.Column
@@ -32,5 +33,6 @@ open class Event {
     open var date: GregorianCalendar = GregorianCalendar(DEFAULT_YEAR, DEFAULT_MONTH, DEFAULT_DAY)
 
     @ManyToMany(mappedBy = "events")
+    @JsonIgnoreProperties("events")
     var groups: MutableList<Group> = mutableListOf()
 }

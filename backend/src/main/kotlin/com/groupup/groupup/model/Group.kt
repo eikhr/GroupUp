@@ -1,5 +1,7 @@
 package com.groupup.groupup.model
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import javax.persistence.CascadeType
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -30,11 +32,12 @@ open class Group {
     @Column
     var maxAge: Int = MAX_AGE
 
-    @ManyToMany
+    @ManyToMany(cascade = [CascadeType.ALL])
     @JoinTable(
         name = "group_events",
         joinColumns = [JoinColumn(name = "group_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "event_id", referencedColumnName = "id")]
     )
-    var events: MutableList<Event> = mutableListOf()
+    @JsonIgnoreProperties("groups")
+    open var events: MutableList<Event> = mutableListOf()
 }
