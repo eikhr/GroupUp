@@ -1,18 +1,39 @@
-import Typography from '@mui/material/Typography'
 import React from 'react'
 import './App.css'
 import EventList from './components/event/eventList'
-import CreateEventForm from './components/event/createEvent'
-import CreateGroupForm from './components/groups/createGroup'
+import { Routes, Route } from 'react-router-dom'
+import CoverPage from './components/coverPage/coverPage'
+import Header from './components/layout/header'
+import LoggedInPage from './components/layout/loggedInPage'
+import { Box, Stack } from '@mui/material'
+import CreateEvent from './components/event/createEvent'
 
 const App = () => {
   return (
-    <div className="App">
-      <Typography variant="h3">Create GroupUp App</Typography>
-      <EventList />
-      <CreateEventForm />
-      <CreateGroupForm />
-    </div>
+    <Stack className="App" sx={{ height: 1 }} justifyContent="stretch">
+      <Header />
+      <Box sx={{ flexGrow: 1 }}>
+        <Routes>
+          <Route path="/" element={<CoverPage />} />
+          <Route
+            path="/events"
+            element={
+              <LoggedInPage>
+                <EventList />
+              </LoggedInPage>
+            }
+          />
+          <Route
+            path="/addEvent"
+            element={
+              <LoggedInPage>
+                <CreateEvent />
+              </LoggedInPage>
+            }
+          />
+        </Routes>
+      </Box>
+    </Stack>
   )
 }
 
