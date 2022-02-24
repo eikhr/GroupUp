@@ -1,4 +1,5 @@
 import IEvent from '../models/event'
+import Group from '../models/group'
 
 const baseUrl = 'http://localhost:8080/api'
 
@@ -34,7 +35,18 @@ const API = {
     const options: RequestInit = {
       method: 'POST',
       body: JSON.stringify(event),
-      headers: { 'contnt-type': 'application/json' },
+      headers: { 'content-type': 'application/json' },
+    }
+
+    return await doRequest(url, options)
+  },
+  addGroup: async (group: Group): Promise<Group> => {
+    const url = baseUrl + '/groups/add'
+
+    const options: RequestInit = {
+      method: 'POST',
+      body: JSON.stringify(group),
+      headers: { 'content-type': 'application/json' },
     }
 
     return await doRequest(url, options)
