@@ -35,6 +35,7 @@ const API = {
     const options: RequestInit = {
       method: 'POST',
       body: JSON.stringify(event),
+      headers: {'content-type': 'application/json'}
     }
 
     return await doRequest(url, options);

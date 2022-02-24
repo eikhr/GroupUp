@@ -2,6 +2,9 @@ import { DateTimePicker, LocalizationProvider } from '@mui/lab'
 import { Button, Grid, Stack, TextField, Typography } from '@mui/material'
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import IEvent from "../../models/event";
+import API from "../../API";
+import { useNavigate } from 'react-router-dom'
 
 const defaultValues = {
   name: '',
@@ -9,6 +12,7 @@ const defaultValues = {
 }
 
 const Form = () => {
+  const navigate = useNavigate();
   const [formValues, setFormValues] = useState(defaultValues)
   const [dateValue, setValue] = React.useState<Date | null>(new Date())
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -19,8 +23,21 @@ const Form = () => {
     })
   }
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const event: IEvent = {
+      title: formValues.name,
+      description: formValues.description,
+      time: dateValue?.toJSON()
+    }
+    try {
+      await API.addEvent(event)
+      navigate("/events")
+    } catch (err) {
+      console.log(err)
+      //TODO: better error-handling
+    }
   }
 
   return (
