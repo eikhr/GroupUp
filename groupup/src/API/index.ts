@@ -7,6 +7,17 @@ export interface APIError {
   status: number
 }
 
+const doRequest = async <T>(url: string, options: RequestInit): Promise<T> => {
+  const response = await fetch(url, options)
+
+  // The request was sent successfully
+  if (response.status >= 200 && response.status < 300) {
+    return response.json()
+  } else {
+    throw { message: 'Request returned non-2xx response code', status: response.status }
+  }
+}
+
 const API = {
   getAllEvents: async (): Promise<IEvent[]> => {
     const url = baseUrl + '/events'
@@ -15,14 +26,18 @@ const API = {
       method: 'GET',
     }
 
-    const response = await fetch(url, options)
+    return await doRequest(url, options)
+  },
+  addEvent: async (event: IEvent): Promise<IEvent> => {
+    const url = baseUrl + '/events/add'
 
-    // The request was sent successfully
-    if (response.status >= 200 && response.status < 300) {
-      return response.json()
-    } else {
-      throw { message: 'Could not fetch the events', status: response.status }
+    const options: RequestInit = {
+      method: 'POST',
+      body: JSON.stringify(event),
+      headers: { 'contnt-type': 'application/json' },
     }
+
+    return await doRequest(url, options)
   },
 }
 
