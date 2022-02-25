@@ -87,7 +87,7 @@ Eslint:
 Yarn Test:
   image: node:17.4.0
   stage: Webapp test
-  needs: []
+  needs: [Yarn Build, Eslint]
   script:
     - cd groupup
     - yarn install --frozen-lockfile --cache-folder .yarn
