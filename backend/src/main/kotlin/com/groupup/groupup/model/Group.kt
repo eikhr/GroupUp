@@ -21,19 +21,25 @@ open class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    open var id: Long? = -1
+    open var id: Long = 0
 
     @Column
-    open lateinit var name: String
+    open var description: String = ""
 
     @Column
-    open lateinit var description: String
+    open var minAge: Int = MIN_AGE
 
     @Column
-    var minAge: Int = MIN_AGE
+    open var maxAge: Int = MAX_AGE
 
-    @Column
-    var maxAge: Int = MAX_AGE
+    constructor(id: Long, group: Group) {
+        var id: Long = id
+        var description: String = group.description
+        var minAge: Int = group.minAge
+        var maxAge: Int = group.maxAge
+    }
+
+    constructor()
 
     @ManyToMany(cascade = [CascadeType.ALL])
     @JoinTable(
