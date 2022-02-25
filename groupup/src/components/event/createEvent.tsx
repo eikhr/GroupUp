@@ -32,6 +32,8 @@ const Form = () => {
       title: formValues.name,
       description: formValues.description,
       time: dateValue?.toJSON(),
+      groups: { name: 'groupName', description: 'describing' },
+      // default group now
     }
     try {
       await API.addEvent(event)
