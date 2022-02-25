@@ -21,6 +21,9 @@ const EventCard = (props: IProps) => {
             {moment(props.data.time).format('LLLL')}
           </Typography>
         )}
+        <Typography data-testid="groups" variant="body2" color="text.secondary">
+          {props.data.groups.name}
+        </Typography>
       </CardContent>
     </Card>
   )

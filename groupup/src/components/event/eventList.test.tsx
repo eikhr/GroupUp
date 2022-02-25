@@ -6,16 +6,66 @@ import awaitAsync from '../../utils/awaitAsync'
 
 it('renders a list events', async () => {
   const events = [
-    { title: 'testevent', id: 1, description: 'Whatever' },
-    { title: 'testevent', id: 2, description: 'Whatever' },
-    { title: 'testevent', id: 3, description: 'Whatever' },
-    { title: 'testevent', id: 4, description: 'Whatever' },
-    { title: 'testevent', id: 5, description: 'Whatever' },
-    { title: 'testevent', id: 6, description: 'Whatever' },
-    { title: 'testevent', id: 7, description: 'Whatever' },
-    { title: 'testevent', id: 8, description: 'Whatever' },
-    { title: 'testevent', id: 9, description: 'Whatever' },
-    { title: 'testevent', id: 10, description: 'Whatever' },
+    {
+      title: 'testevent',
+      id: 1,
+      description: 'Whatever',
+      groups: { name: 'groupName', description: 'describing' },
+    },
+    {
+      title: 'testevent',
+      id: 2,
+      description: 'Whatever',
+      groups: { name: 'groupName', description: 'describing' },
+    },
+    {
+      title: 'testevent',
+      id: 3,
+      description: 'Whatever',
+      groups: { name: 'groupName', description: 'describing' },
+    },
+    {
+      title: 'testevent',
+      id: 4,
+      description: 'Whatever',
+      groups: { name: 'groupName', description: 'describing' },
+    },
+    {
+      title: 'testevent',
+      id: 5,
+      description: 'Whatever',
+      groups: { name: 'groupName', description: 'describing' },
+    },
+    {
+      title: 'testevent',
+      id: 6,
+      description: 'Whatever',
+      groups: { name: 'groupName', description: 'describing' },
+    },
+    {
+      title: 'testevent',
+      id: 7,
+      description: 'Whatever',
+      groups: { name: 'groupName', description: 'describing' },
+    },
+    {
+      title: 'testevent',
+      id: 8,
+      description: 'Whatever',
+      groups: { name: 'groupName', description: 'describing' },
+    },
+    {
+      title: 'testevent',
+      id: 9,
+      description: 'Whatever',
+      groups: { name: 'groupName', description: 'describing' },
+    },
+    {
+      title: 'testevent',
+      id: 10,
+      description: 'Whatever',
+      groups: { name: 'groupName', description: 'describing' },
+    },
   ]
   mockFetch(200, events)
 
