@@ -11,10 +11,6 @@ class EventService(private val eventRepository: EventRepository) : IEventService
         return eventRepository.save(event)
     }
 
-    override fun updateEvent(event: Event, id: Long): Event {
-        TODO("Not yet implemented")
-    }
-
     override fun getEvents(): List<Event> {
         return eventRepository.findAll()
     }
@@ -31,7 +27,7 @@ class EventService(private val eventRepository: EventRepository) : IEventService
     /* Updates group. Inspired from:
     https://github.com/cijosunny/kotlin-boot-repo/
     blob/master/src/main/kotlin/com/app/kotlin/user/service/UserServiceImpl.kt */
-    fun updateEvent(id: Long, event: Event): Event {
+    override fun updateEvent(event: Event, id: Long): Event {
         event.id = id
         eventRepository.saveAndFlush(event)
         return event
