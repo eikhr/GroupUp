@@ -3,6 +3,7 @@ package com.groupup.groupup.model
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.CascadeType
 import javax.persistence.Column
+import javax.persistence.ElementCollection
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -24,6 +25,9 @@ open class Group {
     open var id: Long = 0
 
     @Column
+    open var name: String = ""
+
+    @Column
     open var description: String = ""
 
     @Column
@@ -32,14 +36,9 @@ open class Group {
     @Column
     open var maxAge: Int = MAX_AGE
 
-    constructor(id: Long, group: Group) {
-        var id: Long = id
-        var description: String = group.description
-        var minAge: Int = group.minAge
-        var maxAge: Int = group.maxAge
-    }
-
-    constructor()
+    @Column
+    @ElementCollection
+    open var interests: MutableList<String> = mutableListOf()
 
     @ManyToMany(cascade = [CascadeType.ALL])
     @JoinTable(
