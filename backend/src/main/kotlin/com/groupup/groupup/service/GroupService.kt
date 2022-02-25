@@ -8,7 +8,8 @@ import org.springframework.stereotype.Service
 class GroupService(private val groupRepository: GroupRepository) : IGroupService {
 
     override fun createGroup(group: Group): Group {
-        return groupRepository.save(group)
+        var groupDb = groupRepository.save(group)
+        return groupDb
     }
 
     override fun getGroup(id: Long): Group {
@@ -19,8 +20,18 @@ class GroupService(private val groupRepository: GroupRepository) : IGroupService
         return groupRepository.findAll()
     }
 
-    override fun updateGroup(group: Group, id: Long): Group {
-        TODO("not yet implemented")
+    /* Updates group. Inspired from:
+    https://github.com/cijosunny/
+    kotlin-boot-repo/blob/master/src/main/kotlin/com/app/kotlin/user/service/UserServiceImpl.kt */
+    override fun updateGroup(id: Long, group: Group): Group {
+        group.id = id
+        groupRepository.saveAndFlush(group)
+        return group
+    }
+
+    override fun removeGroup(id: Long): Boolean {
+        groupRepository.deleteById(id)
+        return true
     }
 
     override fun getMinAge(id: Long): Int {

@@ -26,4 +26,6 @@ interface IEventService {
      * @return The new event
      */
     fun updateEvent(event: Event, id: Long): Event
+
+    fun removeEvent(id: Long): Boolean
 }
