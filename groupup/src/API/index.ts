@@ -51,6 +51,17 @@ const API = {
 
     return await doRequest(url, options)
   },
+  updateGroup: async (group: Group): Promise<Group> => {
+    const url = baseUrl + `/groups/${group.id}`
+
+    const options: RequestInit = {
+      method: 'PUT',
+      body: JSON.stringify(group),
+      headers: { 'content-type': 'application/json' },
+    }
+
+    return await doRequest(url, options)
+  },
 }
 
 export default API
