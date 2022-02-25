@@ -24,6 +24,9 @@ open class Group {
     open var id: Long? = -1
 
     @Column
+    open lateinit var name: String
+
+    @Column
     open lateinit var description: String
 
     @Column
