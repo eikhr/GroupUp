@@ -7,8 +7,8 @@ interface IProps {
   data: IEvent
 }
 const EventCard = (props: IProps) => {
-  const groups = props.data.groups;
-  const arrangingGroup = groups ? groups[0] : undefined;
+  const groups = props.data.groups
+  const arrangingGroup = groups ? groups[0] : undefined
   return (
     <Card data-testid={'event-' + props.data.id} sx={{ width: 345 }}>
       <CardContent>

@@ -1,9 +1,11 @@
+import IEvent from './event'
+
 interface Group {
   id?: number
   name: string
   description: string
   interests: string[]
-  events?: Event[]
+  events?: IEvent[]
 }
 
 export default Group
