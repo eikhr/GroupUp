@@ -40,6 +40,15 @@ const API = {
 
     return await doRequest(url, options)
   },
+  getAllGroups: async (): Promise<Group[]> => {
+    const url = baseUrl + '/groups'
+
+    const options: RequestInit = {
+      method: 'GET',
+    }
+
+    return await doRequest(url, options)
+  },
   addGroup: async (group: Group): Promise<Group> => {
     const url = baseUrl + '/groups/add'
 
