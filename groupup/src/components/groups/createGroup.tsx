@@ -52,6 +52,7 @@ const Form = () => {
     const group: Group = {
       name: formValues.name,
       description: formValues.description,
+      interests: interests,
     }
     try {
       await API.addGroup(group)

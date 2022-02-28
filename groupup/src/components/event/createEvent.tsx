@@ -32,7 +32,7 @@ const Form = () => {
       title: formValues.name,
       description: formValues.description,
       time: dateValue?.toJSON(),
-      groups: { name: 'groupName', description: 'describing' },
+      groups: { name: 'groupName', description: 'describing', interests: [] },
       // default group now
     }
     try {
