@@ -1,5 +1,6 @@
 import IEvent from '../models/event'
 import Group from '../models/group'
+import getExampleImage from '../utils/getExampleImage'
 
 const baseUrl = 'http://localhost:8080/api'
 
@@ -27,7 +28,10 @@ const API = {
       method: 'GET',
     }
 
-    return await doRequest(url, options)
+    return (await doRequest<IEvent[]>(url, options)).map((event) => ({
+      ...event,
+      image: getExampleImage(),
+    }))
   },
   addEvent: async (event: IEvent): Promise<IEvent> => {
     const url = baseUrl + '/events/add'

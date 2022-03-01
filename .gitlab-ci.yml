@@ -67,6 +67,7 @@ Yarn Build:
 Prettier check:
   image: node:17.4.0
   stage: Webapp test
+  needs: [ Yarn Build ]
   script:
     - cd groupup
     - npx prettier --check .
@@ -75,6 +76,7 @@ Prettier check:
 Eslint:
   image: node:17.4.0
   stage: Webapp test
+  needs: [ Yarn Build ]
   script:
     - cd groupup
     - yarn install --frozen-lockfile --cache-folder .yarn
@@ -84,6 +86,7 @@ Eslint:
 Yarn Test:
   image: node:17.4.0
   stage: Webapp test
+  needs: [ Yarn Build ]
   script:
     - cd groupup
     - yarn install --frozen-lockfile --cache-folder .yarn

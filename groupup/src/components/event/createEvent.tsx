@@ -54,7 +54,7 @@ const Form = () => {
     const event: IEvent = {
       title: formValues.name,
       description: formValues.description,
-      time: dateValue?.toJSON(),
+      date: dateValue?.toJSON(),
       groups: [],
     }
 
@@ -125,10 +125,10 @@ const Form = () => {
               disablePast
               label="Choose your event date"
               value={dateValue}
-              onChange={setValue}
+              onChange={(newDate) => setValue(newDate)}
               onError={console.log}
-              inputFormat="yyyy/MM/dd hh:mm a"
-              mask="___/__/__ __:__ _M"
+              inputFormat="yyyy/MM/dd HH:mm"
+              mask="___/__/__ __:__"
               renderInput={(params) => <TextField {...params} />}
             />
             <FormControl>

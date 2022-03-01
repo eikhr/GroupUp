@@ -54,7 +54,7 @@ const Form = () => {
       name: formValues.name,
       description: formValues.description,
       interests: interests,
-      email: formValues.email,
+      contactEmail: formValues.email,
     }
     try {
       await API.addGroup(group)
