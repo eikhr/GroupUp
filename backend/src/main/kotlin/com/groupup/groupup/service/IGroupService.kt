@@ -16,4 +16,14 @@ interface IGroupService {
     fun getMinAge(id: Long): Int
 
     fun getMaxAge(id: Long): Int
+
+    /**
+     * Adds an event to the group
+     */
+    fun addEventById(group: Group, id: Long): Group
+
+    /**
+     * Removes an event from a group
+     */
+    fun removeEventById(group: Group, id: Long): Group
 }

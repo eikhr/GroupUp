@@ -32,13 +32,23 @@ class EventController(private val eventService: EventService) {
         return eventService.createEvent(event).id
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     fun deleteEvent(@PathVariable id: Long): Boolean {
         return eventService.removeEvent(id)
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     fun updateGroup(@PathVariable id: Long, @RequestBody event: Event): Event? {
         return eventService.updateEvent(event, id)
+    }
+
+    @PostMapping("/{eventId}/addgroup/{groupId}")
+    fun addGroupById(@PathVariable eventId: Long, @PathVariable groupId: Long): Event? {
+        return eventService.addGroupById(eventService.getEvent(eventId), groupId)
+    }
+
+    @DeleteMapping("/{eventId}/removegroup/{groupId}")
+    fun removeGroupById(@PathVariable eventId: Long, @PathVariable groupId: Long): Event? {
+        return eventService.removeGroupById(eventService.getEvent(eventId), groupId)
     }
 }
