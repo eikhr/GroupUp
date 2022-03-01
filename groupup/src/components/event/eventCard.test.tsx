@@ -2,6 +2,7 @@ import { render } from '@testing-library/react'
 import EventCard from './eventCard'
 import React from 'react'
 import moment from 'moment'
+import IEvent from "../../models/event";
 
 it('renders with event details', () => {
   const event = {
@@ -21,17 +22,17 @@ it('renders with event details', () => {
 })
 
 it('renders with time', () => {
-  const event = {
+  const event: IEvent = {
     title: 'testevent',
     id: 1,
     description: 'Whatever',
-    time: '1999-06-26T12:32:43Z',
+    date: '1999-06-26T12:32:43Z',
     groups: [
       { name: 'groupName', description: 'describing', interests: [], email: 'email' },
     ],
   }
   const { container } = render(<EventCard data={event} />)
   expect(container.querySelector("[data-testid='time']")?.textContent).toBe(
-    moment(event.time).format('LLLL')
+    moment(event.date).format('LLLL')
   )
 })

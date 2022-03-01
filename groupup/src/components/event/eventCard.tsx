@@ -18,9 +18,9 @@ const EventCard = (props: IProps) => {
         <Typography data-testid="description" variant="body2" color="text.secondary">
           {props.data.description}
         </Typography>
-        {props.data.time && (
+        {props.data.date && (
           <Typography data-testid="time" variant="body2" color="text.secondary">
-            {moment(props.data.time).format('LLLL')}
+            {moment(props.data.date).format('LLLL')}
           </Typography>
         )}
         <Typography data-testid="groups" variant="body2" color="text.secondary">
