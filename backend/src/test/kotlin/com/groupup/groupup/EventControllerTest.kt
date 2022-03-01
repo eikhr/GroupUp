@@ -28,7 +28,7 @@ import kotlin.random.Random
 @ContextConfiguration(classes = [EventController::class, EventRepository::class])
 @AutoConfigureMockMvc
 @WebMvcTest
-class EventControllerTest : WebControllerTestHelper() {
+class EventControllerTest : WebControllerTestHelper {
     private fun <Event> anyEvent(): Event = Mockito.any()
 
     @Autowired

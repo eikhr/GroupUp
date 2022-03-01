@@ -27,7 +27,7 @@ import kotlin.random.Random
 @ContextConfiguration(classes = [GroupController::class, GroupRepository::class])
 @AutoConfigureMockMvc
 @WebMvcTest
-class GroupControllerTest : WebControllerTestHelper() {
+class GroupControllerTest : WebControllerTestHelper {
     private fun <Group> anyGroup(): Group = Mockito.any()
 
     @Autowired
@@ -96,8 +96,8 @@ class GroupControllerTest : WebControllerTestHelper() {
             assertNotNull(actualGroup)
             assertEquals(expectedGroup.description, actualGroup?.description)
             assertEquals(expectedGroup.minAge, actualGroup?.minAge)
-            assertEquals(expectedGroup.maxAge, actualGroup?.minAge)
-            // assertEquals(expectedGroup.contactEmail, actualGroup?.contactEmail)
+            assertEquals(expectedGroup.maxAge, actualGroup?.maxAge)
+            assertEquals(expectedGroup.contactEmail, actualGroup?.contactEmail)
         }
     }
 
@@ -107,12 +107,12 @@ class GroupControllerTest : WebControllerTestHelper() {
         assertTrue(events.isEmpty())
     }
 
-    /*@Test
+    @Test
     fun testGetGroupsList() {
         val testGroups = listOf(createTestGroup(), createTestGroup(), createTestGroup())
         val groups: Collection<Group> = getGroups(testGroups)
         assertGroupCollectionsEqual(testGroups, groups)
-    }*/
+    }
 
     @Test
     fun testAddGroup() {

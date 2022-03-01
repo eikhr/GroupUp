@@ -1,6 +1,6 @@
 package com.groupup.groupup
 
-abstract class WebControllerTestHelper {
+interface WebControllerTestHelper {
     fun apiUrl(vararg segments: String): String {
         val url = StringBuilder("/" + "api")
         for (segment in segments) {
