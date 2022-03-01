@@ -24,6 +24,7 @@ const defaultValues = {
   name: '',
   description: '',
   interests: [''],
+  email: '',
 }
 const interestList = ['hiking', 'parties', 'horses', 'pokemon go']
 
@@ -53,6 +54,7 @@ const Form = () => {
       name: formValues.name,
       description: formValues.description,
       interests: interests,
+      email: formValues.email,
     }
     try {
       await API.addGroup(group)
@@ -85,6 +87,14 @@ const Form = () => {
             label="Describe your group"
             type="text"
             value={formValues.description}
+            onChange={handleInputChange}
+          />
+          <TextField
+            id="email-input"
+            name="email"
+            label="Your email"
+            type="text"
+            value={formValues.email}
             onChange={handleInputChange}
           />
           <FormControl>

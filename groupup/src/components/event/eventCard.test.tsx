@@ -8,7 +8,7 @@ it('renders with event details', () => {
     title: 'testevent',
     id: 1,
     description: 'Whatever',
-    groups: [{ name: 'groupName', description: 'describing', interests: [] }],
+    groups: [{ name: 'groupName', description: 'describing', interests: [], email: 'email' }],
   }
   const { container } = render(<EventCard data={event} />)
   expect(container.querySelector("[data-testid='title']")?.textContent).toBe(event.title)
@@ -24,7 +24,7 @@ it('renders with time', () => {
     id: 1,
     description: 'Whatever',
     time: '1999-06-26T12:32:43Z',
-    groups: [{ name: 'groupName', description: 'describing', interests: [] }],
+    groups: [{ name: 'groupName', description: 'describing', interests: [], email: 'email' }],
   }
   const { container } = render(<EventCard data={event} />)
   expect(container.querySelector("[data-testid='time']")?.textContent).toBe(
