@@ -8,6 +8,7 @@ import LoggedInPage from './components/layout/loggedInPage'
 import { Box, Stack } from '@mui/material'
 import CreateEvent from './components/event/createEvent'
 import CreateGroup from './components/groups/createGroup'
+import GroupList from './components/groups/groupList'
 
 const App = () => {
   return (
@@ -37,6 +38,14 @@ const App = () => {
             element={
               <LoggedInPage>
                 <CreateGroup />
+              </LoggedInPage>
+            }
+          />
+          <Route
+            path="/groupList"
+            element={
+              <LoggedInPage>
+                <GroupList />
               </LoggedInPage>
             }
           />

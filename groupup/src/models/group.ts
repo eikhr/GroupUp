@@ -5,6 +5,7 @@ interface Group {
   name: string
   description: string
   interests: string[]
+  email: string
   events?: IEvent[]
 }
 
