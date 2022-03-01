@@ -30,7 +30,7 @@ class EventService(
 
     override fun removeEvent(id: Long): Boolean {
         val event = getEvent(id)
-        for (group in event.groups) {
+        for (group in event.groupsMatched) {
             removeGroupById(event, group.id)
         }
         eventRepository.deleteById(id)
@@ -48,7 +48,7 @@ class EventService(
 
     override fun addGroupById(event: Event, id: Long): Event? {
         val group: Group = groupService.getGroup(id)
-        event.groups.add(group)
+        event.groupsMatched.add(group)
         group.events.add(event)
         groupService.updateGroup(id, group)
         return event.id?.let { updateEvent(event, it) }
@@ -56,7 +56,7 @@ class EventService(
 
     override fun removeGroupById(event: Event, id: Long): Event? {
         val group: Group = groupService.getGroup(id)
-        event.groups.remove(group)
+        event.groupsMatched.remove(group)
         group.events.remove(event)
         groupService.updateGroup(id, group)
         return event.id?.let { updateEvent(event, it) }
