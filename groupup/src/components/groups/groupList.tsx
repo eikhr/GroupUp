@@ -29,7 +29,7 @@ const GroupList = () => {
   return (
     <Grid container spacing={2} justifyContent="center">
       {groups.map((group: IGroup) => (
-        <Grid item key={group.name}>
+        <Grid item key={group.id}>
           <GroupCard data={group} />
         </Grid>
       ))}

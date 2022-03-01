@@ -7,7 +7,7 @@ interface IProps {
 }
 const GroupCard = (props: IProps) => {
   return (
-    <Card data-testid={'group-'} sx={{ width: 345 }}>
+    <Card data-testid={'group-' + props.data.id} sx={{ width: 345 }}>
 
       <CardContent>
         <Typography data-testid="title" gutterBottom variant="h5" component="div">
@@ -16,6 +16,7 @@ const GroupCard = (props: IProps) => {
         <Typography data-testid="description" variant="body2" color="text.secondary">
           {props.data.description}
         </Typography>
+
       </CardContent>
     </Card>
   )
