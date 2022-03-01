@@ -6,6 +6,7 @@ interface IEvent {
   description: string
   date?: string
   groups?: group[]
+  image?: string
 }
 
 export default IEvent

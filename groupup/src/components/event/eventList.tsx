@@ -1,12 +1,14 @@
-import { Card, Grid, Typography } from '@mui/material'
+import { Box, Card, Grid, Modal, Typography } from '@mui/material'
 import IEvent from '../../models/event'
 import React, { useEffect, useState } from 'react'
 import EventCard from './eventCard'
 import API, { APIError } from '../../API'
+import EventDetails from './eventDetails'
 
 const EventList = () => {
   const [events, setEvents] = useState<IEvent[] | null>(null)
   const [error, setError] = useState<APIError | null>(null)
+  const [openEvent, setOpenEvent] = useState<IEvent | null>(null)
 
   useEffect(() => {
     API.getAllEvents()
@@ -27,13 +29,20 @@ const EventList = () => {
   }
 
   return (
-    <Grid container spacing={2} justifyContent="center">
-      {events.map((event) => (
-        <Grid item key={event.id}>
-          <EventCard data={event} />
-        </Grid>
-      ))}
-    </Grid>
+    <>
+      <Modal open={!!openEvent} onClose={() => setOpenEvent(null)}>
+        <>{openEvent && <EventDetails event={openEvent} />}</>
+      </Modal>
+      <Grid container spacing={2} justifyContent="center">
+        {events.map((event) => (
+          <Grid item key={event.id} >
+            <Box onClick={() => setOpenEvent(event)} sx={{cursor: 'pointer'}}>
+              <EventCard data={event} />
+            </Box>
+          </Grid>
+        ))}
+      </Grid>
+    </>
   )
 }
 
