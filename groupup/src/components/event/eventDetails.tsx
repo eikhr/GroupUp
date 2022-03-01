@@ -12,8 +12,8 @@ const EventDetails = ({ event }: IProps) => {
   const arrangingGroup = event.groups && event.groups[0]
 
   return (
-    <CenteredModalCard>
-      <CardMedia component="img" height="140" src={event.image} alt="green iguana" />
+    <CenteredModalCard width={800}>
+      <CardMedia component="img" height="200" src={event.image} alt="green iguana" />
       <CardContent>
         {event.date && (
           <Typography
@@ -28,8 +28,14 @@ const EventDetails = ({ event }: IProps) => {
         <Typography data-testid="title" gutterBottom variant="h5" component="div">
           {event.title}
         </Typography>
-        <Typography data-testid="description" variant="body2" color="text.secondary">
+        <Typography data-testid="description" gutterBottom variant="body2" color="text.secondary">
           {event.description}
+        </Typography>
+        <Typography data-testid="description" variant="body2" color="text">
+          Med: <b>{arrangingGroup?.name}</b>
+        </Typography>
+        <Typography data-testid="groupsEmail" variant="body2" color="text.secondary">
+          {arrangingGroup?.email}
         </Typography>
         <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
           {arrangingGroup?.interests?.map((interest) => (

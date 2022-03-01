@@ -36,9 +36,6 @@ const EventCard = (props: IProps) => {
         <Typography data-testid="groups" variant="body2" color="text.secondary">
           {arrangingGroup?.name}
         </Typography>
-        <Typography data-testid="groupsEmail" variant="body2" color="text.secondary">
-          {arrangingGroup?.email}
-        </Typography>
         <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
           {arrangingGroup?.interests?.map((interest) => (
             <Chip key={interest} label={interest} />
