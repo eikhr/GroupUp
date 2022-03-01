@@ -1,11 +1,11 @@
 import { Card } from '@mui/material'
-import React, { PropsWithChildren } from "react";
+import React, { PropsWithChildren } from 'react'
 
 interface IProps {
   width?: number
 }
 
-const CenteredModalCard = ({width, children}: PropsWithChildren<IProps>) => {
+const CenteredModalCard = ({ width, children }: PropsWithChildren<IProps>) => {
   const style = {
     position: 'absolute',
     top: '50%',

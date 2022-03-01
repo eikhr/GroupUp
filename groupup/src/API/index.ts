@@ -28,10 +28,10 @@ const API = {
       method: 'GET',
     }
 
-    return (await doRequest<IEvent[]>(url, options)).map((event) => {
-      event.image = getExampleImage()
-      return event
-    })
+    return (await doRequest<IEvent[]>(url, options)).map((event) => ({
+      ...event,
+      image: getExampleImage(),
+    }))
   },
   addEvent: async (event: IEvent): Promise<IEvent> => {
     const url = baseUrl + '/events/add'

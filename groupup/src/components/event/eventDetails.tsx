@@ -2,7 +2,7 @@ import IEvent from '../../models/event'
 import { CardContent, CardMedia, Chip, Stack, Typography } from '@mui/material'
 import moment from 'moment'
 import React from 'react'
-import CenteredModalCard from "../layout/centeredModal";
+import CenteredModalCard from '../layout/centeredModal'
 
 interface IProps {
   event: IEvent
@@ -28,7 +28,12 @@ const EventDetails = ({ event }: IProps) => {
         <Typography data-testid="title" gutterBottom variant="h5" component="div">
           {event.title}
         </Typography>
-        <Typography data-testid="description" gutterBottom variant="body2" color="text.secondary">
+        <Typography
+          data-testid="description"
+          gutterBottom
+          variant="body2"
+          color="text.secondary"
+        >
           {event.description}
         </Typography>
         <Typography data-testid="description" variant="body2" color="text">

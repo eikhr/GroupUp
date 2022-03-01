@@ -2,15 +2,21 @@ import { render } from '@testing-library/react'
 import EventCard from './eventCard'
 import React from 'react'
 import moment from 'moment'
-import IEvent from "../../models/event";
+import 'moment/locale/nb'
+import IEvent from '../../models/event'
 
 it('renders with event details', () => {
-  const event = {
+  const event: IEvent = {
     title: 'testevent',
     id: 1,
     description: 'Whatever',
     groups: [
-      { name: 'groupName', description: 'describing', interests: [], email: 'email' },
+      {
+        name: 'groupName',
+        description: 'describing',
+        interests: [],
+        contactEmail: 'email',
+      },
     ],
   }
   const { container } = render(<EventCard data={event} />)
@@ -28,11 +34,18 @@ it('renders with time', () => {
     description: 'Whatever',
     date: '1999-06-26T12:32:43Z',
     groups: [
-      { name: 'groupName', description: 'describing', interests: [], email: 'email' },
+      {
+        name: 'groupName',
+        description: 'describing',
+        interests: [],
+        contactEmail: 'email',
+      },
     ],
   }
+  moment.locale('nb')
+
   const { container } = render(<EventCard data={event} />)
   expect(container.querySelector("[data-testid='time']")?.textContent).toBe(
-    moment(event.date).format('LLLL')
+    moment(event.date).calendar({ sameElse: 'dddd Do MMMM [kl.] HH:mm' })
   )
 })

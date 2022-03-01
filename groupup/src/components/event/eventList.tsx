@@ -35,8 +35,8 @@ const EventList = () => {
       </Modal>
       <Grid container spacing={2} justifyContent="center">
         {events.map((event) => (
-          <Grid item key={event.id} >
-            <Box onClick={() => setOpenEvent(event)} sx={{cursor: 'pointer'}}>
+          <Grid item key={event.id}>
+            <Box onClick={() => setOpenEvent(event)} sx={{ cursor: 'pointer' }}>
               <EventCard data={event} />
             </Box>
           </Grid>
