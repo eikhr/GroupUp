@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography } from '@mui/material'
+import {Card, CardContent, Chip, Stack, Typography} from '@mui/material'
 import React from 'react'
 import IGroup from '../../models/group'
 
@@ -18,6 +18,12 @@ const GroupCard = (props: IProps) => {
         <Typography data-testid="mail" variant="body2" color="text.secondary">
           {props.data.email}
         </Typography>
+        <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
+          {props.data.interests.map((interest) => (
+            <Chip key={interest} label={interest} />
+          ))}
+        </Stack>
+
       </CardContent>
     </Card>
   )
