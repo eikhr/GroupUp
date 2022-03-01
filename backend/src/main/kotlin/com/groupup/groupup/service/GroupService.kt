@@ -26,7 +26,7 @@ class GroupService(private val groupRepository: GroupRepository) : IGroupService
     override fun updateGroup(id: Long, group: Group): Group {
         if (group.contactEmail.contains("@", ignoreCase = false) &&
             group.contactEmail.contains(".", ignoreCase = false)
-            ) {
+        ) {
             group.id = id
             groupRepository.saveAndFlush(group)
             return group
