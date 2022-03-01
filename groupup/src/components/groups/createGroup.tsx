@@ -56,7 +56,7 @@ const Form = () => {
     }
     try {
       await API.addGroup(group)
-      navigate('/events')
+      navigate('/addEvent')
     } catch (err: unknown) {
       const apiErr = err as APIError
       setError(`${apiErr.message}, ${apiErr.status}`)
