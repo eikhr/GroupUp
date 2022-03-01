@@ -31,7 +31,7 @@ class GroupService(private val groupRepository: GroupRepository) : IGroupService
             groupRepository.saveAndFlush(group)
             return group
         } else {
-            throw IllegalArgumentException("Ikke riktig epost")
+            throw IllegalArgumentException("Incorrect email address")
         }
     }
 
