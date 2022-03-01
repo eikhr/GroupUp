@@ -25,7 +25,8 @@ class GroupService(private val groupRepository: GroupRepository) : IGroupService
     kotlin-boot-repo/blob/master/src/main/kotlin/com/app/kotlin/user/service/UserServiceImpl.kt */
     override fun updateGroup(id: Long, group: Group): Group {
         if (group.contactEmail.contains("@", ignoreCase = false) &&
-            group.contactEmail.contains(".", ignoreCase = false)) {
+            group.contactEmail.contains(".", ignoreCase = false)
+            ) {
             group.id = id
             groupRepository.saveAndFlush(group)
             return group
