@@ -11,7 +11,7 @@ const GroupList = () => {
   useEffect(() => {
     API.getAllGroups()
       .then((groups) => setGroups(groups))
-      .catch((error: APIError) => setError(error));
+      .catch((error: APIError) => setError(error))
   }, [])
 
   if (error) {

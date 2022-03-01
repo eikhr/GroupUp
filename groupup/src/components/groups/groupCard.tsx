@@ -8,7 +8,6 @@ interface IProps {
 const GroupCard = (props: IProps) => {
   return (
     <Card data-testid={'group-'} sx={{ width: 345 }}>
-
       <CardContent>
         <Typography data-testid="title" gutterBottom variant="h5" component="div">
           {props.data.name}

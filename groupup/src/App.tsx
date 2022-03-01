@@ -47,8 +47,8 @@ const App = () => {
               <LoggedInPage>
                 <GroupList />
               </LoggedInPage>
-            }>
-          </Route>
+            }
+          />
         </Routes>
       </Box>
     </Stack>
