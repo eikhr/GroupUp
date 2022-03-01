@@ -35,7 +35,7 @@ const EventDetails = ({ event }: IProps) => {
           Med: <b>{arrangingGroup?.name}</b>
         </Typography>
         <Typography data-testid="groupsEmail" variant="body2" color="text.secondary">
-          {arrangingGroup?.email}
+          {arrangingGroup?.contactEmail}
         </Typography>
         <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
           {arrangingGroup?.interests?.map((interest) => (
