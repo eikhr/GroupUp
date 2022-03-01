@@ -27,7 +27,7 @@ import kotlin.random.Random
 @ContextConfiguration(classes = [GroupController::class, GroupRepository::class])
 @AutoConfigureMockMvc
 @WebMvcTest
-class GroupControllerTest : IController {
+class GroupControllerTest : WebControllerTestHelper() {
     private fun <Group> anyGroup(): Group = Mockito.any()
 
     @Autowired
@@ -37,15 +37,6 @@ class GroupControllerTest : IController {
     private lateinit var groupService: GroupService // Controller relies on service to run
 
     private val objectMapper: ObjectMapper = ObjectMapper()
-
-    override fun apiUrl(vararg segments: String): String {
-        val url = StringBuilder("/" + "api")
-        for (segment in segments) {
-            url.append("/").append(segment)
-        }
-        println(url)
-        return url.toString()
-    }
 
     private fun getGroups(groups: Collection<Group>): Collection<Group> {
         Mockito.doReturn(groups).`when`(groupService).getGroups()

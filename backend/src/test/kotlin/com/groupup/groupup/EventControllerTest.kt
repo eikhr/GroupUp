@@ -28,7 +28,7 @@ import kotlin.random.Random
 @ContextConfiguration(classes = [EventController::class, EventRepository::class])
 @AutoConfigureMockMvc
 @WebMvcTest
-class EventControllerTest {
+class EventControllerTest : WebControllerTestHelper() {
     private fun <Event> anyEvent(): Event = Mockito.any()
 
     @Autowired
@@ -38,15 +38,6 @@ class EventControllerTest {
     private lateinit var eventService: EventService // Controller relies on service to run
 
     private val objectMapper: ObjectMapper = ObjectMapper()
-
-    private fun apiUrl(vararg segments: String): String {
-        val url = StringBuilder("/" + "api")
-        for (segment in segments) {
-            url.append("/").append(segment)
-        }
-        println(url)
-        return url.toString()
-    }
 
     private fun getEvents(events: Collection<Event>): Collection<Event> {
         Mockito.doReturn(events).`when`(eventService).getEvents()
