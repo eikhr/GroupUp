@@ -15,7 +15,7 @@ const EventCard = (props: IProps) => {
 
   return (
     <Card data-testid={'event-' + props.data.id} sx={{ width: 345 }}>
-      <CardMedia component="img" height="140" src={props.data.image} alt="green iguana" />
+      <CardMedia component="img" height="140" src={props.data.image} alt="Event image" />
       <CardContent>
         {props.data.date && (
           <Typography

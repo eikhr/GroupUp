@@ -13,7 +13,7 @@ const EventDetails = ({ event }: IProps) => {
 
   return (
     <CenteredModalCard width={800}>
-      <CardMedia component="img" height="200" src={event.image} alt="green iguana" />
+      <CardMedia component="img" height="200" src={event.image} alt="Event image" />
       <CardContent>
         {event.date && (
           <Typography
