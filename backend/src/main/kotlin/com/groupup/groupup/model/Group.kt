@@ -37,15 +37,22 @@ open class Group {
     open var maxAge: Int = MAX_AGE
 
     @Column
+    open var contactEmail: String = ""
+
+    @Column
     @ElementCollection
     open var interests: MutableList<String> = mutableListOf()
 
     @ManyToMany(cascade = [CascadeType.ALL])
     @JoinTable(
-        name = "group_events",
+        name = "groups_matched_to_event",
         joinColumns = [JoinColumn(name = "group_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "event_id", referencedColumnName = "id")]
     )
-    @JsonIgnoreProperties("groups")
+    @JsonIgnoreProperties("groupsMatched")
     open var events: MutableList<Event> = mutableListOf()
+
+    @ManyToMany(mappedBy = "pendingGroupsRequests")
+    @JsonIgnoreProperties("pendingGroupsRequests")
+    open var pendingMatchRequests: MutableList<Event> = mutableListOf()
 }

@@ -1,17 +1,17 @@
 import { Card, Grid, Typography } from '@mui/material'
-import IGroup from '../../models/group'
+import Group from '../../models/group'
 import React, { useEffect, useState } from 'react'
 import GroupCard from './groupCard'
 import API, { APIError } from '../../API'
 
 const GroupList = () => {
-  const [groups, setGroups] = useState<IGroup[] | null>(null)
+  const [groups, setGroups] = useState<Group[] | null>(null)
   const [error, setError] = useState<APIError | null>(null)
 
   useEffect(() => {
     API.getAllGroups()
       .then((groups) => setGroups(groups))
-      .catch((error: APIError) => setError(error));
+      .catch((error: APIError) => setError(error))
   }, [])
 
   if (error) {
@@ -28,7 +28,7 @@ const GroupList = () => {
 
   return (
     <Grid container spacing={2} justifyContent="center">
-      {groups.map((group: IGroup) => (
+      {groups.map((group: Group) => (
         <Grid item key={group.id}>
           <GroupCard data={group} />
         </Grid>
