@@ -1,4 +1,4 @@
-import {Card, CardContent, Chip, Stack, Typography} from '@mui/material'
+import { Card, CardContent, Chip, Stack, Typography } from '@mui/material'
 import React from 'react'
 import IGroup from '../../models/group'
 
@@ -23,7 +23,6 @@ const GroupCard = (props: IProps) => {
             <Chip key={interest} label={interest} />
           ))}
         </Stack>
-
       </CardContent>
     </Card>
   )
