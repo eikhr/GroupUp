@@ -27,10 +27,10 @@ const defaultValues = {
 const Form = () => {
   const navigate = useNavigate()
   const [formValues, setFormValues] = useState(defaultValues)
-  const [dateValue, setValue] = React.useState<Date | null>(new Date())
-  const [arrangingGroup, setArrangingGroup] = React.useState<Group | undefined>()
-  const [allGroups, setAllGroups] = React.useState<Group[] | undefined>()
-  const [error, setError] = React.useState<string | null>()
+  const [dateValue, setValue] = useState<Date | null>(new Date())
+  const [arrangingGroup, setArrangingGroup] = useState<Group | undefined>()
+  const [allGroups, setAllGroups] = useState<Group[] | undefined>()
+  const [error, setError] = useState<string | null>()
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormValues({
