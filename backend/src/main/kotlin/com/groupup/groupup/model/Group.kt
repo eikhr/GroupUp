@@ -37,6 +37,9 @@ open class Group {
     open var maxAge: Int = MAX_AGE
 
     @Column
+    open var contactEmail: String = ""
+
+    @Column
     @ElementCollection
     open var interests: MutableList<String> = mutableListOf()
 

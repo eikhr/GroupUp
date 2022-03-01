@@ -24,9 +24,15 @@ class GroupService(private val groupRepository: GroupRepository) : IGroupService
     https://github.com/cijosunny/
     kotlin-boot-repo/blob/master/src/main/kotlin/com/app/kotlin/user/service/UserServiceImpl.kt */
     override fun updateGroup(id: Long, group: Group): Group {
-        group.id = id
-        groupRepository.saveAndFlush(group)
-        return group
+        if (group.contactEmail.contains("@", ignoreCase = false) &&
+            group.contactEmail.contains(".", ignoreCase = false)
+        ) {
+            group.id = id
+            groupRepository.saveAndFlush(group)
+            return group
+        } else {
+            throw IllegalArgumentException("Incorrect email address")
+        }
     }
 
     override fun removeGroup(id: Long): Boolean {
