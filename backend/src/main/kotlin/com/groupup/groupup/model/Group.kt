@@ -3,6 +3,7 @@ package com.groupup.groupup.model
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.CascadeType
 import javax.persistence.Column
+import javax.persistence.ElementCollection
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -21,16 +22,23 @@ open class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    open var id: Long? = -1
+    open var id: Long = 0
 
     @Column
-    open lateinit var description: String
+    open var name: String = ""
 
     @Column
-    var minAge: Int = MIN_AGE
+    open var description: String = ""
 
     @Column
-    var maxAge: Int = MAX_AGE
+    open var minAge: Int = MIN_AGE
+
+    @Column
+    open var maxAge: Int = MAX_AGE
+
+    @Column
+    @ElementCollection
+    open var interests: MutableList<String> = mutableListOf()
 
     @ManyToMany(cascade = [CascadeType.ALL])
     @JoinTable(

@@ -5,7 +5,7 @@ interface IEvent {
   title: string
   description: string
   time?: string
-  groups: group
+  groups?: group[]
 }
 
 export default IEvent

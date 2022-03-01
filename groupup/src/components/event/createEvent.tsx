@@ -1,11 +1,23 @@
 import { DateTimePicker, LocalizationProvider } from '@mui/lab'
-import { Button, Grid, Stack, TextField, Typography } from '@mui/material'
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import {
+  Button,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material'
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import IEvent from '../../models/event'
 import API, { APIError } from '../../API'
 import { useNavigate } from 'react-router-dom'
 import ErrorCard from '../layout/errorCard'
+import Group from '../../models/group'
 
 const defaultValues = {
   name: '',
@@ -15,8 +27,10 @@ const defaultValues = {
 const Form = () => {
   const navigate = useNavigate()
   const [formValues, setFormValues] = useState(defaultValues)
-  const [dateValue, setValue] = React.useState<Date | null>(new Date())
-  const [error, setError] = React.useState<string | null>()
+  const [dateValue, setValue] = useState<Date | null>(new Date())
+  const [arrangingGroup, setArrangingGroup] = useState<Group | undefined>()
+  const [allGroups, setAllGroups] = useState<Group[] | undefined>()
+  const [error, setError] = useState<string | null>()
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormValues({
@@ -25,6 +39,15 @@ const Form = () => {
     })
   }
 
+  const fetchGroups = async () => {
+    const groups = await API.getAllGroups()
+    setAllGroups(groups)
+  }
+
+  useEffect(() => {
+    fetchGroups()
+  }, [])
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
@@ -32,9 +55,33 @@ const Form = () => {
       title: formValues.name,
       description: formValues.description,
       time: dateValue?.toJSON(),
-      groups: { name: 'groupName', description: 'describing' },
-      // default group now
+      groups: [],
     }
+
+    if (arrangingGroup) {
+      await putGroupWithNewEvent(arrangingGroup, event)
+    } else {
+      await postEvent(event)
+    }
+  }
+
+  const putGroupWithNewEvent = async (group: Group, event: IEvent) => {
+    if (!group.events) {
+      group.events = [event]
+    } else {
+      group.events.push(event)
+    }
+
+    try {
+      await API.updateGroup(group)
+      navigate('/events')
+    } catch (err: unknown) {
+      const apiErr = err as APIError
+      setError(`${apiErr.message}, ${apiErr.status}`)
+    }
+  }
+
+  const postEvent = async (event: IEvent) => {
     try {
       await API.addEvent(event)
       navigate('/events')
@@ -42,6 +89,11 @@ const Form = () => {
       const apiErr = err as APIError
       setError(`${apiErr.message}, ${apiErr.status}`)
     }
+  }
+
+  const handleSelectChange = (e: SelectChangeEvent) => {
+    const { value } = e.target
+    setArrangingGroup(allGroups?.find((group) => '' + group.id === value))
   }
 
   return (
@@ -79,6 +131,22 @@ const Form = () => {
               mask="___/__/__ __:__ _M"
               renderInput={(params) => <TextField {...params} />}
             />
+            <FormControl>
+              <InputLabel id="group-label">Arrangerende gruppe</InputLabel>
+              <Select
+                labelId="group-label"
+                label="Arrangerende gruppe"
+                displayEmpty
+                value={'' + arrangingGroup?.id}
+                onChange={handleSelectChange}
+              >
+                {allGroups?.map((group) => (
+                  <MenuItem key={group.id} value={'' + group.id}>
+                    {group.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </LocalizationProvider>
           <Button variant="contained" color="primary" type="submit">
             Submit

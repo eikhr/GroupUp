@@ -9,7 +9,9 @@ interface IGroupService {
 
     fun getGroup(id: Long): Group
 
-    fun updateGroup(group: Group, id: Long): Group
+    fun updateGroup(id: Long, group: Group): Group
+
+    fun removeGroup(id: Long): Boolean
 
     fun getMinAge(id: Long): Int
 
