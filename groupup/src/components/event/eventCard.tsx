@@ -1,4 +1,4 @@
-import { Card, CardContent, Chip, Stack, Typography } from "@mui/material";
+import { Card, CardContent, CardMedia, Chip, Stack, Typography } from '@mui/material'
 import moment from 'moment'
 import 'moment/locale/nb'
 import React from 'react'
@@ -8,16 +8,32 @@ interface IProps {
   data: IEvent
 }
 const EventCard = (props: IProps) => {
-  moment.locale("nb")
+  moment.locale('nb')
 
   const groups = props.data.groups
   const arrangingGroup = groups ? groups[0] : undefined
+
+  const images = [
+    'group_example_hiking.jpeg',
+    'group_example_horses.jpeg',
+    'group_example_pokemon.jpeg',
+    'group_example_party.jpeg',
+  ]
+  const groupImage =
+    '/groupPhotoExamples/' + images[Math.floor(Math.random() * images.length)]
+
   return (
     <Card data-testid={'event-' + props.data.id} sx={{ width: 345 }}>
+      <CardMedia component="img" height="140" src={groupImage} alt="green iguana" />
       <CardContent>
         {props.data.date && (
-          <Typography data-testid="time" sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            {moment(props.data.date).calendar({sameElse: "dddd Do MMMM [kl.] HH:mm"})}
+          <Typography
+            data-testid="time"
+            sx={{ fontSize: 14 }}
+            color="text.secondary"
+            gutterBottom
+          >
+            {moment(props.data.date).calendar({ sameElse: 'dddd Do MMMM [kl.] HH:mm' })}
           </Typography>
         )}
         <Typography data-testid="title" gutterBottom variant="h5" component="div">
