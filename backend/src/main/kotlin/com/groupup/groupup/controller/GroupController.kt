@@ -38,4 +38,14 @@ class GroupController(private val groupService: GroupService) {
     fun updateGroup(@PathVariable id: Long, @RequestBody group: Group): Group? {
         return groupService.updateGroup(id, group)
     }
+
+    @PostMapping("/{groupId}/addevent/{eventId}")
+    fun addGroupById(@PathVariable eventId: Long, @PathVariable groupId: Long): Group? {
+        return groupService.addEventById(groupService.getGroup(groupId), eventId)
+    }
+
+    @DeleteMapping("/{groupId}/removeevent/{eventId}")
+    fun removeGroupById(@PathVariable eventId: Long, @PathVariable groupId: Long): Group? {
+        return groupService.removeEventById(groupService.getGroup(groupId), eventId)
+    }
 }

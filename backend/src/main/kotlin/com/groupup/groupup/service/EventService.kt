@@ -3,13 +3,18 @@ package com.groupup.groupup.service
 import com.groupup.groupup.model.Event
 import com.groupup.groupup.model.Group
 import com.groupup.groupup.repository.EventRepository
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Lazy
 import org.springframework.stereotype.Service
 
 @Service
 class EventService(
     private val eventRepository: EventRepository,
-    private val groupService: GroupService
 ) : IEventService {
+
+    @Autowired
+    @Lazy
+    private lateinit var groupService: GroupService
 
     override fun createEvent(event: Event): Event {
         return eventRepository.save(event)
@@ -24,6 +29,10 @@ class EventService(
     }
 
     override fun removeEvent(id: Long): Boolean {
+        val event = getEvent(id)
+        for (group in event.groups) {
+            removeGroupById(event, group.id)
+        }
         eventRepository.deleteById(id)
         return true
     }
