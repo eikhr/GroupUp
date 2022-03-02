@@ -42,13 +42,13 @@ const App = () => {
             }
           />
           <Route
-            path="/groupList"
+            path="/allGroups"
             element={
               <LoggedInPage>
                 <GroupList />
               </LoggedInPage>
             }
-          />
+          ></Route>
         </Routes>
       </Box>
     </Stack>

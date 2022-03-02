@@ -58,6 +58,7 @@ Maven Test:
 Yarn Build:
   image: node:17.4.0
   stage: Webapp build
+  needs: []
   script:
     - cd groupup
     - yarn install --frozen-lockfile --cache-folder .yarn
