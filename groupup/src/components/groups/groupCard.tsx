@@ -16,7 +16,7 @@ const GroupCard = (props: IProps) => {
           {props.data.description}
         </Typography>
         <Typography data-testid="mail" variant="body2" color="text.secondary">
-          {props.data.email}
+          {props.data.contactEmail}
         </Typography>
         <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
           {props.data.interests.map((interest) => (

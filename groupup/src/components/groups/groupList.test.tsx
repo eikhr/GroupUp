@@ -11,7 +11,7 @@ it('renders a list groups', async () => {
       name: 'myFirstGroup',
       description: 'Something',
       interests: ['horses'],
-      email: 'email@email.mail',
+      contactEmail: 'email@email.mail',
       events: { title: 'myEvent', description: 'desc', interests: [] },
     },
     {
@@ -19,7 +19,7 @@ it('renders a list groups', async () => {
       name: 'second',
       description: 'Something',
       interests: ['horses'],
-      email: 'email@email.mail',
+      contactEmail: 'email@email.mail',
       events: { title: 'sec', description: 'desc', interests: [] },
     },
     {
@@ -27,7 +27,7 @@ it('renders a list groups', async () => {
       name: 'third',
       description: 'Something',
       interests: ['horses'],
-      email: 'email@email.mail',
+      contactEmail: 'email@email.mail',
       events: { title: 'myEvent', description: 'desc', interests: [] },
     },
     {
@@ -35,7 +35,7 @@ it('renders a list groups', async () => {
       name: 'fourth',
       description: 'Something',
       interests: ['horses'],
-      email: 'email@email.mail',
+      contactEmail: 'email@email.mail',
       events: { title: 'myEvent', description: 'desc', interests: [] },
     },
     {
@@ -43,7 +43,7 @@ it('renders a list groups', async () => {
       name: 'fifth',
       description: 'Something',
       interests: ['horses'],
-      email: 'email@email.mail',
+      contactEmail: 'email@email.mail',
       events: { title: 'myEvent', description: 'desc', interests: [] },
     },
     {
@@ -51,7 +51,7 @@ it('renders a list groups', async () => {
       name: 'sixth',
       description: 'Something',
       interests: ['horses'],
-      email: 'email@email.mail',
+      contactEmail: 'email@email.mail',
       events: { title: 'myEvent', description: 'desc', interests: [] },
     },
     {
@@ -59,7 +59,7 @@ it('renders a list groups', async () => {
       name: 'seventh',
       description: 'Something',
       interests: ['horses'],
-      email: 'email@email.mail',
+      contactEmail: 'email@email.mail',
       events: { title: 'myEvent', description: 'desc', interests: [] },
     },
     {
@@ -67,7 +67,7 @@ it('renders a list groups', async () => {
       name: 'eighth',
       description: 'Something',
       interests: ['horses'],
-      email: 'email@email.mail',
+      contactEmail: 'email@email.mail',
       events: { title: 'myEvent', description: 'desc', interests: [] },
     },
     {
@@ -75,7 +75,7 @@ it('renders a list groups', async () => {
       name: 'ninth',
       description: 'Something',
       interests: ['horses'],
-      email: 'email@email.mail',
+      contactEmail: 'email@email.mail',
       events: { title: 'myEvent', description: 'desc', interests: [] },
     },
     {
@@ -83,7 +83,7 @@ it('renders a list groups', async () => {
       name: 'tenth',
       description: 'Something',
       interests: ['horses'],
-      email: 'email@email.mail',
+      contactEmail: 'email@email.mail',
       events: { title: 'myEvent', description: 'desc', interests: [] },
     },
   ]
