@@ -9,7 +9,7 @@ interface IProps {
 }
 
 const EventDetails = ({ event }: IProps) => {
-  const arrangingGroup = event.groups && event.groups[0]
+  const arrangingGroup = event.groupsMatched && event.groupsMatched[0]
 
   return (
     <CenteredModalCard width={800}>
@@ -38,6 +38,7 @@ const EventDetails = ({ event }: IProps) => {
         </Typography>
         <Typography data-testid="description" variant="body2" color="text">
           Med: <b>{arrangingGroup?.name}</b>
+          {console.log(event)}
         </Typography>
         <Typography data-testid="groupsEmail" variant="body2" color="text.secondary">
           {arrangingGroup?.contactEmail}
