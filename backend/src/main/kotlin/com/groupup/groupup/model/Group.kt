@@ -11,6 +11,7 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.JoinTable
 import javax.persistence.ManyToMany
+import javax.persistence.OneToMany
 import javax.persistence.Table
 
 private const val MIN_AGE = 18
@@ -55,7 +56,7 @@ open class Group {
     @JsonIgnoreProperties("groupsMatched")
     open var events: MutableList<Event> = mutableListOf()
 
-    @ManyToMany(mappedBy = "pendingGroupsRequests")
+    @OneToMany(mappedBy = "event")
     @JsonIgnoreProperties("pendingGroupsRequests")
-    open var pendingMatchRequests: MutableList<Event> = mutableListOf()
+    open var pendingMatchRequests: MutableList<MatchRequest> = mutableListOf()
 }
