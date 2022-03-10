@@ -1,12 +1,6 @@
 import { DateTimePicker, LocalizationProvider } from '@mui/lab'
-import {
-  Button,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material'
-import React, { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react'
+import { Button, Grid, Stack, TextField, Typography } from '@mui/material'
+import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import IEvent from '../../models/event'
 import API, { APIError } from '../../API'
@@ -47,7 +41,7 @@ const Form = () => {
     if (currentGroup) {
       await putGroupWithNewEvent(currentGroup, event)
     } else {
-      setError("You must choose a group to create event!")
+      setError('You must choose a group to create event!')
     }
   }
 
