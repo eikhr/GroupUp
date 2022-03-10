@@ -40,14 +40,7 @@ const App = () => {
                 </LoggedInPage>
               }
             />
-            <Route
-              path="/createGroup"
-              element={
-                <LoggedInPage>
-                  <CreateGroup />
-                </LoggedInPage>
-              }
-            />
+            <Route path="/createGroup" element={<CreateGroup />} />
             <Route
               path="/allGroups"
               element={
