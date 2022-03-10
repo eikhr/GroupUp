@@ -46,5 +46,5 @@ open class Event {
         inverseJoinColumns = [JoinColumn(name = "group_id", referencedColumnName = "id")]
     )
     @JsonIgnoreProperties("pendingMatchRequests")
-    open var pendingGroupsRequests: MutableList<Group> = mutableListOf()
+    open var pendingGroupRequests: MutableList<Group> = mutableListOf()
 }

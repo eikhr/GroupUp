@@ -52,7 +52,7 @@ open class Group {
     @JsonIgnoreProperties("groupsMatched")
     open var events: MutableList<Event> = mutableListOf()
 
-    @ManyToMany(mappedBy = "pendingGroupsRequests")
-    @JsonIgnoreProperties("pendingGroupsRequests")
+    @ManyToMany(mappedBy = "pendingGroupRequests")
+    @JsonIgnoreProperties("pendingGroupRequests")
     open var pendingMatchRequests: MutableList<Event> = mutableListOf()
 }
