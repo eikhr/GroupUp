@@ -18,6 +18,7 @@ const LoggedInPage = (props: PropsWithChildren<Record<never, never>>) => {
           <Tab label="Add Event" value="/addEvent" />
           <Tab label="Create Group" value="/createGroup" />
           <Tab label="All Groups" value="/allGroups" />
+          <Tab label="My Group" value="/myGroup" />
         </Tabs>
       </Paper>
       <Box sx={{ width: 1, maxWidth: 1100, margin: '20px auto' }}>{props.children}</Box>

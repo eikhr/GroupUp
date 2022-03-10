@@ -1,6 +1,7 @@
 import { Card, CardContent, Chip, Stack, Typography } from '@mui/material'
 import React from 'react'
 import IGroup from '../../models/group'
+import InterestsIcon from '@mui/icons-material/Interests';
 
 interface IProps {
   data: IGroup
@@ -20,7 +21,7 @@ const GroupCard = (props: IProps) => {
         </Typography>
         <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
           {props.data.interests.map((interest) => (
-            <Chip key={interest} label={interest} />
+            <Chip icon={<InterestsIcon />} key={interest} label={interest} />
           ))}
         </Stack>
       </CardContent>

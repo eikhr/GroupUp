@@ -9,6 +9,16 @@ import { Box, Stack } from '@mui/material'
 import CreateEvent from './components/event/createEvent'
 import CreateGroup from './components/groups/createGroup'
 import GroupList from './components/groups/groupList'
+import GroupDetails from "./components/groups/groupDetails";
+
+const groupConst = {
+  id: 1,
+  name: 'myFirstGroup',
+  description: 'Something',
+  interests: ['horses'],
+  contactEmail: 'email@email.mail',
+  events: { title: 'myEvent', description: 'desc', interests: [] },
+}
 
 const App = () => {
   return (
@@ -48,7 +58,15 @@ const App = () => {
                 <GroupList />
               </LoggedInPage>
             }
-          ></Route>
+          />
+          <Route
+            path="/myGroup"
+            element={
+              <LoggedInPage>
+                <GroupDetails />
+              </LoggedInPage>
+            }
+          />
         </Routes>
       </Box>
     </Stack>
