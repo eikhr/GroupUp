@@ -10,7 +10,7 @@ it('renders with event details', () => {
     title: 'testevent',
     id: 1,
     description: 'Whatever',
-    groups: [
+    groupsMatched: [
       {
         name: 'groupName',
         description: 'describing',
@@ -33,7 +33,7 @@ it('renders with time', () => {
     id: 1,
     description: 'Whatever',
     date: '1999-06-26T12:32:43Z',
-    groups: [
+    groupsMatched: [
       {
         name: 'groupName',
         description: 'describing',

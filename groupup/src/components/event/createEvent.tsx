@@ -55,7 +55,7 @@ const Form = () => {
       title: formValues.name,
       description: formValues.description,
       date: dateValue?.toJSON(),
-      groups: [],
+      groupsMatched: [],
     }
 
     if (arrangingGroup) {

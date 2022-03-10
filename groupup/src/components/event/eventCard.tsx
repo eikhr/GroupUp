@@ -10,7 +10,7 @@ interface IProps {
 const EventCard = (props: IProps) => {
   moment.locale('nb')
 
-  const groups = props.data.groups
+  const groups = props.data.groupsMatched
   const arrangingGroup = groups ? groups[0] : undefined
 
   return (
