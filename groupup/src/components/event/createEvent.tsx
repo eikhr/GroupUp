@@ -61,7 +61,7 @@ const Form = () => {
     if (arrangingGroup) {
       await putGroupWithNewEvent(arrangingGroup, event)
     } else {
-      await postEvent(event)
+      setError("You must choose a group to create event!")
     }
   }
 
@@ -81,6 +81,7 @@ const Form = () => {
     }
   }
 
+  /*
   const postEvent = async (event: IEvent) => {
     try {
       await API.addEvent(event)
@@ -90,6 +91,7 @@ const Form = () => {
       setError(`${apiErr.message}, ${apiErr.status}`)
     }
   }
+  */
 
   const handleSelectChange = (e: SelectChangeEvent) => {
     const { value } = e.target
