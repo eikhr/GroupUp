@@ -40,6 +40,9 @@ open class Group {
     open var contactEmail: String = ""
 
     @Column
+    open var gold: Boolean = false
+
+    @Column
     @ElementCollection
     open var interests: MutableList<String> = mutableListOf()
 
