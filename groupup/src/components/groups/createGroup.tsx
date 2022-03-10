@@ -13,12 +13,13 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import API, { APIError } from '../../API'
 import Group from '../../models/group'
 import ErrorCard from '../layout/errorCard'
 import { Favorite, FavoriteBorder } from '@mui/icons-material'
+import CurrentGroupContext from '../../context/CurrentGroupContext'
 
 const defaultValues = {
   name: '',
@@ -33,6 +34,8 @@ const Form = () => {
   const [formValues, setFormValues] = useState(defaultValues)
   const [interests, setInterest] = React.useState<string[]>([])
   const [error, setError] = React.useState<string | null>()
+  const { setCurrentGroup } = useContext(CurrentGroupContext)
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormValues({
@@ -58,7 +61,8 @@ const Form = () => {
     }
     try {
       await API.addGroup(group)
-      navigate('/addEvent')
+      setCurrentGroup(group)
+      navigate('/events')
     } catch (err: unknown) {
       const apiErr = err as APIError
       setError(`${apiErr.message}, ${apiErr.status}`)
