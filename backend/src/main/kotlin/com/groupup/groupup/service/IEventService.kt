@@ -4,12 +4,14 @@ import com.groupup.groupup.model.Event
 
 interface IEventService {
     /**
-     * Returns a list of all events
+     * @return list of all events
      */
     fun getEvents(): List<Event>
 
     /**
      * Returns the event with the given id
+     * @param id: id of group to get
+     * @return event object
      */
     fun getEvent(id: Long): Event
 
@@ -27,6 +29,11 @@ interface IEventService {
      */
     fun updateEvent(event: Event, id: Long): Event
 
+    /**
+     * removes an event
+     * @param id: event to remove
+     * @return true if successfully deleted
+     */
     fun removeEvent(id: Long): Boolean
 
     /**
