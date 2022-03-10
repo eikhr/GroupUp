@@ -1,10 +1,18 @@
 import { Box, Paper, Stack, Tab, Tabs } from '@mui/material'
-import React, { PropsWithChildren, SyntheticEvent } from 'react'
+import React, { PropsWithChildren, SyntheticEvent, useContext, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import CurrentGroupContext from '../../context/CurrentGroupContext'
 
 const LoggedInPage = (props: PropsWithChildren<Record<never, never>>) => {
+  const { currentGroup } = useContext(CurrentGroupContext)
   const location = useLocation()
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!currentGroup) {
+      navigate('/')
+    }
+  }, [currentGroup])
 
   const onTabChange = (evt: SyntheticEvent, newPath: string) => {
     navigate(newPath)
@@ -16,7 +24,6 @@ const LoggedInPage = (props: PropsWithChildren<Record<never, never>>) => {
         <Tabs value={location.pathname} onChange={onTabChange} orientation="vertical">
           <Tab label="Events" value="/events" />
           <Tab label="Add Event" value="/addEvent" />
-          <Tab label="Create Group" value="/createGroup" />
           <Tab label="All Groups" value="/allGroups" />
         </Tabs>
       </Paper>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './App.css'
 import EventList from './components/event/eventList'
 import { Routes, Route } from 'react-router-dom'
@@ -9,49 +9,51 @@ import { Box, Stack } from '@mui/material'
 import CreateEvent from './components/event/createEvent'
 import CreateGroup from './components/groups/createGroup'
 import GroupList from './components/groups/groupList'
+import Group from './models/group'
+import CurrentGroupContext from './context/CurrentGroupContext'
+import ChooseGroup from './components/groups/chooseGroup'
 
 const App = () => {
+  const [currentGroup, setCurrentGroup] = useState<Group | null>(null)
+  const context = { currentGroup, setCurrentGroup }
+
   return (
-    <Stack className="App" sx={{ height: 1 }} justifyContent="stretch">
-      <Header />
-      <Box sx={{ flexGrow: 1 }}>
-        <Routes>
-          <Route path="/" element={<CoverPage />} />
-          <Route
-            path="/events"
-            element={
-              <LoggedInPage>
-                <EventList />
-              </LoggedInPage>
-            }
-          />
-          <Route
-            path="/addEvent"
-            element={
-              <LoggedInPage>
-                <CreateEvent />
-              </LoggedInPage>
-            }
-          />
-          <Route
-            path="/createGroup"
-            element={
-              <LoggedInPage>
-                <CreateGroup />
-              </LoggedInPage>
-            }
-          />
-          <Route
-            path="/allGroups"
-            element={
-              <LoggedInPage>
-                <GroupList />
-              </LoggedInPage>
-            }
-          ></Route>
-        </Routes>
-      </Box>
-    </Stack>
+    <CurrentGroupContext.Provider value={context}>
+      <Stack className="App" sx={{ height: 1 }} justifyContent="stretch">
+        <Header />
+        <Box sx={{ flexGrow: 1 }}>
+          <Routes>
+            <Route path="/" element={<CoverPage />} />
+            <Route
+              path="/events"
+              element={
+                <LoggedInPage>
+                  <EventList />
+                </LoggedInPage>
+              }
+            />
+            <Route
+              path="/addEvent"
+              element={
+                <LoggedInPage>
+                  <CreateEvent />
+                </LoggedInPage>
+              }
+            />
+            <Route path="/createGroup" element={<CreateGroup />} />
+            <Route
+              path="/allGroups"
+              element={
+                <LoggedInPage>
+                  <GroupList />
+                </LoggedInPage>
+              }
+            />
+            <Route path="/chooseGroup" element={<ChooseGroup />} />
+          </Routes>
+        </Box>
+      </Stack>
+    </CurrentGroupContext.Provider>
   )
 }
 
