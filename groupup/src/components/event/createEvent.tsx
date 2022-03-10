@@ -1,23 +1,19 @@
 import { DateTimePicker, LocalizationProvider } from '@mui/lab'
 import {
   Button,
-  FormControl,
   Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
   Stack,
   TextField,
   Typography,
 } from '@mui/material'
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import IEvent from '../../models/event'
 import API, { APIError } from '../../API'
 import { useNavigate } from 'react-router-dom'
 import ErrorCard from '../layout/errorCard'
 import Group from '../../models/group'
+import CurrentGroupContext from '../../context/CurrentGroupContext'
 
 const defaultValues = {
   name: '',
@@ -25,11 +21,10 @@ const defaultValues = {
 }
 
 const Form = () => {
+  const { currentGroup } = useContext(CurrentGroupContext)
   const navigate = useNavigate()
   const [formValues, setFormValues] = useState(defaultValues)
   const [dateValue, setValue] = useState<Date | null>(new Date())
-  const [arrangingGroup, setArrangingGroup] = useState<Group | undefined>()
-  const [allGroups, setAllGroups] = useState<Group[] | undefined>()
   const [error, setError] = useState<string | null>()
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -38,15 +33,6 @@ const Form = () => {
       [name]: value,
     })
   }
-
-  const fetchGroups = async () => {
-    const groups = await API.getAllGroups()
-    setAllGroups(groups)
-  }
-
-  useEffect(() => {
-    fetchGroups()
-  }, [])
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -58,8 +44,8 @@ const Form = () => {
       groupsMatched: [],
     }
 
-    if (arrangingGroup) {
-      await putGroupWithNewEvent(arrangingGroup, event)
+    if (currentGroup) {
+      await putGroupWithNewEvent(currentGroup, event)
     } else {
       setError("You must choose a group to create event!")
     }
@@ -92,11 +78,6 @@ const Form = () => {
     }
   }
   */
-
-  const handleSelectChange = (e: SelectChangeEvent) => {
-    const { value } = e.target
-    setArrangingGroup(allGroups?.find((group) => '' + group.id === value))
-  }
 
   return (
     <form onSubmit={handleSubmit}>
@@ -133,23 +114,15 @@ const Form = () => {
               mask="___/__/__ __:__"
               renderInput={(params) => <TextField {...params} />}
             />
-            <FormControl>
-              <InputLabel id="group-label">Arrangerende gruppe</InputLabel>
-              <Select
-                labelId="group-label"
-                label="Arrangerende gruppe"
-                displayEmpty
-                value={'' + arrangingGroup?.id}
-                onChange={handleSelectChange}
-              >
-                {allGroups?.map((group) => (
-                  <MenuItem key={group.id} value={'' + group.id}>
-                    {group.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
           </LocalizationProvider>
+          <TextField
+            id="arranging-group"
+            name="group"
+            label="Arranging group"
+            type="text"
+            disabled
+            value={currentGroup?.name}
+          />
           <Button variant="contained" color="primary" type="submit">
             Submit
           </Button>
