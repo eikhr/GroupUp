@@ -6,10 +6,12 @@ import {
   CardMedia,
   Chip,
   Stack,
+  Tooltip,
   Typography,
 } from '@mui/material'
 import StarsIcon from '@mui/icons-material/Stars'
 import RecommendIcon from '@mui/icons-material/Recommend'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import moment from 'moment'
 import React, { useContext, useState } from 'react'
 import CenteredModalCard from '../layout/centeredModal'
@@ -110,6 +112,23 @@ const EventDetails = ({ event }: IProps) => {
             </>
           )}
         </Button>
+        <Tooltip
+          placement="top"
+          arrow
+          title={
+            <React.Fragment>
+              <Typography color="inherit">How does matching work?</Typography>
+              <Typography color="inherit" variant="body1" fontSize={12}>
+                When you like (or superlike) another group, they will be notified and get
+                the option to like you back. <br />
+                If they like you back you get a <i>match</i> and you will get their
+                contact info, so you can plan a meeting with your new friends!
+              </Typography>
+            </React.Fragment>
+          }
+        >
+          <HelpOutlineIcon sx={{ ml: 1 }} />
+        </Tooltip>
       </CardActions>
     </CenteredModalCard>
   )
