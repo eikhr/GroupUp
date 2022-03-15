@@ -61,7 +61,7 @@ interface IGroupService {
     fun addEventById(group: Group, id: Long): Group
 
     /**
-     * Remove an event to the group
+     * Remove an event from the group
      * @param group: group to remove event from
      * @param id: id of event to remove
      * @return group object
