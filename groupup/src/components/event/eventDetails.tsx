@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@mui/material'
 import StarsIcon from '@mui/icons-material/Stars'
+import RecommendIcon from '@mui/icons-material/Recommend'
 import moment from 'moment'
 import React, { useContext, useState } from 'react'
 import CenteredModalCard from '../layout/centeredModal'
@@ -22,6 +23,7 @@ interface IProps {
 const EventDetails = ({ event }: IProps) => {
   const { currentGroup } = useContext(CurrentGroupContext)
   const [superlikeLoading, setSuperlikeLoading] = useState(false)
+  const [likeLoading, setLikeLoading] = useState(false)
   const arrangingGroup = event.groupsMatched && event.groupsMatched[0]
 
   const superlike = async () => {
@@ -32,6 +34,16 @@ const EventDetails = ({ event }: IProps) => {
       console.error(e)
     }
     setSuperlikeLoading(false)
+  }
+
+  const like = async () => {
+    setLikeLoading(true)
+    try {
+      await (event.id && API.requestMatch(event.id, false))
+    } catch (e) {
+      console.error(e)
+    }
+    setLikeLoading(false)
   }
 
   return (
@@ -89,6 +101,15 @@ const EventDetails = ({ event }: IProps) => {
             )}
           </Button>
         )}
+        <Button variant="contained" onClick={() => like()}>
+          {likeLoading ? (
+            'Liking...'
+          ) : (
+            <>
+              <RecommendIcon sx={{ mr: 1 }} /> Like
+            </>
+          )}
+        </Button>
       </CardActions>
     </CenteredModalCard>
   )
