@@ -7,6 +7,7 @@ interface Group {
   interests: string[]
   contactEmail: string
   events?: IEvent[]
+  gold?: boolean
 }
 
 export default Group

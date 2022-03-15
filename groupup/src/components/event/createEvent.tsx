@@ -117,7 +117,11 @@ const Form = () => {
             disabled
             value={currentGroup?.name}
           />
-          <Button variant="contained" color="primary" type="submit">
+          <Button
+            variant="contained"
+            color={currentGroup?.gold ? 'inherit' : 'primary'}
+            type="submit"
+          >
             Submit
           </Button>
         </Stack>
