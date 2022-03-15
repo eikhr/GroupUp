@@ -1,7 +1,7 @@
 import { Card, CardContent, Chip, Stack, Typography } from '@mui/material'
 import React from 'react'
 import IGroup from '../../models/group'
-import InterestsIcon from '@mui/icons-material/Interests';
+import InterestsIcon from '@mui/icons-material/Interests'
 
 interface IProps {
   data: IGroup
