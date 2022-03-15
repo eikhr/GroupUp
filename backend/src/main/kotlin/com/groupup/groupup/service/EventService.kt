@@ -63,11 +63,15 @@ class EventService(
         return event.id?.let { updateEvent(event, it) }
     }
 
-    fun requestMatch(event: Event, groupId: Long, isSuperlike: Boolean) {
+    fun requestMatch(event: Event, groupId: Long, isSuperlike: Boolean): Event? {
         val matchRequest = MatchRequest()
         matchRequest.event = event
         matchRequest.group = groupService.getGroup(groupId)
         matchRequest.isSuperlike = isSuperlike
+        matchRequest.id.eventId = event.id!!
+        matchRequest.id.groupId = groupId
         event.pendingGroupsRequests.add(matchRequest)
+
+        return event
     }
 }

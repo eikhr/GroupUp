@@ -44,7 +44,7 @@ open class Event {
     open var groupsMatched: MutableList<Group> = mutableListOf()
 
     @OneToMany(mappedBy = "group")
-    @JsonIgnoreProperties("pendingMatchRequests")
+    @JsonIgnoreProperties("pendingGroupsRequests")
     open var pendingGroupsRequests: MutableList<MatchRequest> = mutableListOf()
 }
 
@@ -64,7 +64,7 @@ open class MatchRequestKey : Serializable {
 @Entity
 open class MatchRequest {
     @EmbeddedId
-    open lateinit var id: MatchRequestKey
+    open var id: MatchRequestKey = MatchRequestKey()
 
     @ManyToOne
     @MapsId("eventId")
