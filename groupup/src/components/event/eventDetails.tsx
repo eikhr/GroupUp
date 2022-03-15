@@ -1,15 +1,38 @@
 import IEvent from '../../models/event'
-import { CardContent, CardMedia, Chip, Stack, Typography } from '@mui/material'
+import {
+  Button,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Chip,
+  Stack,
+  Typography,
+} from '@mui/material'
+import StarsIcon from '@mui/icons-material/Stars'
 import moment from 'moment'
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import CenteredModalCard from '../layout/centeredModal'
+import API from '../../API'
+import CurrentGroupContext from '../../context/CurrentGroupContext'
 
 interface IProps {
   event: IEvent
 }
 
 const EventDetails = ({ event }: IProps) => {
+  const { currentGroup } = useContext(CurrentGroupContext)
+  const [superlikeLoading, setSuperlikeLoading] = useState(false)
   const arrangingGroup = event.groupsMatched && event.groupsMatched[0]
+
+  const superlike = async () => {
+    setSuperlikeLoading(true)
+    try {
+      await (event.id && API.requestMatch(event.id, true))
+    } catch (e) {
+      console.error(e)
+    }
+    setSuperlikeLoading(false)
+  }
 
   return (
     <CenteredModalCard width={800}>
@@ -49,6 +72,24 @@ const EventDetails = ({ event }: IProps) => {
           ))}
         </Stack>
       </CardContent>
+      <CardActions>
+        {currentGroup?.gold && (
+          <Button
+            variant="contained"
+            color="warning"
+            sx={{ background: '#DAA520' }}
+            onClick={() => superlike()}
+          >
+            {superlikeLoading ? (
+              'Liking...'
+            ) : (
+              <>
+                <StarsIcon sx={{ mr: 1 }} /> Superlike
+              </>
+            )}
+          </Button>
+        )}
+      </CardActions>
     </CenteredModalCard>
   )
 }

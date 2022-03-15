@@ -75,6 +75,17 @@ const API = {
 
     return await doRequest(url, options)
   },
+  requestMatch: async (eventId: number, superlike: boolean): Promise<void> => {
+    const url = baseUrl + `/events/${eventId}/requestmatch`
+
+    const options: RequestInit = {
+      method: 'PUT',
+      body: JSON.stringify(superlike),
+      headers: { 'content-type': 'application/json' },
+    }
+
+    return await doRequest(url, options)
+  },
 }
 
 export default API
