@@ -12,6 +12,7 @@ import GroupList from './components/groups/groupList'
 import Group from './models/group'
 import CurrentGroupContext from './context/CurrentGroupContext'
 import ChooseGroup from './components/groups/chooseGroup'
+import GroupDetails from './components/groups/groupDetails'
 
 const App = () => {
   const [currentGroup, setCurrentGroup] = useState<Group | null>(null)
@@ -50,6 +51,14 @@ const App = () => {
               }
             />
             <Route path="/chooseGroup" element={<ChooseGroup />} />
+            <Route
+              path="/myGroup"
+              element={
+                <LoggedInPage>
+                  <GroupDetails />
+                </LoggedInPage>
+              }
+            />
           </Routes>
         </Box>
       </Stack>
