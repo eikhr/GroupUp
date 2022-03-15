@@ -14,15 +14,6 @@ import CurrentGroupContext from './context/CurrentGroupContext'
 import ChooseGroup from './components/groups/chooseGroup'
 import GroupDetails from './components/groups/groupDetails'
 
-const groupConst = {
-  id: 1,
-  name: 'myFirstGroup',
-  description: 'Something',
-  interests: ['horses'],
-  contactEmail: 'email@email.mail',
-  events: { title: 'myEvent', description: 'desc', interests: [] },
-}
-
 const App = () => {
   const [currentGroup, setCurrentGroup] = useState<Group | null>(null)
   const context = { currentGroup, setCurrentGroup }

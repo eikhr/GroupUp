@@ -43,7 +43,7 @@ const EventDetails = ({ event }: IProps) => {
         <Typography data-testid="groupsEmail" variant="body2" color="text.secondary">
           {arrangingGroup?.contactEmail}
         </Typography>
-        <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
+        <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
           {arrangingGroup?.interests?.map((interest) => (
             <Chip key={interest} label={interest} />
           ))}

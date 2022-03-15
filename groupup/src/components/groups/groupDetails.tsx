@@ -1,34 +1,16 @@
-import Group from '../../models/group'
 import { Card, CardContent, CardMedia, Chip, Stack, Typography } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useContext } from 'react'
 import EventIcon from '@mui/icons-material/Event'
-import API, { APIError } from '../../API'
 import InterestsIcon from '@mui/icons-material/Interests'
-
-interface IProps {
-  group: Group
-}
+import CurrentGroupContext from '../../context/CurrentGroupContext'
 
 const GroupDetails = () => {
-  const [groups, setGroups] = useState<Group[] | null>(null)
-  const [error, setError] = useState<APIError | null>(null)
+  const { currentGroup } = useContext(CurrentGroupContext)
 
-  useEffect(() => {
-    API.getAllGroups()
-      .then((groups) => setGroups(groups))
-      .catch((error: APIError) => setError(error))
-  }, [])
-
-  if (error) {
+  if (!currentGroup) {
     return (
-      <Card data-testid="error" sx={{ backgroundColor: 'error.light' }}>
-        <Typography variant="h5">Error</Typography>
-      </Card>
+      <Typography data-testid="loading-text">Choose your current group...</Typography>
     )
-  }
-
-  if (!groups) {
-    return <Typography data-testid="loading-text">Loading...</Typography>
   }
 
   return (
@@ -36,12 +18,12 @@ const GroupDetails = () => {
       <CardMedia
         component="img"
         height="200"
-        src={'../../../public/groupPhotoExamples/group_example_party.jpeg'}
-        alt="Event image"
+        src={'/groupMy.jpg'}
+        alt="Portrait of ASTP crews - restoration.jpg"
       />
       <CardContent>
         <Typography data-testid="title" gutterBottom variant="h5" component="div">
-          {groups[4].name}
+          {currentGroup.name}
         </Typography>
         <Typography
           data-testid="description"
@@ -49,7 +31,7 @@ const GroupDetails = () => {
           variant="body2"
           color="text.secondary"
         >
-          {groups[4].description}
+          {currentGroup.description}
         </Typography>
 
         <Typography
@@ -58,22 +40,21 @@ const GroupDetails = () => {
           color="text.secondary"
           gutterBottom
         >
-          {groups[4].contactEmail}
+          {currentGroup.contactEmail}
         </Typography>
         <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
-          {groups[4].interests?.map((interest) => (
+          {currentGroup.interests?.map((interest) => (
             <Chip icon={<InterestsIcon />} key={interest} label={interest} />
           ))}
         </Stack>
-        <Typography data-testid="description" variant="body2" color="text" gutterBottom>
-          Aktiviteter:{' '}
-          <b>
-            {groups[4].events?.map((event) => (
-              <Chip icon={<EventIcon />} key={event.title} label={event.title} />
-            ))}
-          </b>
-          {console.log(groups[1])}
-        </Typography>
+        <Stack data-testid="description" spacing={1} direction={'row'} sx={{ mt: 2 }}>
+          <Typography variant="body2" color="text">
+            Aktiviteter:{' '}
+          </Typography>
+          {currentGroup.events?.map((event) => (
+            <Chip icon={<EventIcon />} key={event.title} label={event.title} />
+          ))}
+        </Stack>
       </CardContent>
     </Card>
   )
