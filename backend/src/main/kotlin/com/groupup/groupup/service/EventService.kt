@@ -38,7 +38,7 @@ class EventService(
         return true
     }
 
-    /* Updates group. Inspired from:
+    /* Updates event. Inspired from:
     https://github.com/cijosunny/kotlin-boot-repo/
     blob/master/src/main/kotlin/com/app/kotlin/user/service/UserServiceImpl.kt */
     override fun updateEvent(event: Event, id: Long): Event {
@@ -71,7 +71,7 @@ class EventService(
         matchRequest.id.eventId = event.id!!
         matchRequest.id.groupId = groupId
         event.pendingGroupsRequests.add(matchRequest)
-
+        // eventRepository.saveAndFlush(event)
         return event
     }
 }
