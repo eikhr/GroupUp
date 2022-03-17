@@ -6,9 +6,12 @@ import {
   CardMedia,
   Chip,
   Stack,
+  Tooltip,
   Typography,
 } from '@mui/material'
 import StarsIcon from '@mui/icons-material/Stars'
+import RecommendIcon from '@mui/icons-material/Recommend'
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline'
 import moment from 'moment'
 import React, { useContext, useState } from 'react'
 import CenteredModalCard from '../layout/centeredModal'
@@ -22,6 +25,7 @@ interface IProps {
 const EventDetails = ({ event }: IProps) => {
   const { currentGroup } = useContext(CurrentGroupContext)
   const [superlikeLoading, setSuperlikeLoading] = useState(false)
+  const [likeLoading, setLikeLoading] = useState(false)
   const arrangingGroup = event.groupsMatched && event.groupsMatched[0]
 
   const superlike = async () => {
@@ -32,6 +36,16 @@ const EventDetails = ({ event }: IProps) => {
       console.error(e)
     }
     setSuperlikeLoading(false)
+  }
+
+  const like = async () => {
+    setLikeLoading(true)
+    try {
+      await (event.id && API.requestMatch(event.id, false))
+    } catch (e) {
+      console.error(e)
+    }
+    setLikeLoading(false)
   }
 
   return (
@@ -89,6 +103,32 @@ const EventDetails = ({ event }: IProps) => {
             )}
           </Button>
         )}
+        <Button variant="contained" onClick={() => like()}>
+          {likeLoading ? (
+            'Liking...'
+          ) : (
+            <>
+              <RecommendIcon sx={{ mr: 1 }} /> Like
+            </>
+          )}
+        </Button>
+        <Tooltip
+          placement="top"
+          arrow
+          title={
+            <React.Fragment>
+              <Typography color="inherit">How does matching work?</Typography>
+              <Typography color="inherit" variant="body1" fontSize={12}>
+                When you like (or superlike) another group, they will be notified and get
+                the option to like you back. <br />
+                If they like you back you get a <i>match</i> and you will get their
+                contact info, so you can plan a meeting with your new friends!
+              </Typography>
+            </React.Fragment>
+          }
+        >
+          <HelpOutlineIcon sx={{ ml: 1 }} />
+        </Tooltip>
       </CardActions>
     </CenteredModalCard>
   )
