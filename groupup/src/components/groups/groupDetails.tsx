@@ -3,11 +3,19 @@ import React, { useContext } from 'react'
 import EventIcon from '@mui/icons-material/Event'
 import InterestsIcon from '@mui/icons-material/Interests'
 import CurrentGroupContext from '../../context/CurrentGroupContext'
+import Group from '../../models/group'
 
-const GroupDetails = () => {
+interface IProps {
+  group?: Group
+}
+
+const GroupDetails = ({ group }: IProps) => {
   const { currentGroup } = useContext(CurrentGroupContext)
+  if (!group) {
+    group = currentGroup ?? undefined
+  }
 
-  if (!currentGroup) {
+  if (!group) {
     return (
       <Typography data-testid="loading-text">Choose your current group...</Typography>
     )
@@ -23,7 +31,7 @@ const GroupDetails = () => {
       />
       <CardContent>
         <Typography data-testid="title" gutterBottom variant="h5" component="div">
-          {currentGroup.name}
+          {group.name}
         </Typography>
         <Typography
           data-testid="description"
@@ -31,7 +39,7 @@ const GroupDetails = () => {
           variant="body2"
           color="text.secondary"
         >
-          {currentGroup.description}
+          {group.description}
         </Typography>
 
         <Typography
@@ -40,10 +48,10 @@ const GroupDetails = () => {
           color="text.secondary"
           gutterBottom
         >
-          {currentGroup.contactEmail}
+          {group.contactEmail}
         </Typography>
         <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
-          {currentGroup.interests?.map((interest) => (
+          {group.interests?.map((interest) => (
             <Chip icon={<InterestsIcon />} key={interest} label={interest} />
           ))}
         </Stack>
@@ -51,7 +59,7 @@ const GroupDetails = () => {
           <Typography variant="body2" color="text">
             Aktiviteter:{' '}
           </Typography>
-          {currentGroup.events?.map((event) => (
+          {group.events?.map((event) => (
             <Chip icon={<EventIcon />} key={event.title} label={event.title} />
           ))}
         </Stack>

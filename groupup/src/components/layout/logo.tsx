@@ -11,7 +11,7 @@ const Logo = (props: IProps) => {
   return (
     <Stack direction="row" alignItems="center" sx={props.sx}>
       <GroupsRoundedIcon sx={{ p: 1, height: 1 }} />
-      <Typography variant="h5">{props.gold ? 'GroupUp Gold' : 'GroupUp'}</Typography>
+      <Typography variant="h5">{props.gold ? 'GroupUp Gull' : 'GroupUp'}</Typography>
     </Stack>
   )
 }

@@ -25,7 +25,7 @@ const EventList = () => {
   }
 
   if (!events) {
-    return <Typography data-testid="loading-text">Loading...</Typography>
+    return <Typography data-testid="loading-text">Laster inn...</Typography>
   }
 
   return (
