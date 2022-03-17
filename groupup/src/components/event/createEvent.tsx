@@ -107,6 +107,7 @@ const Form = () => {
               onChange={(newDate) => setValue(newDate)}
               onError={console.log}
               inputFormat="yyyy/MM/dd HH:mm"
+              ampm={false}
               mask="___/__/__ __:__"
               renderInput={(params) => <TextField {...params} />}
             />

@@ -39,8 +39,9 @@ open class Group {
     @Column
     open var contactEmail: String = "testmail@autogen.com"
         set(value) {
-            if (value.contains("@", ignoreCase = false) && value.contains(".", ignoreCase = false))
-                field = value
+            if (!value.contains("@", ignoreCase = false) || !value.contains(".", ignoreCase = false))
+                throw IllegalStateException("Email format is wrong, missing '@' or '.'")
+            field = value
         }
 
     @Column

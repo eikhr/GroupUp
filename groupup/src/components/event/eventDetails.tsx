@@ -37,7 +37,7 @@ const EventDetails = ({ event, onNext, onPrevious }: IProps) => {
   const superlike = async () => {
     setSuperlikeLoading(true)
     try {
-      await (event.id && API.requestMatch(event.id, true))
+      await (event.id && API.requestMatch(event.id, currentGroup?.id ?? -1, true))
     } catch (e) {
       console.error(e)
     }
@@ -47,7 +47,7 @@ const EventDetails = ({ event, onNext, onPrevious }: IProps) => {
   const like = async () => {
     setLikeLoading(true)
     try {
-      await (event.id && API.requestMatch(event.id, false))
+      await (event.id && API.requestMatch(event.id, currentGroup?.id ?? -1, false))
     } catch (e) {
       console.error(e)
     }
