@@ -1,20 +1,10 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Chip,
-  Modal,
-  Stack,
-  Typography,
-} from '@mui/material'
+import { Button, CardContent, Modal, Stack, Typography } from '@mui/material'
 import React, { useContext, useState } from 'react'
-import EventIcon from '@mui/icons-material/Event'
-import InterestsIcon from '@mui/icons-material/Interests'
 import CurrentGroupContext from '../../context/CurrentGroupContext'
 import CenteredModalCard from '../layout/centeredModal'
 import API, { APIError } from '../../API'
 import ErrorCard from '../layout/errorCard'
+import GroupDetails from './groupDetails'
 
 const MyGroup = () => {
   const { currentGroup } = useContext(CurrentGroupContext)
@@ -80,49 +70,7 @@ const MyGroup = () => {
             Kjøp GroupUp GULL!
           </Button>
         )}
-        <Card>
-          <CardMedia
-            component="img"
-            height="200"
-            src={'/groupMy.jpg'}
-            alt="Portrait of ASTP crews - restoration.jpg"
-          />
-          <CardContent>
-            <Typography data-testid="title" gutterBottom variant="h5" component="div">
-              {currentGroup.name}
-            </Typography>
-            <Typography
-              data-testid="description"
-              gutterBottom
-              variant="body2"
-              color="text.secondary"
-            >
-              {currentGroup.description}
-            </Typography>
-
-            <Typography
-              data-testid="groupsEmail"
-              variant="body2"
-              color="text.secondary"
-              gutterBottom
-            >
-              {currentGroup.contactEmail}
-            </Typography>
-            <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
-              {currentGroup.interests?.map((interest) => (
-                <Chip icon={<InterestsIcon />} key={interest} label={interest} />
-              ))}
-            </Stack>
-            <Stack data-testid="description" spacing={1} direction={'row'} sx={{ mt: 2 }}>
-              <Typography variant="body2" color="text">
-                Aktiviteter:{' '}
-              </Typography>
-              {currentGroup.events?.map((event) => (
-                <Chip icon={<EventIcon />} key={event.title} label={event.title} />
-              ))}
-            </Stack>
-          </CardContent>
-        </Card>
+        <GroupDetails group={currentGroup} />
       </Stack>
     </div>
   )
