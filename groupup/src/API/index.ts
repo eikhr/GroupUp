@@ -53,7 +53,7 @@ const API = {
 
     return await doRequest(url, options)
   },
-  addGroup: async (group: Group): Promise<Group> => {
+  addGroup: async (group: Group): Promise<number> => {
     const url = baseUrl + '/groups/add'
 
     const options: RequestInit = {
