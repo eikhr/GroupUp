@@ -37,7 +37,7 @@ const ChooseGroup = () => {
   return (
     <>
       <Typography variant="h2" sx={{ textAlign: 'center' }} gutterBottom>
-        Choose your group
+        Velg gruppe
       </Typography>
       <Stack spacing={2} alignItems="center">
         {groups.map((group: Group) => (

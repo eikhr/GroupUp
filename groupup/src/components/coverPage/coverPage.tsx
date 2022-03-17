@@ -14,10 +14,10 @@ const CoverPage = () => {
           </Typography>
           <Stack direction="row" spacing={1}>
             <Button component="a" href="/chooseGroup" variant="outlined">
-              Choose group
+              Velg gruppe
             </Button>
             <Button component="a" href="/createGroup" variant="outlined">
-              Create group
+              Lag grupppe
             </Button>
           </Stack>
         </Stack>

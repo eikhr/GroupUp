@@ -38,7 +38,7 @@ const Header = () => {
                   color="inherit"
                   onClick={() => setCurrentGroup(null)}
                 >
-                  Logout
+                  Logg ut
                 </Button>
               </>
             ) : (
@@ -48,7 +48,7 @@ const Header = () => {
                 color="inherit"
                 variant="outlined"
               >
-                Choose group
+                Din gruppe
               </Button>
             )}
           </Toolbar>

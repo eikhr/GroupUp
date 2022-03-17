@@ -77,13 +77,14 @@ const Form = () => {
     <form onSubmit={handleSubmit}>
       <Grid container alignItems="center" justifyContent="center">
         <Stack spacing={3}>
-          <Typography variant="h2"> Create your event </Typography>
+          <Typography variant="h2"> Opprett aktivitet </Typography>
           {error && <ErrorCard message={error + ''} />}
           <TextField
             id="name-input"
             name="name"
-            label="Event name"
+            label="Navn på aktivitet"
             type="text"
+            required
             value={formValues.name}
             onChange={handleInputChange}
           />
@@ -92,15 +93,16 @@ const Form = () => {
             rows={4}
             id="description-input"
             name="description"
-            label="Describe your event"
+            label="Beskriv aktiviteten"
             type="text"
+            required
             value={formValues.description}
             onChange={handleInputChange}
           />
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker
               disablePast
-              label="Choose your event date"
+              label="Velg dato for aktiviteten"
               value={dateValue}
               onChange={(newDate) => setValue(newDate)}
               onError={console.log}
@@ -112,8 +114,9 @@ const Form = () => {
           <TextField
             id="arranging-group"
             name="group"
-            label="Arranging group"
+            label="Arrangerende gruppe"
             type="text"
+            required
             disabled
             value={currentGroup?.name}
           />
@@ -122,7 +125,7 @@ const Form = () => {
             color={currentGroup?.gold ? 'inherit' : 'primary'}
             type="submit"
           >
-            Submit
+            Opprett aktivitet
           </Button>
         </Stack>
       </Grid>

@@ -29,7 +29,15 @@ const defaultValues = {
   interests: [''],
   email: '',
 }
-const interestList = ['hiking', 'parties', 'horses', 'pokemon go']
+const interestList = [
+  'tur',
+  'fest',
+  'hest',
+  'pokemon go',
+  'buldring',
+  'matlaging',
+  'strikking',
+]
 
 const Form = () => {
   const navigate = useNavigate()
@@ -77,13 +85,14 @@ const Form = () => {
     <form onSubmit={handleSubmit}>
       <Grid container alignItems="center" justifyContent="center">
         <Stack spacing={3}>
-          <Typography variant="h2"> Create your group </Typography>
+          <Typography variant="h2"> Lag din gruppe </Typography>
           {error && <ErrorCard message={error + ''} />}
           <TextField
             id="name-input"
             name="name"
-            label="Group name"
+            label="Gruppenavn"
             type="text"
+            required
             value={formValues.name}
             onChange={handleInputChange}
           />
@@ -92,24 +101,27 @@ const Form = () => {
             rows={4}
             id="description-input"
             name="description"
-            label="Describe your group"
+            label="Beskriv gruppen din"
             type="text"
+            required
             value={formValues.description}
             onChange={handleInputChange}
           />
           <TextField
             id="email-input"
             name="email"
-            label="Your email"
+            label="E-post"
             type="text"
+            required
             value={formValues.email}
             onChange={handleInputChange}
           />
           <FormControl>
-            <InputLabel id="interest-label">Interests</InputLabel>
+            <InputLabel id="interest-label">Interesser</InputLabel>
             <Select
+              required
               labelId="interest-label"
-              label="Pick interests"
+              label="Velg interesser"
               name="interests"
               multiple
               displayEmpty
@@ -131,7 +143,7 @@ const Form = () => {
             </Select>
           </FormControl>
           <Button variant="contained" color="primary" type="submit">
-            Submit
+            Lag gruppe
           </Button>
         </Stack>
       </Grid>
