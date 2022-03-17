@@ -2,7 +2,6 @@ package com.groupup.groupup.service
 
 import com.groupup.groupup.model.Event
 import com.groupup.groupup.model.Group
-import com.groupup.groupup.model.MatchRequest
 import com.groupup.groupup.repository.EventRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Lazy
@@ -64,14 +63,15 @@ class EventService(
     }
 
     fun requestMatch(event: Event, groupId: Long, isSuperlike: Boolean): Event? {
-        val matchRequest = MatchRequest()
-        matchRequest.event = event
-        matchRequest.group = groupService.getGroup(groupId)
-        matchRequest.isSuperlike = isSuperlike
-        matchRequest.id.eventId = event.id!!
-        matchRequest.id.groupId = groupId
-        event.pendingGroupsRequests.add(matchRequest)
-        // eventRepository.saveAndFlush(event)
-        return event
+        val group: Group = groupService.getGroup(groupId)
+        if (isSuperlike) {
+            event.superlikeGroupsRequests.add(group)
+            group.superlikeMatchRequests.add(event)
+        } else {
+            event.pendingGroupsRequests.add(group)
+            group.pendingMatchRequests.add(event)
+        }
+        groupService.updateGroup(groupId, group)
+        return event.id?.let { updateEvent(event, it) }
     }
 }
