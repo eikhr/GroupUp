@@ -1,10 +1,11 @@
 import IEvent from '../../models/event'
 import {
+  Box,
   Button,
   CardActions,
   CardContent,
   CardMedia,
-  Chip,
+  Divider,
   Stack,
   Tooltip,
   Typography,
@@ -17,6 +18,7 @@ import React, { useContext, useState } from 'react'
 import CenteredModalCard from '../layout/centeredModal'
 import API from '../../API'
 import CurrentGroupContext from '../../context/CurrentGroupContext'
+import { GroupInfo } from '../groups/groupCard'
 
 interface IProps {
   event: IEvent
@@ -52,38 +54,37 @@ const EventDetails = ({ event }: IProps) => {
     <CenteredModalCard width={800}>
       <CardMedia component="img" height="200" src={event.image} alt="Event image" />
       <CardContent>
-        {event.date && (
-          <Typography
-            data-testid="time"
-            sx={{ fontSize: 14 }}
-            color="text.secondary"
-            gutterBottom
-          >
-            {moment(event.date).calendar({ sameElse: 'dddd Do MMMM [kl.] HH:mm' })}
-          </Typography>
-        )}
-        <Typography data-testid="title" gutterBottom variant="h5" component="div">
-          {event.title}
-        </Typography>
-        <Typography
-          data-testid="description"
-          gutterBottom
-          variant="body2"
-          color="text.secondary"
-        >
-          {event.description}
-        </Typography>
-        <Typography data-testid="description" variant="body2" color="text">
-          Med: <b>{arrangingGroup?.name}</b>
-          {console.log(event)}
-        </Typography>
-        <Typography data-testid="groupsEmail" variant="body2" color="text.secondary">
-          {arrangingGroup?.contactEmail}
-        </Typography>
-        <Stack direction="row" spacing={2} sx={{ mt: 2 }}>
-          {arrangingGroup?.interests?.map((interest) => (
-            <Chip key={interest} label={interest} />
-          ))}
+        <Stack direction="row" justifyContent="space-between">
+          <Box sx={{ width: 1, flex: 1 }}>
+            <Divider variant="middle">Aktiviteten</Divider>
+            <Typography data-testid="title" gutterBottom variant="h5" component="div">
+              {event.title}
+            </Typography>
+            {event.date && (
+              <Typography
+                variant="body2"
+                data-testid="time"
+                sx={{ fontSize: 12 }}
+                color="text.secondary"
+                gutterBottom
+              >
+                {moment(event.date).calendar({ sameElse: 'dddd Do MMMM [kl.] HH:mm' })}
+              </Typography>
+            )}
+            <Typography
+              data-testid="description"
+              gutterBottom
+              variant="body2"
+              color="text.secondary"
+            >
+              {event.description}
+            </Typography>
+          </Box>
+          <Divider orientation="vertical" flexItem sx={{ m: 2, mb: 0 }} />
+          <Box sx={{ width: 1, flex: 1 }}>
+            <Divider variant="middle">Gruppen</Divider>
+            {arrangingGroup && <GroupInfo data={arrangingGroup} />}
+          </Box>
         </Stack>
       </CardContent>
       <CardActions>
@@ -95,10 +96,10 @@ const EventDetails = ({ event }: IProps) => {
             onClick={() => superlike()}
           >
             {superlikeLoading ? (
-              'Liking...'
+              'Liker...'
             ) : (
               <>
-                <StarsIcon sx={{ mr: 1 }} /> Superlike
+                <StarsIcon sx={{ mr: 1 }} /> Superlik
               </>
             )}
           </Button>

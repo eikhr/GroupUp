@@ -24,6 +24,8 @@ import CurrentGroupContext from '../../context/CurrentGroupContext'
 const defaultValues = {
   name: '',
   description: '',
+  minAge: 18,
+  maxAge: 99,
   interests: [''],
   email: '',
 }
@@ -56,6 +58,8 @@ const Form = () => {
     const group: Group = {
       name: formValues.name,
       description: formValues.description,
+      minAge: 18,
+      maxAge: 99,
       interests: interests,
       contactEmail: formValues.email,
     }
