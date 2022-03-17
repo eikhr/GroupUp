@@ -37,7 +37,11 @@ open class Group {
     open var maxAge: Int = MAX_AGE
 
     @Column
-    open var contactEmail: String = ""
+    open var contactEmail: String = "testmail@autogen.com"
+        set(value) {
+            if (value.contains("@", ignoreCase = false) && value.contains(".", ignoreCase = false))
+                field = value
+        }
 
     @Column
     open var gold: Boolean = false
@@ -55,11 +59,21 @@ open class Group {
     @JsonIgnoreProperties("groupsMatched")
     open var events: MutableList<Event> = mutableListOf()
 
-    @ManyToMany(mappedBy = "pendingGroupsRequests")
+    @ManyToMany(cascade = [CascadeType.ALL])
+    @JoinTable(
+        name = "group_requesting_match_to_event",
+        joinColumns = [JoinColumn(name = "group_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "event_id", referencedColumnName = "id")]
+    )
     @JsonIgnoreProperties("pendingGroupsRequests")
     open var pendingMatchRequests: MutableList<Event> = mutableListOf()
 
-    @ManyToMany(mappedBy = "superlikeGroupsRequests")
+    @ManyToMany(cascade = [CascadeType.ALL])
+    @JoinTable(
+        name = "group_superlike_requesting_match_to_event",
+        joinColumns = [JoinColumn(name = "group_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "event_id", referencedColumnName = "id")]
+    )
     @JsonIgnoreProperties("superlikeGroupsRequests")
     open var superlikeMatchRequests: MutableList<Event> = mutableListOf()
 }
