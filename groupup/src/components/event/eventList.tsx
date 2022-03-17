@@ -28,10 +28,24 @@ const EventList = () => {
     return <Typography data-testid="loading-text">Loading...</Typography>
   }
 
+  const openNext = (reverse: boolean) => {
+    const openIndex = events.findIndex((event) => event.id === openEvent?.id)
+
+    setOpenEvent(events[(openIndex + events.length + (reverse ? -1 : 1)) % events.length])
+  }
+
   return (
     <>
       <Modal open={!!openEvent} onClose={() => setOpenEvent(null)}>
-        <>{openEvent && <EventDetails event={openEvent} />}</>
+        <>
+          {openEvent && (
+            <EventDetails
+              event={openEvent}
+              onNext={() => openNext(false)}
+              onPrevious={() => openNext(true)}
+            />
+          )}
+        </>
       </Modal>
       <Grid container spacing={2} justifyContent="center">
         {events.map((event) => (
