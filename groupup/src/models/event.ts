@@ -5,7 +5,7 @@ interface IEvent {
   title: string
   description: string
   date?: string
-  groupsMatched?: group[]
+  groupsMatched: group[]
   image?: string
 }
 

@@ -4,6 +4,8 @@ interface Group {
   id?: number
   name: string
   description: string
+  minAge: number
+  maxAge: number
   interests: string[]
   contactEmail: string
   events?: IEvent[]
