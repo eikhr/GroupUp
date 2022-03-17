@@ -51,4 +51,11 @@ class EventController(private val eventService: EventService) {
     fun removeGroupById(@PathVariable eventId: Long, @PathVariable groupId: Long): Event? {
         return eventService.removeGroupById(eventService.getEvent(eventId), groupId)
     }
+
+    @PostMapping("/{eventId}/requestmatch/{groupId}")
+    fun requestMatch(
+        @PathVariable eventId: Long,
+        @PathVariable groupId: Long,
+        @RequestBody isSuperlike: Boolean
+    ): Event? = eventService.requestMatch(eventService.getEvent(eventId), groupId, isSuperlike)
 }

@@ -16,8 +16,7 @@ class GroupService(
     private lateinit var eventService: EventService
 
     override fun createGroup(group: Group): Group {
-        var groupDb = groupRepository.save(group)
-        return groupDb
+        return groupRepository.save(group)
     }
 
     override fun getGroup(id: Long): Group {
@@ -32,15 +31,9 @@ class GroupService(
     https://github.com/cijosunny/
     kotlin-boot-repo/blob/master/src/main/kotlin/com/app/kotlin/user/service/UserServiceImpl.kt */
     override fun updateGroup(id: Long, group: Group): Group {
-        if (group.contactEmail.contains("@", ignoreCase = false) &&
-            group.contactEmail.contains(".", ignoreCase = false)
-        ) {
-            group.id = id
-            groupRepository.saveAndFlush(group)
-            return group
-        } else {
-            throw IllegalArgumentException("Incorrect email address")
-        }
+        group.id = id
+        groupRepository.saveAndFlush(group)
+        return group
     }
 
     override fun removeGroup(id: Long): Boolean {

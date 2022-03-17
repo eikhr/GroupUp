@@ -12,6 +12,7 @@ const CenteredModalCard = ({ width, children }: PropsWithChildren<IProps>) => {
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width: width ?? 400,
+    overflow: 'visible',
   }
 
   return <Card sx={style}>{children}</Card>

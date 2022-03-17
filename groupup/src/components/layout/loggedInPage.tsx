@@ -22,10 +22,10 @@ const LoggedInPage = (props: PropsWithChildren<Record<never, never>>) => {
     <Stack direction="row" sx={{ height: 1 }}>
       <Paper square>
         <Tabs value={location.pathname} onChange={onTabChange} orientation="vertical">
-          <Tab label="Events" value="/events" />
-          <Tab label="Add Event" value="/addEvent" />
-          <Tab label="All Groups" value="/allGroups" />
-          <Tab label="My Group" value="/myGroup" />
+          <Tab label="Aktiviteter" value="/events" />
+          <Tab label="Opprett aktivitet" value="/addEvent" />
+          <Tab label="Alle grupper" value="/allGroups" />
+          <Tab label="Min gruppe" value="/myGroup" />
         </Tabs>
       </Paper>
       <Box sx={{ width: 1, maxWidth: 1100, margin: '20px auto' }}>{props.children}</Box>
