@@ -5,6 +5,7 @@ import CenteredModalCard from '../layout/centeredModal'
 import API, { APIError } from '../../API'
 import ErrorCard from '../layout/errorCard'
 import GroupDetails from './groupDetails'
+import MatchRequests from '../matching/matchRequests'
 
 const MyGroup = () => {
   const { currentGroup } = useContext(CurrentGroupContext)
@@ -71,6 +72,7 @@ const MyGroup = () => {
           </Button>
         )}
         <GroupDetails group={currentGroup} />
+        <MatchRequests group={currentGroup} />
       </Stack>
     </div>
   )
