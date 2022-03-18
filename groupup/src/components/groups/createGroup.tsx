@@ -72,7 +72,7 @@ const Form = () => {
       contactEmail: formValues.email,
     }
     try {
-      await API.addGroup(group)
+      group.id = await API.addGroup(group)
       setCurrentGroup(group)
       navigate('/events')
     } catch (err: unknown) {

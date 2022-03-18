@@ -4,23 +4,19 @@ import EventIcon from '@mui/icons-material/Event'
 import InterestsIcon from '@mui/icons-material/Interests'
 import CurrentGroupContext from '../../context/CurrentGroupContext'
 import Group from '../../models/group'
-
 interface IProps {
   group?: Group
 }
-
 const GroupDetails = ({ group }: IProps) => {
   const { currentGroup } = useContext(CurrentGroupContext)
   if (!group) {
     group = currentGroup ?? undefined
   }
-
   if (!group) {
     return (
       <Typography data-testid="loading-text">Choose your current group...</Typography>
     )
   }
-
   return (
     <Card>
       <CardMedia
@@ -41,7 +37,6 @@ const GroupDetails = ({ group }: IProps) => {
         >
           {group.description}
         </Typography>
-
         <Typography
           data-testid="groupsEmail"
           variant="body2"
@@ -67,5 +62,4 @@ const GroupDetails = ({ group }: IProps) => {
     </Card>
   )
 }
-
 export default GroupDetails

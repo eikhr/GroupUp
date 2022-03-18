@@ -12,7 +12,7 @@ import GroupList from './components/groups/groupList'
 import Group from './models/group'
 import CurrentGroupContext from './context/CurrentGroupContext'
 import ChooseGroup from './components/groups/chooseGroup'
-import GroupDetails from './components/groups/groupDetails'
+import MyGroup from './components/groups/myGroup'
 
 const App = () => {
   const [currentGroup, setCurrentGroup] = useState<Group | null>(null)
@@ -55,7 +55,7 @@ const App = () => {
               path="/myGroup"
               element={
                 <LoggedInPage>
-                  <GroupDetails />
+                  <MyGroup />
                 </LoggedInPage>
               }
             />
