@@ -1,10 +1,12 @@
-import { Card, CardContent, Chip, Stack, Typography } from '@mui/material'
+import { Card, CardContent, Chip, Stack, SxProps, Typography } from '@mui/material'
 import React from 'react'
 import IGroup from '../../models/group'
 import InterestsIcon from '@mui/icons-material/Interests'
 
 interface IProps {
   data: IGroup
+  sx?: SxProps
+  showContact?: boolean
 }
 
 const GroupInfo = (props: IProps) => {
@@ -25,9 +27,11 @@ const GroupInfo = (props: IProps) => {
       <Typography data-testid="description" variant="body2" color="text.secondary">
         {props.data.description}
       </Typography>
-      {/*<Typography data-testid="mail" variant="body2" color="text.secondary">*/}
-      {/*  {props.data.contactEmail}*/}
-      {/*</Typography>*/}
+      {props.showContact && (
+        <Typography data-testid="mail" variant="body2" color="text.secondary">
+          {props.data.contactEmail}
+        </Typography>
+      )}
       <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
         {props.data.interests.map((interest) => (
           <Chip icon={<InterestsIcon />} key={interest} label={interest} />
@@ -39,7 +43,7 @@ const GroupInfo = (props: IProps) => {
 
 const GroupCard = (props: IProps) => {
   return (
-    <Card data-testid={'group-' + props.data.id} sx={{ width: 345 }}>
+    <Card data-testid={'group-' + props.data.id} sx={{ width: 345, ...props.sx }}>
       <CardContent>
         <GroupInfo {...props} />
       </CardContent>

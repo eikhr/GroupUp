@@ -6,6 +6,8 @@ interface IEvent {
   description: string
   date?: string
   groupsMatched: group[]
+  superlikeGroupsRequests?: group[]
+  pendingGroupsRequests?: group[]
   image?: string
 }
 

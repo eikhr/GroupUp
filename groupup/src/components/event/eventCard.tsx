@@ -7,6 +7,9 @@ import InterestsIcon from '@mui/icons-material/Interests'
 
 interface IProps {
   data: IEvent
+  options?: {
+    hideImage?: boolean
+  }
 }
 const EventCard = (props: IProps) => {
   moment.locale('nb')
@@ -16,7 +19,14 @@ const EventCard = (props: IProps) => {
 
   return (
     <Card data-testid={'event-' + props.data.id} sx={{ width: 345 }}>
-      <CardMedia component="img" height="140" src={props.data.image} alt="Event image" />
+      {props?.options?.hideImage || (
+        <CardMedia
+          component="img"
+          height="140"
+          src={props.data.image}
+          alt="Event image"
+        />
+      )}
       <CardContent>
         {props.data.date && (
           <Typography
