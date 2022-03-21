@@ -62,7 +62,7 @@ class EventService(
         return event.id?.let { updateEvent(event, it) }
     }
 
-    fun requestMatch(event: Event, groupId: Long, isSuperlike: Boolean): Event? {
+    override fun requestMatch(event: Event, groupId: Long, isSuperlike: Boolean): Event? {
         val group: Group = groupService.getGroup(groupId)
         if (!event.groupsMatched.contains(group) &&
             !event.pendingGroupsRequests.contains(group) &&
@@ -82,5 +82,29 @@ class EventService(
             return event.id?.let { updateEvent(event, it) }
         }
         throw IllegalStateException("Match or superlike already requested")
+    }
+
+    override fun acceptMatch(event: Event, groupId: Long): Event? {
+        val group: Group = groupService.getGroup(groupId)
+        if (!event.groupsMatched.contains(group)) {
+            if (!event.pendingGroupsRequests.contains(group) &&
+                !event.superlikeGroupsRequests.contains(group)
+            ) {
+                throw IllegalStateException("Group has not requested a match")
+            } else {
+                if (event.pendingGroupsRequests.contains(group)) {
+                    event.pendingGroupsRequests.remove(group)
+                    group.pendingMatchRequests.remove(event)
+                } else {
+                    event.superlikeGroupsRequests.remove(group)
+                    group.superlikeMatchRequests.remove(event)
+                }
+                event.groupsMatched.add(group)
+                group.events.add(event)
+            }
+        } else {
+            throw IllegalStateException("Group is already matched")
+        }
+        return event.id?.let { updateEvent(event, it) }
     }
 }
