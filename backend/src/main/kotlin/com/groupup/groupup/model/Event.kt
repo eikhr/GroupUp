@@ -15,6 +15,7 @@ private const val DEFAULT_YEAR = 2022
 private const val DEFAULT_MONTH = 4
 private const val DEFAULT_DAY = 13
 private const val TITLE_MIN_LENGTH = 4
+private const val LOCATION_MIN_LENGTH = 1
 
 @Entity
 @Table(name = "events")
@@ -31,6 +32,15 @@ open class Event {
                 throw IllegalArgumentException("Title must be at least 4 chars\n")
             field = value
         }
+
+    @Column
+    open var location: String = ""
+        set(value) {
+            if (value.length < LOCATION_MIN_LENGTH)
+                throw IllegalArgumentException("Location can't be empty\n")
+            field = value
+        }
+
     @Column
     open lateinit var description: String
     @Column
