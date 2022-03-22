@@ -51,4 +51,21 @@ interface IEventService {
      * @return The updated event
      */
     fun removeGroupById(event: Event, id: Long): Event?
+
+    /**
+     * Requests a match from a group to an event
+     * @param event: Event to add group to
+     * @param groupId: id of group
+     * @param isSuperlike: boolean to indicate if it's a superlike
+     * @return The updated event
+     */
+    fun requestMatch(event: Event, groupId: Long, isSuperlike: Boolean): Event?
+
+    /**
+     * Requests a match from a group to an event
+     * @param event: Event to that the group is accepted to
+     * @param groupId: id of group
+     * @return The updated event
+     */
+    fun acceptMatch(event: Event, groupId: Long): Event?
 }

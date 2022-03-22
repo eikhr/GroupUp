@@ -61,4 +61,12 @@ class EventController(private val eventService: EventService) {
     ): Event? {
         return eventService.requestMatch(eventService.getEvent(eventId), groupId, isSuperlike)
     }
+
+    @PutMapping("{eventId}/acceptmatch/{groupId}")
+    fun acceptMatch(
+        @PathVariable eventId: Long,
+        @PathVariable groupId: Long
+    ): Event? {
+        return eventService.acceptMatch(eventService.getEvent(eventId), groupId)
+    }
 }
