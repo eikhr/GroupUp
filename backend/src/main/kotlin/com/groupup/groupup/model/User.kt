@@ -1,5 +1,6 @@
 package com.groupup.groupup.model
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.nio.charset.StandardCharsets
@@ -27,9 +28,10 @@ open class User {
     @Column(name = "id", nullable = false)
     open var id: Long? = null
 
-    @Column
+    @Column(unique = true)
     open lateinit var username: String
     @Column
+    @JsonIgnore
     open lateinit var password: String
     @Column
     open lateinit var firstName: String
@@ -51,8 +53,10 @@ open class User {
      * @param password The password of the user
      * @param hash Whether or not the password should be hashed before setting
      */
-    constructor(username: String, password: String, hash: Boolean) : super() {
+    constructor(username: String, password: String, hash: Boolean, firstName: String, lastName: String) : super() {
         this.username = username
+        this.firstName = firstName
+        this.lastName = lastName
         if (hash) {
             hashAndSetPassword(password)
         } else {

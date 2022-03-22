@@ -31,7 +31,7 @@ class UserController(private val userService: UserService) {
     @PostMapping("/register")
     fun createUser(@RequestBody user: User): AuthSession {
         userService.createUser(user)
-        return userService.login(user, user.password)
+        return userService.login(user.username, user.password)
     }
 
     @DeleteMapping("/{id}")
@@ -46,6 +46,6 @@ class UserController(private val userService: UserService) {
 
     @PostMapping("/login")
     fun login(@RequestBody username: String, @RequestBody password: String): AuthSession {
-        return userService.login(userService.getUser(username), password)
+        return userService.login(username, password)
     }
 }

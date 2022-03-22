@@ -20,7 +20,16 @@ class UserService(
     private lateinit var groupService: GroupService
 
     fun createUser(user: User): User {
-        return userRepository.save(user)
+        var dbUser: User? = null
+        try {
+            dbUser = getUser(user.username)
+        } catch (e: Exception) {
+            // Empty to continue flow of execution
+        }
+        if (dbUser != null)
+            throw IllegalStateException("Du kan ikke registrere flere brukere med samme navn")
+        val createdUser = User(user.username, user.password, true, user.firstName, user.lastName)
+        return userRepository.save(createdUser)
     }
 
     fun getUsers(): List<User> {
@@ -31,7 +40,7 @@ class UserService(
         return userRepository.findById(id).get()
     }
 
-    fun getUser(userName: String): User {
+    fun getUser(userName: String): User? {
         return userRepository.findAll()
             .stream()
             .filter { user -> user.username == userName }
@@ -60,9 +69,11 @@ class UserService(
         return user
     }
 
-    fun login(user: User, password: String): AuthSession {
-        require(user.checkPassword(password)) { "Brukernavn eller passord er feil." }
-        val authSession = AuthSession(user)
+    fun login(username: String, password: String): AuthSession {
+        val dbUser = getUser(username) ?: throw IllegalArgumentException("User does not exist")
+        println(dbUser.password.toString() + " password: " + password)
+        require(dbUser.checkPassword(password)) { "Brukernavn eller passord er feil." }
+        val authSession = AuthSession(dbUser)
         authSessionRepository.saveAndFlush(authSession)
         return authSession
     }

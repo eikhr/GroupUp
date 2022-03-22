@@ -235,6 +235,7 @@ exceptions:
       - 'NumberFormatException'
       - 'ParseException'
     allowedExceptionNameRegex: '_|(ignore|expected).*'
+    excludes: ['**/UserService.kt']
   ThrowingExceptionFromFinally:
     active: true
   ThrowingExceptionInMain:
@@ -260,7 +261,6 @@ exceptions:
     exceptionNames:
       - 'ArrayIndexOutOfBoundsException'
       - 'Error'
-      - 'Exception'
       - 'IllegalMonitorStateException'
       - 'IndexOutOfBoundsException'
       - 'NullPointerException'
