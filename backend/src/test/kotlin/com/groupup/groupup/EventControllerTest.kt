@@ -86,6 +86,7 @@ class EventControllerTest : WebControllerTestHelper {
         val event = Event()
         event.title = "Test event " + Random.nextFloat().toString()
         event.description = "description " + Random.nextFloat().toString()
+        event.location = "location " + Random.nextFloat().toString()
         event.date = GregorianCalendar(
             Random.nextInt(2022, 2030),
             Random.nextInt(0, 11),
@@ -124,6 +125,7 @@ class EventControllerTest : WebControllerTestHelper {
         val event = Event()
         event.title = "testTitle"
         event.description = "description"
+        event.location = "location"
         event.date = GregorianCalendar(2022, 4, 13, 12, 12, 12)
         addEvent(event)
     }
@@ -134,12 +136,14 @@ class EventControllerTest : WebControllerTestHelper {
         event.id = 123
         event.title = "testTitle"
         event.description = "description"
+        event.location = "location"
         event.date = GregorianCalendar(2022, 4, 13, 12, 12, 12)
         val gottenEvent = getEventById(event)
 
         assertEquals(event.id, gottenEvent.id)
         assertEquals(event.title, gottenEvent.title)
         assertEquals(event.description, gottenEvent.description)
+        assertEquals(event.location, gottenEvent.location)
         assertEquals(event.date.time, gottenEvent.date.time)
     }
 }
