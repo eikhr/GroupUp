@@ -9,8 +9,8 @@
       "description": "The unique identifier for an group",
       "type": "integer"
     },
-    "title": {
-      "description": "Title of the group",
+    "name": {
+      "description": "Name of the group",
       "type": "string"
     },
     "description": {
@@ -18,14 +18,40 @@
       "type": "string"
     },
     "minAge": {
-      "descriotion": "Minimum age of the the groups members",
+      "description": "Minimum age of the the groups members",
       "type": "integer"
     },
     "maxAge": {
-      "descriotion": "Maximum age of the the groups members",
+      "description": "Maximum age of the the groups members",
       "type": "integer"
+    },
+    "contactEmail": {
+      "description" : "An email to get in touch with the group",
+      "type": "string"
+    },
+    "interests": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "events": {
+      "description": "A list of events this group is attending",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "event.schema.json"
+      }
+    },
+    "pendingMatchRequests": {
+      "description": "A list of events this group has requested to join",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "event.schema.json"
+      }
     }
   },
-    "required": [ "id", "title", "description", "minAge","maxAge" ]
+    "required": [ "id", "name", "description", "minAge","maxAge" ]
 }
 

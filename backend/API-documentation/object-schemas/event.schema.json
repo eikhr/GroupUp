@@ -17,11 +17,27 @@
       "description": "Description of the event",
       "type": "string"
     },
-    "time": {
+    "date": {
       "description": "The date/time when the event is to take place",
       "type": "string",
       "format": "date-time"
+    },
+    "groupsMatched": {
+      "description": "A list of groups that have matched with this event",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "group.schema.json"
+      }
+    },
+    "pendingGroupRequests": {
+      "description": "A list of groups that requested a match with this event",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "group.schema.json"
+      }
     }
   },
-  "required": [ "id", "title", "description" ]
+  "required": [ "id", "title", "description, date" ]
 }
