@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.springframework.format.annotation.DateTimeFormat
 import java.util.GregorianCalendar
 import javax.persistence.Column
+import javax.persistence.ElementCollection
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -25,6 +26,10 @@ open class Event {
     open var id: Long? = null
 
     @Column
+    @ElementCollection
+    open var eventInterests: MutableList<String> = mutableListOf()
+
+    @Column
     open var title: String = ""
         set(value) {
             if (value.length < TITLE_MIN_LENGTH)
@@ -33,6 +38,7 @@ open class Event {
         }
     @Column
     open lateinit var description: String
+
     @Column
     @DateTimeFormat
     open var date: GregorianCalendar = GregorianCalendar(DEFAULT_YEAR, DEFAULT_MONTH, DEFAULT_DAY)
