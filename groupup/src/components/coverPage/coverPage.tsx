@@ -12,9 +12,14 @@ const CoverPage = () => {
           <Typography gutterBottom variant="h5">
             Utvid vennekretsen!
           </Typography>
-          <Button component="a" href="/events" variant="outlined">
-            Start
-          </Button>
+          <Stack direction="row" spacing={1}>
+            <Button component="a" href="/chooseGroup" variant="outlined">
+              Velg gruppe
+            </Button>
+            <Button component="a" href="/createGroup" variant="outlined">
+              Lag grupppe
+            </Button>
+          </Stack>
         </Stack>
       </Grid>
       <Grid item xs={12} md={7}>

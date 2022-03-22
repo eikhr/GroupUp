@@ -14,6 +14,8 @@ it('renders with event details', () => {
       {
         name: 'groupName',
         description: 'describing',
+        minAge: 18,
+        maxAge: 99,
         interests: [],
         contactEmail: 'email',
       },
@@ -37,6 +39,8 @@ it('renders with time', () => {
       {
         name: 'groupName',
         description: 'describing',
+        minAge: 18,
+        maxAge: 99,
         interests: [],
         contactEmail: 'email',
       },

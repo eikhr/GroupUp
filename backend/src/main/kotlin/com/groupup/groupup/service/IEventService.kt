@@ -4,12 +4,14 @@ import com.groupup.groupup.model.Event
 
 interface IEventService {
     /**
-     * Returns a list of all events
+     * @return list of all events
      */
     fun getEvents(): List<Event>
 
     /**
      * Returns the event with the given id
+     * @param id: id of group to get
+     * @return event object
      */
     fun getEvent(id: Long): Event
 
@@ -27,6 +29,11 @@ interface IEventService {
      */
     fun updateEvent(event: Event, id: Long): Event
 
+    /**
+     * removes an event
+     * @param id: event to remove
+     * @return true if successfully deleted
+     */
     fun removeEvent(id: Long): Boolean
 
     /**
@@ -44,4 +51,21 @@ interface IEventService {
      * @return The updated event
      */
     fun removeGroupById(event: Event, id: Long): Event?
+
+    /**
+     * Requests a match from a group to an event
+     * @param event: Event to add group to
+     * @param groupId: id of group
+     * @param isSuperlike: boolean to indicate if it's a superlike
+     * @return The updated event
+     */
+    fun requestMatch(event: Event, groupId: Long, isSuperlike: Boolean): Event?
+
+    /**
+     * Requests a match from a group to an event
+     * @param event: Event to that the group is accepted to
+     * @param groupId: id of group
+     * @return The updated event
+     */
+    fun acceptMatch(event: Event, groupId: Long): Event?
 }

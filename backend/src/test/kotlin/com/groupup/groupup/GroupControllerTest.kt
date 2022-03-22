@@ -53,7 +53,7 @@ class GroupControllerTest : WebControllerTestHelper {
 
     @Throws(Exception::class)
     private fun getGroupById(group: Group): Group {
-        val groupId = group.id ?: throw IllegalArgumentException("Group must have id")
+        val groupId = group.id
         Mockito.doReturn(group).`when`(groupService).getGroup(groupId)
         val result: MvcResult = mockMvc.perform(
             MockMvcRequestBuilders

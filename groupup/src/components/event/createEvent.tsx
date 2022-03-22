@@ -1,23 +1,13 @@
 import { DateTimePicker, LocalizationProvider } from '@mui/lab'
-import {
-  Button,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material'
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { Button, Grid, Stack, TextField, Typography } from '@mui/material'
+import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import IEvent from '../../models/event'
 import API, { APIError } from '../../API'
 import { useNavigate } from 'react-router-dom'
 import ErrorCard from '../layout/errorCard'
 import Group from '../../models/group'
+import CurrentGroupContext from '../../context/CurrentGroupContext'
 
 const defaultValues = {
   name: '',
@@ -25,11 +15,10 @@ const defaultValues = {
 }
 
 const Form = () => {
+  const { currentGroup } = useContext(CurrentGroupContext)
   const navigate = useNavigate()
   const [formValues, setFormValues] = useState(defaultValues)
   const [dateValue, setValue] = useState<Date | null>(new Date())
-  const [arrangingGroup, setArrangingGroup] = useState<Group | undefined>()
-  const [allGroups, setAllGroups] = useState<Group[] | undefined>()
   const [error, setError] = useState<string | null>()
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -38,15 +27,6 @@ const Form = () => {
       [name]: value,
     })
   }
-
-  const fetchGroups = async () => {
-    const groups = await API.getAllGroups()
-    setAllGroups(groups)
-  }
-
-  useEffect(() => {
-    fetchGroups()
-  }, [])
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -58,10 +38,10 @@ const Form = () => {
       groupsMatched: [],
     }
 
-    if (arrangingGroup) {
-      await putGroupWithNewEvent(arrangingGroup, event)
+    if (currentGroup) {
+      await putGroupWithNewEvent(currentGroup, event)
     } else {
-      await postEvent(event)
+      setError('You must choose a group to create event!')
     }
   }
 
@@ -81,6 +61,7 @@ const Form = () => {
     }
   }
 
+  /*
   const postEvent = async (event: IEvent) => {
     try {
       await API.addEvent(event)
@@ -90,23 +71,20 @@ const Form = () => {
       setError(`${apiErr.message}, ${apiErr.status}`)
     }
   }
-
-  const handleSelectChange = (e: SelectChangeEvent) => {
-    const { value } = e.target
-    setArrangingGroup(allGroups?.find((group) => '' + group.id === value))
-  }
+  */
 
   return (
     <form onSubmit={handleSubmit}>
       <Grid container alignItems="center" justifyContent="center">
         <Stack spacing={3}>
-          <Typography variant="h2"> Create your event </Typography>
+          <Typography variant="h2"> Opprett aktivitet </Typography>
           {error && <ErrorCard message={error + ''} />}
           <TextField
             id="name-input"
             name="name"
-            label="Event name"
+            label="Navn på aktivitet"
             type="text"
+            required
             value={formValues.name}
             onChange={handleInputChange}
           />
@@ -115,41 +93,40 @@ const Form = () => {
             rows={4}
             id="description-input"
             name="description"
-            label="Describe your event"
+            label="Beskriv aktiviteten"
             type="text"
+            required
             value={formValues.description}
             onChange={handleInputChange}
           />
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DateTimePicker
               disablePast
-              label="Choose your event date"
+              label="Velg dato for aktiviteten"
               value={dateValue}
               onChange={(newDate) => setValue(newDate)}
               onError={console.log}
               inputFormat="yyyy/MM/dd HH:mm"
+              ampm={false}
               mask="___/__/__ __:__"
               renderInput={(params) => <TextField {...params} />}
             />
-            <FormControl>
-              <InputLabel id="group-label">Arrangerende gruppe</InputLabel>
-              <Select
-                labelId="group-label"
-                label="Arrangerende gruppe"
-                displayEmpty
-                value={'' + arrangingGroup?.id}
-                onChange={handleSelectChange}
-              >
-                {allGroups?.map((group) => (
-                  <MenuItem key={group.id} value={'' + group.id}>
-                    {group.name}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
           </LocalizationProvider>
-          <Button variant="contained" color="primary" type="submit">
-            Submit
+          <TextField
+            id="arranging-group"
+            name="group"
+            label="Arrangerende gruppe"
+            type="text"
+            required
+            disabled
+            value={currentGroup?.name}
+          />
+          <Button
+            variant="contained"
+            color={currentGroup?.gold ? 'inherit' : 'primary'}
+            type="submit"
+          >
+            Opprett aktivitet
           </Button>
         </Stack>
       </Grid>

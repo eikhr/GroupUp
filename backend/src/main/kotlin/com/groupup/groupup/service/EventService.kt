@@ -37,7 +37,7 @@ class EventService(
         return true
     }
 
-    /* Updates group. Inspired from:
+    /* Updates event. Inspired from:
     https://github.com/cijosunny/kotlin-boot-repo/
     blob/master/src/main/kotlin/com/app/kotlin/user/service/UserServiceImpl.kt */
     override fun updateEvent(event: Event, id: Long): Event {
@@ -59,6 +59,52 @@ class EventService(
         event.groupsMatched.remove(group)
         group.events.remove(event)
         groupService.updateGroup(id, group)
+        return event.id?.let { updateEvent(event, it) }
+    }
+
+    override fun requestMatch(event: Event, groupId: Long, isSuperlike: Boolean): Event? {
+        val group: Group = groupService.getGroup(groupId)
+        if (!event.groupsMatched.contains(group) &&
+            !event.pendingGroupsRequests.contains(group) &&
+            !event.superlikeGroupsRequests.contains(group)
+        ) {
+            if (isSuperlike) {
+                if (group.gold) {
+                    event.superlikeGroupsRequests.add(group)
+                    group.superlikeMatchRequests.add(event)
+                } else
+                    throw IllegalStateException("Buy gold plz")
+            } else {
+                event.pendingGroupsRequests.add(group)
+                group.pendingMatchRequests.add(event)
+            }
+            groupService.updateGroup(groupId, group)
+            return event.id?.let { updateEvent(event, it) }
+        }
+        throw IllegalStateException("Match or superlike already requested")
+    }
+
+    override fun acceptMatch(event: Event, groupId: Long): Event? {
+        val group: Group = groupService.getGroup(groupId)
+        if (!event.groupsMatched.contains(group)) {
+            if (!event.pendingGroupsRequests.contains(group) &&
+                !event.superlikeGroupsRequests.contains(group)
+            ) {
+                throw IllegalStateException("Group has not requested a match")
+            } else {
+                if (event.pendingGroupsRequests.contains(group)) {
+                    event.pendingGroupsRequests.remove(group)
+                    group.pendingMatchRequests.remove(event)
+                } else {
+                    event.superlikeGroupsRequests.remove(group)
+                    group.superlikeMatchRequests.remove(event)
+                }
+                event.groupsMatched.add(group)
+                group.events.add(event)
+            }
+        } else {
+            throw IllegalStateException("Group is already matched")
+        }
         return event.id?.let { updateEvent(event, it) }
     }
 }

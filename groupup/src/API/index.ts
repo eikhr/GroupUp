@@ -33,13 +33,13 @@ const API = {
       image: getExampleImage(),
     }))
   },
-  addEvent: async (event: IEvent): Promise<IEvent> => {
+  addEvent: async (event: IEvent, currentGroup: Group): Promise<IEvent> => {
     const url = baseUrl + '/events/add'
 
     const options: RequestInit = {
       method: 'POST',
       body: JSON.stringify(event),
-      headers: { 'content-type': 'application/json' },
+      headers: { 'content-type': 'application/json', 'group-id': '' + currentGroup.id },
     }
 
     return await doRequest(url, options)
@@ -53,7 +53,7 @@ const API = {
 
     return await doRequest(url, options)
   },
-  addGroup: async (group: Group): Promise<Group> => {
+  addGroup: async (group: Group): Promise<number> => {
     const url = baseUrl + '/groups/add'
 
     const options: RequestInit = {
@@ -71,6 +71,21 @@ const API = {
       method: 'PUT',
       body: JSON.stringify(group),
       headers: { 'content-type': 'application/json' },
+    }
+
+    return await doRequest(url, options)
+  },
+  requestMatch: async (
+    eventId: number,
+    groupId: number,
+    superlike: boolean
+  ): Promise<void> => {
+    const url = baseUrl + `/events/${eventId}/requestmatch`
+
+    const options: RequestInit = {
+      method: 'PUT',
+      body: JSON.stringify(superlike),
+      headers: { 'content-type': 'application/json', 'group-id': groupId.toString() },
     }
 
     return await doRequest(url, options)

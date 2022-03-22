@@ -5,7 +5,9 @@ interface IEvent {
   title: string
   description: string
   date?: string
-  groupsMatched?: group[]
+  groupsMatched: group[]
+  superlikeGroupsRequests?: group[]
+  pendingGroupsRequests?: group[]
   image?: string
 }
 

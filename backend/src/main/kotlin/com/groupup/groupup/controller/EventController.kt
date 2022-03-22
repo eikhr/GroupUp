@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -50,5 +51,22 @@ class EventController(private val eventService: EventService) {
     @DeleteMapping("/{eventId}/removegroup/{groupId}")
     fun removeGroupById(@PathVariable eventId: Long, @PathVariable groupId: Long): Event? {
         return eventService.removeGroupById(eventService.getEvent(eventId), groupId)
+    }
+
+    @PutMapping("/{eventId}/requestmatch")
+    fun requestMatch(
+        @PathVariable eventId: Long,
+        @RequestHeader("group-id") groupId: Long,
+        @RequestBody isSuperlike: Boolean
+    ): Event? {
+        return eventService.requestMatch(eventService.getEvent(eventId), groupId, isSuperlike)
+    }
+
+    @PutMapping("{eventId}/acceptmatch/{groupId}")
+    fun acceptMatch(
+        @PathVariable eventId: Long,
+        @PathVariable groupId: Long
+    ): Event? {
+        return eventService.acceptMatch(eventService.getEvent(eventId), groupId)
     }
 }

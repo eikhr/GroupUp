@@ -13,26 +13,39 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import React, { ChangeEvent, FormEvent, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import API, { APIError } from '../../API'
 import Group from '../../models/group'
 import ErrorCard from '../layout/errorCard'
 import { Favorite, FavoriteBorder } from '@mui/icons-material'
+import CurrentGroupContext from '../../context/CurrentGroupContext'
 
 const defaultValues = {
   name: '',
   description: '',
+  minAge: 18,
+  maxAge: 99,
   interests: [''],
   email: '',
 }
-const interestList = ['hiking', 'parties', 'horses', 'pokemon go']
+const interestList = [
+  'tur',
+  'fest',
+  'hest',
+  'pokemon go',
+  'buldring',
+  'matlaging',
+  'strikking',
+]
 
 const Form = () => {
   const navigate = useNavigate()
   const [formValues, setFormValues] = useState(defaultValues)
   const [interests, setInterest] = React.useState<string[]>([])
   const [error, setError] = React.useState<string | null>()
+  const { setCurrentGroup } = useContext(CurrentGroupContext)
+
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormValues({
@@ -53,12 +66,15 @@ const Form = () => {
     const group: Group = {
       name: formValues.name,
       description: formValues.description,
+      minAge: 18,
+      maxAge: 99,
       interests: interests,
       contactEmail: formValues.email,
     }
     try {
-      await API.addGroup(group)
-      navigate('/addEvent')
+      group.id = await API.addGroup(group)
+      setCurrentGroup(group)
+      navigate('/events')
     } catch (err: unknown) {
       const apiErr = err as APIError
       setError(`${apiErr.message}, ${apiErr.status}`)
@@ -69,13 +85,14 @@ const Form = () => {
     <form onSubmit={handleSubmit}>
       <Grid container alignItems="center" justifyContent="center">
         <Stack spacing={3}>
-          <Typography variant="h2"> Create your group </Typography>
+          <Typography variant="h2"> Lag din gruppe </Typography>
           {error && <ErrorCard message={error + ''} />}
           <TextField
             id="name-input"
             name="name"
-            label="Group name"
+            label="Gruppenavn"
             type="text"
+            required
             value={formValues.name}
             onChange={handleInputChange}
           />
@@ -84,24 +101,27 @@ const Form = () => {
             rows={4}
             id="description-input"
             name="description"
-            label="Describe your group"
+            label="Beskriv gruppen din"
             type="text"
+            required
             value={formValues.description}
             onChange={handleInputChange}
           />
           <TextField
             id="email-input"
             name="email"
-            label="Your email"
+            label="E-post"
             type="text"
+            required
             value={formValues.email}
             onChange={handleInputChange}
           />
           <FormControl>
-            <InputLabel id="interest-label">Interests</InputLabel>
+            <InputLabel id="interest-label">Interesser</InputLabel>
             <Select
+              required
               labelId="interest-label"
-              label="Pick interests"
+              label="Velg interesser"
               name="interests"
               multiple
               displayEmpty
@@ -123,7 +143,7 @@ const Form = () => {
             </Select>
           </FormControl>
           <Button variant="contained" color="primary" type="submit">
-            Submit
+            Lag gruppe
           </Button>
         </Stack>
       </Grid>
