@@ -1,6 +1,5 @@
 package com.groupup.groupup.model
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
@@ -30,7 +29,6 @@ open class User {
     @Column(unique = true)
     open lateinit var username: String
     @Column
-    @JsonIgnore
     open lateinit var password: String
     @Column
     open lateinit var firstName: String
