@@ -6,9 +6,10 @@ interface IGroupService {
     /**
      * Creates group
      * @param: group object
+     * @param token Auth token
      * @return created group
      */
-    fun createGroup(group: Group): Group
+    fun createGroup(token: String, group: Group): Group
 
     /**
      * gets all groups

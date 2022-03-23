@@ -1,6 +1,7 @@
 package com.groupup.groupup.service
 
 import com.groupup.groupup.model.Group
+import com.groupup.groupup.model.User
 import com.groupup.groupup.repository.GroupRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Lazy
@@ -15,7 +16,13 @@ class GroupService(
     @Lazy
     private lateinit var eventService: EventService
 
-    override fun createGroup(group: Group): Group {
+    @Autowired
+    @Lazy
+    private lateinit var userService: UserService
+
+    override fun createGroup(token: String, group: Group): Group {
+        val user = userService.getUserByToken(token)
+        group.users.add(user)
         return groupRepository.save(group)
     }
 
@@ -39,6 +46,10 @@ class GroupService(
     override fun removeGroup(id: Long): Boolean {
         groupRepository.deleteById(id)
         return true
+    }
+
+    fun removeMember(group: Group, user: User) {
+        group.users.remove(user)
     }
 
     override fun getMinAge(id: Long): Int {
