@@ -46,7 +46,7 @@ class UserController(private val userService: UserService) {
     }
 
     @PostMapping("/login")
-    fun login(@RequestBody username: String, @RequestBody password: String): AuthSession {
+    fun login(@RequestHeader username: String, @RequestHeader password: String): AuthSession {
         return userService.login(username, password)
     }
 

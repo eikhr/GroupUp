@@ -28,7 +28,7 @@ class UserService(
             // Empty to continue flow of execution
         }
         if (dbUser != null)
-            throw IllegalStateException("Du kan ikke registrere flere brukere med samme navn")
+            throw IllegalStateException("Du kan ikke registrere flere brukere med samme brukernavn")
         val createdUser = User(user.username, user.password, true, user.firstName, user.lastName, user.email)
         return userRepository.save(createdUser)
     }
@@ -76,7 +76,6 @@ class UserService(
 
     fun login(username: String, password: String): AuthSession {
         val dbUser = getUser(username) ?: throw IllegalArgumentException("User does not exist")
-        println(dbUser.password.toString() + " password: " + password)
         require(dbUser.checkPassword(password)) { "Brukernavn eller passord er feil." }
         val authSession = AuthSession(dbUser)
         authSessionRepository.saveAndFlush(authSession)
