@@ -86,4 +86,13 @@ open class Group {
     )
     @JsonIgnoreProperties("groups")
     open var users: MutableList<User> = mutableListOf()
+
+    @ManyToMany(cascade = [CascadeType.ALL])
+    @JoinTable(
+        name = "users_requesting_membership_in_group",
+        joinColumns = [JoinColumn(name = "group_id", referencedColumnName = "id")],
+        inverseJoinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")]
+    )
+    @JsonIgnoreProperties("groupMembershipRequests")
+    open var usersRequestingMembership: MutableList<User> = mutableListOf()
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
@@ -47,5 +48,23 @@ class UserController(private val userService: UserService) {
     @PostMapping("/login")
     fun login(@RequestBody username: String, @RequestBody password: String): AuthSession {
         return userService.login(username, password)
+    }
+
+    @PostMapping("/requestmembership/{groupId}")
+    fun requestMembership(
+        @PathVariable groupId: Long,
+        @RequestHeader("auth") authToken: String,
+        @RequestBody user: User
+    ): User {
+        return userService.requestMembership(groupId, authToken, user)
+    }
+
+    @PostMapping("/acceptmembership/{groupId}")
+    fun acceptMembership(
+        @PathVariable groupId: Long,
+        @RequestHeader("auth") authToken: String,
+        @RequestBody user: User
+    ): User {
+        return userService.acceptMembership(groupId, userService.getUserByToken(authToken), user)
     }
 }

@@ -16,7 +16,13 @@ class GroupService(
     @Lazy
     private lateinit var eventService: EventService
 
-    override fun createGroup(group: Group): Group {
+    @Autowired
+    @Lazy
+    private lateinit var userService: UserService
+
+    override fun createGroup(token: String, group: Group): Group {
+        val user = userService.getUserByToken(token)
+        group.users.add(user)
         return groupRepository.save(group)
     }
 

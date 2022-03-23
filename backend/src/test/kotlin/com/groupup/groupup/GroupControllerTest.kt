@@ -3,7 +3,9 @@ package com.groupup.groupup
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.groupup.groupup.controller.GroupController
+import com.groupup.groupup.model.AuthSession
 import com.groupup.groupup.model.Group
+import com.groupup.groupup.model.User
 import com.groupup.groupup.repository.GroupRepository
 import com.groupup.groupup.service.GroupService
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -29,6 +31,7 @@ import kotlin.random.Random
 @WebMvcTest
 class GroupControllerTest : WebControllerTestHelper {
     private fun <Group> anyGroup(): Group = Mockito.any()
+    private fun <User> anyUser(): User = Mockito.any()
 
     @Autowired
     private lateinit var mockMvc: MockMvc
@@ -66,19 +69,21 @@ class GroupControllerTest : WebControllerTestHelper {
     }
 
     @Throws(Exception::class)
-    private fun addGroup(group: Group) {
+    private fun addGroup(user: User, group: Group) {
         val groupJson: String = objectMapper.writeValueAsString(group)
-        Mockito.doReturn(group).`when`(groupService).createGroup(anyGroup())
+        val authSession = AuthSession(user)
+        Mockito.doReturn(group).`when`(groupService).createGroup(anyUser(), anyGroup())
         mockMvc.perform(
             MockMvcRequestBuilders
                 .post(apiUrl("groups", "add"))
+                .header("auth", authSession.token)
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(groupJson)
         )
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andReturn()
-        Mockito.verify(groupService, times(1)).createGroup(anyGroup())
+        Mockito.verify(groupService, times(1)).createGroup(anyUser(), anyGroup())
     }
 
     private fun createTestGroup(): Group {
@@ -121,7 +126,8 @@ class GroupControllerTest : WebControllerTestHelper {
         group.description = "description"
         group.minAge = 18
         group.maxAge = 99
-        addGroup(group)
+        val user = User("username", "pwd", true, "", "", "email@email.com")
+        addGroup(user, group)
     }
 
     @Test

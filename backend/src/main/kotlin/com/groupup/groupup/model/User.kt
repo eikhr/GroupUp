@@ -2,7 +2,6 @@ package com.groupup.groupup.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import com.fasterxml.jackson.annotation.JsonProperty
 import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import javax.persistence.Column
@@ -26,7 +25,7 @@ open class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
-    open var id: Long? = null
+    open var id: Long = -1
 
     @Column(unique = true)
     open lateinit var username: String
@@ -37,26 +36,28 @@ open class User {
     open lateinit var firstName: String
     @Column
     open lateinit var lastName: String
-
-    constructor(
-        @JsonProperty("username") username: String,
-        @JsonProperty("password") password: String
-    ) {
-        this.username = username
-        this.password = password
-    }
+    @Column
+    open lateinit var email: String
 
     /**
      * Create a new User.
      *
      * @param username The username of the user
      * @param password The password of the user
-     * @param hash Whether or not the password should be hashed before setting
+     * @param hash Whether or not the password should be hashed before setting it
      */
-    constructor(username: String, password: String, hash: Boolean, firstName: String, lastName: String) : super() {
+    constructor(
+        username: String,
+        password: String,
+        hash: Boolean,
+        firstName: String,
+        lastName: String,
+        email: String
+    ) : super() {
         this.username = username
         this.firstName = firstName
         this.lastName = lastName
+        this.email = email
         if (hash) {
             hashAndSetPassword(password)
         } else {
@@ -86,4 +87,8 @@ open class User {
     @ManyToMany(mappedBy = "users")
     @JsonIgnoreProperties("users")
     open var groups: MutableList<Group> = mutableListOf()
+
+    @ManyToMany(mappedBy = "usersRequestingMembership")
+    @JsonIgnoreProperties("usersRequestingMembership")
+    open var groupMembershipRequests: MutableList<Group> = mutableListOf()
 }

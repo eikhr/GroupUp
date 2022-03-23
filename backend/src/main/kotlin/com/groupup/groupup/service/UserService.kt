@@ -1,6 +1,7 @@
 package com.groupup.groupup.service
 
 import com.groupup.groupup.model.AuthSession
+import com.groupup.groupup.model.Group
 import com.groupup.groupup.model.User
 import com.groupup.groupup.repository.AuthSessionRepository
 import com.groupup.groupup.repository.UserRepository
@@ -28,7 +29,7 @@ class UserService(
         }
         if (dbUser != null)
             throw IllegalStateException("Du kan ikke registrere flere brukere med samme navn")
-        val createdUser = User(user.username, user.password, true, user.firstName, user.lastName)
+        val createdUser = User(user.username, user.password, true, user.firstName, user.lastName, user.email)
         return userRepository.save(createdUser)
     }
 
@@ -45,6 +46,10 @@ class UserService(
             .stream()
             .filter { user -> user.username == userName }
             .collect(Collectors.toList())[0]
+    }
+
+    fun getUserByToken(token: String): User {
+        return authSessionRepository.findById(token).get().user
     }
 
     fun removeUser(id: Long): Boolean {
@@ -76,5 +81,29 @@ class UserService(
         val authSession = AuthSession(dbUser)
         authSessionRepository.saveAndFlush(authSession)
         return authSession
+    }
+
+    fun requestMembership(groupId: Long, authToken: String, user: User): User {
+        val group: Group = groupService.getGroup(groupId)
+        if (getUser(user.id) != getUserByToken(authToken))
+            throw IllegalStateException("Du kan ikke forespørre på vegne av andre brukere")
+        group.usersRequestingMembership.add(user)
+        user.groupMembershipRequests.add(group)
+        groupService.updateGroup(groupId, group)
+        return updateUser(user, user.id)
+    }
+
+    fun acceptMembership(groupId: Long, authUser: User, user: User): User {
+        val group = groupService.getGroup(groupId)
+        if (!user.groupMembershipRequests.contains(group))
+            throw IllegalArgumentException("Du har ikke sendt en forespørsel til gruppen")
+        if (!group.users.contains(authUser))
+            throw IllegalStateException("Du kan ikke legge til medlemmer i en gruppe du ikke er med i")
+        user.groupMembershipRequests.remove(group)
+        group.usersRequestingMembership.remove(user)
+        user.groups.add(group)
+        group.users.add(user)
+        groupService.updateGroup(groupId, group)
+        return updateUser(user, user.id)
     }
 }
