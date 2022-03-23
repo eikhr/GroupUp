@@ -54,9 +54,8 @@ class UserController(private val userService: UserService) {
     fun requestMembership(
         @PathVariable groupId: Long,
         @RequestHeader("auth") authToken: String,
-        @RequestBody user: User
     ): User {
-        return userService.requestMembership(groupId, authToken, user)
+        return userService.requestMembership(groupId, authToken)
     }
 
     @PostMapping("/acceptmembership/{groupId}")

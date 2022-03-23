@@ -82,10 +82,9 @@ class UserService(
         return authSession
     }
 
-    fun requestMembership(groupId: Long, authToken: String, user: User): User {
+    fun requestMembership(groupId: Long, authToken: String): User {
         val group: Group = groupService.getGroup(groupId)
-        if (getUser(user.id) != getUserByToken(authToken))
-            throw IllegalStateException("Du kan ikke forespørre på vegne av andre brukere")
+        val user = getUserByToken(authToken)
         group.usersRequestingMembership.add(user)
         user.groupMembershipRequests.add(group)
         groupService.updateGroup(groupId, group)
