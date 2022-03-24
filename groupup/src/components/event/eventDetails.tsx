@@ -138,7 +138,7 @@ const EventDetails = ({ event, onNext, onPrevious }: IProps) => {
                 'Liker...'
               ) : (
                 <>
-                  <StarsIcon sx={{ mr: 1 }} /> Superlik
+                  <StarsIcon sx={{ mr: 1 }} /> Superlike
                 </>
               )}
             </Button>

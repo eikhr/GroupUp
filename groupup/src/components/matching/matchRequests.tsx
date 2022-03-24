@@ -1,37 +1,60 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Group from '../../models/group'
-import { Box, Stack, Typography } from '@mui/material'
+import { Chip, Stack, Modal, Button } from '@mui/material'
 import EventCard from '../event/eventCard'
-import GroupCard from '../groups/groupCard'
+import GroupIcon from '@mui/icons-material/Group'
+import CenteredModalCard from '../layout/centeredModal'
+import GroupDetails from '../groups/groupDetails'
 
 interface IProps {
   group: Group
 }
 
 const MatchRequests = ({ group }: IProps) => {
+  const [openGroup, setOpenGroup] = useState<Group | null>(null)
   return (
     <>
-      <Typography variant="h5">Aktiviteter</Typography>
-      <Stack spacing={2}>
+      <Modal open={!!openGroup} onClose={() => setOpenGroup(null)}>
+        <CenteredModalCard width={800}>
+          <>{openGroup && <GroupDetails group={openGroup} />}</>
+          <Button />
+        </CenteredModalCard>
+      </Modal>
+
+      <Stack direction="row" spacing={2}>
         {group.events?.map((event) => (
           <Stack direction="row" key={event.id}>
-            <EventCard data={event} options={{ hideImage: true }} />
-            <Box sx={{ ml: 2 }}>
-              <Typography variant="h6">Match-forespørsler:</Typography>
-              <Stack direction="row" spacing={2}>
+            <EventCard data={event} options={{ hideImage: true }}>
+              <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
+                Super-Likes:
                 {event.superlikeGroupsRequests?.map((superlikeGroup) => (
-                  <GroupCard
-                    data={superlikeGroup}
+                  <Chip
+                    icon={<GroupIcon />}
                     key={superlikeGroup.id}
-                    showContact
-                    sx={{ background: '#ffd467' }}
+                    label={superlikeGroup.name}
+                    color="primary"
+                    style={{ backgroundColor: '#DAA520' }}
+                    onClick={() => setOpenGroup(superlikeGroup)}
+                    sx={{ cursor: 'pointer' }}
                   />
                 ))}
+              </Stack>
+
+              <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
+                Match-forespørsler:
                 {event.pendingGroupsRequests?.map((pendingGroup) => (
-                  <GroupCard data={pendingGroup} key={pendingGroup.id} showContact />
+                  <Chip
+                    icon={<GroupIcon />}
+                    key={pendingGroup.id}
+                    label={pendingGroup.name}
+                    color="primary"
+                    variant="filled"
+                    onClick={() => setOpenGroup(pendingGroup)}
+                    sx={{ cursor: 'pointer' }}
+                  />
                 ))}
               </Stack>
-            </Box>
+            </EventCard>
           </Stack>
         ))}
       </Stack>
