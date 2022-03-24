@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { AppBar, Box, Button, Container, Toolbar, Typography } from '@mui/material'
 import Logo from './logo'
 import LoginContext from '../../context/loginContext'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
   const { authSession, setAuthSession, currentGroup, setCurrentGroup } =
@@ -18,13 +19,17 @@ const Header = () => {
       >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Button
-              variant="text"
-              href="/"
-              sx={{ height: 1, width: 'auto', color: 'primary.contrastText' }}
-            >
-              <Logo sx={{ height: 1, textTransform: 'none' }} gold={currentGroup?.gold} />
-            </Button>
+            <Link to="/" style={{ textDecoration: 'none' }}>
+              <Button
+                variant="text"
+                sx={{ height: 1, width: 'auto', color: 'primary.contrastText' }}
+              >
+                <Logo
+                  sx={{ height: 1, textTransform: 'none' }}
+                  gold={currentGroup?.gold}
+                />
+              </Button>
+            </Link>
             <Box sx={{ flexGrow: 1 }} />
             {authSession && (
               <>

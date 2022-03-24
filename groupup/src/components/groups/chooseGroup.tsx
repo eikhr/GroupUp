@@ -3,13 +3,20 @@ import Group from '../../models/group'
 import React, { useContext, useEffect, useState } from 'react'
 import API, { APIError } from '../../API'
 import LoginContext from '../../context/loginContext'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import GroupCard from './groupCard'
 
 const ChooseGroup = () => {
   const navigate = useNavigate()
   const [allGroups, setAllGroups] = useState<Group[] | null>(null)
   const [error, setError] = useState<APIError | null>(null)
   const { authSession, setCurrentGroup } = useContext(LoginContext)
+
+  useEffect(() => {
+    if (!authSession) {
+      navigate('/')
+    }
+  }, [authSession])
 
   const myGroups = authSession?.user.groups ?? []
 
@@ -23,6 +30,11 @@ const ChooseGroup = () => {
       await API.requestMembership(authSession, '' + group.id)
       group.usersRequestingMembership = group.usersRequestingMembership ?? []
       group.usersRequestingMembership.push(authSession.user)
+      setAllGroups(
+        [...(allGroups?.filter((g) => g.id != group.id) ?? []), group].sort((a, b) =>
+          a.name.localeCompare(b.name)
+        )
+      )
     }
   }
 
@@ -47,42 +59,57 @@ const ChooseGroup = () => {
   return (
     <>
       <Typography variant="h2" sx={{ textAlign: 'center' }} gutterBottom>
-        Velg gruppe
+        Hvilken gruppe vil du logge inn som
       </Typography>
       <Stack spacing={2} alignItems="center">
-        {myGroups.map((group: Group) => (
-          <Button
-            variant="contained"
-            key={group.id}
-            sx={{ fontSize: 20 }}
-            onClick={() => selectGroup(group)}
-          >
-            {group.name}
-          </Button>
-        ))}
-      </Stack>
-
-      <Typography variant="h2" sx={{ textAlign: 'center' }} gutterBottom>
-        Bli med i en ny gruppe
-      </Typography>
-      <Stack spacing={2} alignItems="center">
-        {allGroups
-          .filter((allGroup) => !myGroups.includes(allGroup))
-          .map((group: Group) => (
+        {myGroups && myGroups.length ? (
+          myGroups.map((group: Group) => (
             <Button
               variant="contained"
               key={group.id}
               sx={{ fontSize: 20 }}
-              disabled={
-                !!(group?.usersRequestingMembership ?? []).find(
-                  (user) => user.id == authSession?.user.id
-                )
-              }
-              onClick={() => requestMembership(group)}
+              onClick={() => selectGroup(group)}
             >
               {group.name}
             </Button>
-          ))}
+          ))
+        ) : (
+          <>
+            <Typography>Du er ikke medlem av noen grupper enda :(</Typography>
+            <Link to="/createGroup" style={{ textDecoration: 'none' }}>
+              <Button variant="contained">Lag en ny gruppe</Button>
+            </Link>
+          </>
+        )}
+      </Stack>
+
+      <Typography variant="h2" sx={{ textAlign: 'center' }} gutterBottom>
+        Bli med i en eksisterende gruppe
+      </Typography>
+      <Stack spacing={2} alignItems="center">
+        {allGroups
+          .filter((allGroup) => !myGroups.includes(allGroup))
+          .map((group: Group) => {
+            const requested = !!(group?.usersRequestingMembership ?? []).find(
+              (user) => user.id == authSession?.user.id
+            )
+            return (
+              <GroupCard
+                data={group}
+                key={group.id}
+                extraActions={[
+                  <Button
+                    variant="contained"
+                    key={group.id}
+                    disabled={requested}
+                    onClick={() => requestMembership(group)}
+                  >
+                    {requested ? 'Forespørsel sendt' : 'Send medlemsforespørsel'}
+                  </Button>,
+                ]}
+              />
+            )
+          })}
       </Stack>
     </>
   )

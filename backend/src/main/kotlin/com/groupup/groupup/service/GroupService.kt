@@ -31,7 +31,7 @@ class GroupService(
     }
 
     override fun getGroups(): List<Group> {
-        return groupRepository.findAll()
+        return groupRepository.findAll().sortedBy { it.name }
     }
 
     /* Updates group. Inspired from:
