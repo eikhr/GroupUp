@@ -18,7 +18,7 @@ const GroupDetails = ({ group }: IProps) => {
     )
   }
   return (
-    <Card>
+    <Card sx={{ m: 1.5 }}>
       <CardMedia
         component="img"
         height="200"

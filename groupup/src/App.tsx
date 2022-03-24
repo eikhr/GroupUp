@@ -13,6 +13,7 @@ import Group from './models/group'
 import CurrentGroupContext from './context/CurrentGroupContext'
 import ChooseGroup from './components/groups/chooseGroup'
 import MyGroup from './components/groups/myGroup'
+import MatchList from './components/matching/matchList'
 
 const App = () => {
   const [currentGroup, setCurrentGroup] = useState<Group | null>(null)
@@ -56,6 +57,22 @@ const App = () => {
               element={
                 <LoggedInPage>
                   <MyGroup />
+                </LoggedInPage>
+              }
+            />
+            <Route
+              path="/matches"
+              element={
+                <LoggedInPage>
+                  <MatchList />
+                </LoggedInPage>
+              }
+            />
+            <Route
+              path="/matchReq"
+              element={
+                <LoggedInPage>
+                  <MatchList />
                 </LoggedInPage>
               }
             />
