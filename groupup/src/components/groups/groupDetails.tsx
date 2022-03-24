@@ -14,8 +14,10 @@ import LoginContext from '../../context/loginContext'
 import Group from '../../models/group'
 interface IProps {
   group?: Group
+  onApprove?: () => void
+  onDecline?: () => void
 }
-const GroupDetails = ({ group }: IProps) => {
+const GroupDetails = ({ group, onApprove, onDecline }: IProps) => {
   const { currentGroup } = useContext(LoginContext)
   if (!group) {
     group = currentGroup ?? undefined
@@ -69,10 +71,10 @@ const GroupDetails = ({ group }: IProps) => {
           </Stack>
           {location.pathname == '/matchReq' ? (
             <Stack direction="row" spacing={1}>
-              <Button variant="contained" color="success">
+              <Button variant="contained" color="success" onClick={() => onApprove}>
                 Godkjenn
               </Button>
-              <Button variant="contained" color="error">
+              <Button variant="contained" color="error" onClick={() => onDecline}>
                 Avslå
               </Button>
             </Stack>
