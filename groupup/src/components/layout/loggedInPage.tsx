@@ -1,10 +1,10 @@
 import { Box, Paper, Stack, Tab, Tabs } from '@mui/material'
 import React, { PropsWithChildren, SyntheticEvent, useContext, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import CurrentGroupContext from '../../context/CurrentGroupContext'
+import LoginContext from '../../context/loginContext'
 
 const LoggedInPage = (props: PropsWithChildren<Record<never, never>>) => {
-  const { currentGroup } = useContext(CurrentGroupContext)
+  const { currentGroup } = useContext(LoginContext)
   const location = useLocation()
   const navigate = useNavigate()
 

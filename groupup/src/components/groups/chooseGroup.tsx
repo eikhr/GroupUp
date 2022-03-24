@@ -2,23 +2,33 @@ import { Button, Card, Stack, Typography } from '@mui/material'
 import Group from '../../models/group'
 import React, { useContext, useEffect, useState } from 'react'
 import API, { APIError } from '../../API'
-import CurrentGroupContext from '../../context/CurrentGroupContext'
+import LoginContext from '../../context/loginContext'
 import { useNavigate } from 'react-router-dom'
 
 const ChooseGroup = () => {
   const navigate = useNavigate()
-  const [groups, setGroups] = useState<Group[] | null>(null)
+  const [allGroups, setAllGroups] = useState<Group[] | null>(null)
   const [error, setError] = useState<APIError | null>(null)
-  const { setCurrentGroup } = useContext(CurrentGroupContext)
+  const { authSession, setCurrentGroup } = useContext(LoginContext)
+
+  const myGroups = authSession?.user.groups ?? []
 
   const selectGroup = (group: Group) => {
     setCurrentGroup(group)
     navigate('/events')
   }
 
+  const requestMembership = async (group: Group) => {
+    if (authSession) {
+      await API.requestMembership(authSession, '' + group.id)
+      group.usersRequestingMembership = group.usersRequestingMembership ?? []
+      group.usersRequestingMembership.push(authSession.user)
+    }
+  }
+
   useEffect(() => {
     API.getAllGroups()
-      .then((groups) => setGroups(groups))
+      .then((groups) => setAllGroups(groups))
       .catch((error: APIError) => setError(error))
   }, [])
 
@@ -30,7 +40,7 @@ const ChooseGroup = () => {
     )
   }
 
-  if (!groups) {
+  if (!allGroups) {
     return <Typography data-testid="loading-text">Loading...</Typography>
   }
 
@@ -40,7 +50,7 @@ const ChooseGroup = () => {
         Velg gruppe
       </Typography>
       <Stack spacing={2} alignItems="center">
-        {groups.map((group: Group) => (
+        {myGroups.map((group: Group) => (
           <Button
             variant="contained"
             key={group.id}
@@ -50,6 +60,29 @@ const ChooseGroup = () => {
             {group.name}
           </Button>
         ))}
+      </Stack>
+
+      <Typography variant="h2" sx={{ textAlign: 'center' }} gutterBottom>
+        Bli med i en ny gruppe
+      </Typography>
+      <Stack spacing={2} alignItems="center">
+        {allGroups
+          .filter((allGroup) => !myGroups.includes(allGroup))
+          .map((group: Group) => (
+            <Button
+              variant="contained"
+              key={group.id}
+              sx={{ fontSize: 20 }}
+              disabled={
+                !!(group?.usersRequestingMembership ?? []).find(
+                  (user) => user.id == authSession?.user.id
+                )
+              }
+              onClick={() => requestMembership(group)}
+            >
+              {group.name}
+            </Button>
+          ))}
       </Stack>
     </>
   )

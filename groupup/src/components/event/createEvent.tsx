@@ -7,7 +7,7 @@ import API, { APIError } from '../../API'
 import { useNavigate } from 'react-router-dom'
 import ErrorCard from '../layout/errorCard'
 import Group from '../../models/group'
-import CurrentGroupContext from '../../context/CurrentGroupContext'
+import LoginContext from '../../context/loginContext'
 
 const defaultValues = {
   name: '',
@@ -15,7 +15,7 @@ const defaultValues = {
 }
 
 const Form = () => {
-  const { currentGroup } = useContext(CurrentGroupContext)
+  const { currentGroup } = useContext(LoginContext)
   const navigate = useNavigate()
   const [formValues, setFormValues] = useState(defaultValues)
   const [dateValue, setValue] = useState<Date | null>(new Date())

@@ -1,6 +1,9 @@
 import IEvent from '../models/event'
 import Group from '../models/group'
 import getExampleImage from '../utils/getExampleImage'
+import LoginRequest from '../models/loginRequest'
+import AuthSession from '../models/authSession'
+import User from '../models/user'
 
 const baseUrl = 'http://localhost:8080/api'
 
@@ -53,13 +56,13 @@ const API = {
 
     return await doRequest(url, options)
   },
-  addGroup: async (group: Group): Promise<number> => {
+  addGroup: async (authSession: AuthSession, group: Group): Promise<number> => {
     const url = baseUrl + '/groups/add'
 
     const options: RequestInit = {
       method: 'POST',
       body: JSON.stringify(group),
-      headers: { 'content-type': 'application/json' },
+      headers: { 'content-type': 'application/json', auth: authSession.token },
     }
 
     return await doRequest(url, options)
@@ -75,6 +78,31 @@ const API = {
 
     return await doRequest(url, options)
   },
+  requestMembership: async (authSession: AuthSession, groupId: string): Promise<void> => {
+    const url = baseUrl + `/users/requestmembership/${groupId}`
+
+    const options: RequestInit = {
+      method: 'POST',
+      headers: { auth: authSession.token },
+    }
+
+    return await doRequest(url, options)
+  },
+  acceptMembership: async (
+    authSession: AuthSession,
+    user: User,
+    groupId: string
+  ): Promise<void> => {
+    const url = baseUrl + `/users/acceptmembership/${groupId}`
+
+    const options: RequestInit = {
+      method: 'POST',
+      body: user.toString(),
+      headers: { 'content-type': 'application/json', auth: authSession.token },
+    }
+
+    return await doRequest(url, options)
+  },
   requestMatch: async (
     eventId: number,
     groupId: number,
@@ -86,6 +114,27 @@ const API = {
       method: 'PUT',
       body: JSON.stringify(superlike),
       headers: { 'content-type': 'application/json', 'group-id': groupId.toString() },
+    }
+
+    return await doRequest(url, options)
+  },
+  login: async (loginRequest: LoginRequest): Promise<AuthSession> => {
+    const url = baseUrl + `/users/login`
+
+    const options: RequestInit = {
+      method: 'POST',
+      headers: { username: loginRequest.username, password: loginRequest.password },
+    }
+
+    return await doRequest(url, options)
+  },
+  register: async (user: User): Promise<AuthSession> => {
+    const url = baseUrl + `/users/register`
+
+    const options: RequestInit = {
+      method: 'POST',
+      body: JSON.stringify(user),
+      headers: { 'content-type': 'application/json' },
     }
 
     return await doRequest(url, options)

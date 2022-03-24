@@ -1,4 +1,5 @@
 import IEvent from './event'
+import User from './user'
 
 interface Group {
   id?: number
@@ -10,6 +11,7 @@ interface Group {
   contactEmail: string
   events?: IEvent[]
   gold?: boolean
+  usersRequestingMembership?: User[]
 }
 
 export default Group

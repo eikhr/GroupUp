@@ -10,17 +10,19 @@ import CreateEvent from './components/event/createEvent'
 import CreateGroup from './components/groups/createGroup'
 import GroupList from './components/groups/groupList'
 import Group from './models/group'
-import CurrentGroupContext from './context/CurrentGroupContext'
+import LoginContext from './context/loginContext'
 import ChooseGroup from './components/groups/chooseGroup'
 import MyGroup from './components/groups/myGroup'
+import AuthSession from './models/authSession'
 import MatchList from './components/matching/matchList'
 
 const App = () => {
+  const [authSession, setAuthSession] = useState<AuthSession | null>(null)
   const [currentGroup, setCurrentGroup] = useState<Group | null>(null)
-  const context = { currentGroup, setCurrentGroup }
+  const context = { currentGroup, setCurrentGroup, authSession, setAuthSession }
 
   return (
-    <CurrentGroupContext.Provider value={context}>
+    <LoginContext.Provider value={context}>
       <Stack className="App" sx={{ height: 1 }} justifyContent="stretch">
         <Header />
         <Box sx={{ flexGrow: 1 }}>
@@ -79,7 +81,7 @@ const App = () => {
           </Routes>
         </Box>
       </Stack>
-    </CurrentGroupContext.Provider>
+    </LoginContext.Provider>
   )
 }
 

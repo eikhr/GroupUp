@@ -1,14 +1,14 @@
 import { Button, CardContent, Modal, Stack, Typography } from '@mui/material'
 import React, { useContext, useState } from 'react'
-import CurrentGroupContext from '../../context/CurrentGroupContext'
+import LoginContext from '../../context/loginContext'
 import CenteredModalCard from '../layout/centeredModal'
 import API, { APIError } from '../../API'
 import ErrorCard from '../layout/errorCard'
 import GroupDetails from './groupDetails'
 
 const MyGroup = () => {
-  const { currentGroup } = useContext(CurrentGroupContext)
-  const { setCurrentGroup } = useContext(CurrentGroupContext)
+  const { currentGroup } = useContext(LoginContext)
+  const { setCurrentGroup } = useContext(LoginContext)
   const [open, setOpen] = useState(false)
   const [error, setError] = React.useState<string | null>()
   const handleOpen = () => setOpen(true)
