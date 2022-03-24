@@ -29,7 +29,7 @@ interface IProps {
 }
 
 const EventDetails = ({ event, onNext, onPrevious }: IProps) => {
-  const { currentGroup } = useContext(LoginContext)
+  const { currentGroup, setCurrentGroup } = useContext(LoginContext)
   const [superlikeLoading, setSuperlikeLoading] = useState(false)
   const [likeLoading, setLikeLoading] = useState(false)
   const arrangingGroup = event.groupsMatched && event.groupsMatched[0]
@@ -41,6 +41,7 @@ const EventDetails = ({ event, onNext, onPrevious }: IProps) => {
     } catch (e) {
       console.error(e)
     }
+    setCurrentGroup(await API.getGroup(currentGroup?.id ?? 0))
     setSuperlikeLoading(false)
   }
 
@@ -53,6 +54,12 @@ const EventDetails = ({ event, onNext, onPrevious }: IProps) => {
     }
     setLikeLoading(false)
   }
+
+  const isMine = arrangingGroup?.id === currentGroup?.id
+  const hasLiked = !!currentGroup?.pendingMatchRequests?.find((e) => e?.id === event?.id)
+  const hasSuperliked = !!currentGroup?.superlikeMatchRequests?.find(
+    (e) => e?.id === event?.id
+  )
 
   return (
     <>
@@ -131,26 +138,25 @@ const EventDetails = ({ event, onNext, onPrevious }: IProps) => {
             <Button
               variant="contained"
               color="warning"
+              disabled={hasSuperliked || isMine}
               sx={{ background: '#DAA520' }}
               onClick={() => superlike()}
             >
-              {superlikeLoading ? (
-                'Liker...'
-              ) : (
-                <>
-                  <StarsIcon sx={{ mr: 1 }} /> Superlike
-                </>
-              )}
+              <StarsIcon sx={{ mr: 1 }} />
+              {superlikeLoading
+                ? 'Laster...'
+                : hasSuperliked
+                ? 'Allerede superlikt'
+                : 'Superlik'}
             </Button>
           )}
-          <Button variant="contained" onClick={() => like()}>
-            {likeLoading ? (
-              'Liking...'
-            ) : (
-              <>
-                <RecommendIcon sx={{ mr: 1 }} /> Like
-              </>
-            )}
+          <Button
+            variant="contained"
+            disabled={hasLiked || isMine}
+            onClick={() => like()}
+          >
+            <RecommendIcon sx={{ mr: 1 }} />
+            {likeLoading ? 'Laster...' : hasLiked ? 'Allerede likt' : 'Lik'}
           </Button>
           <Tooltip
             placement="top"
