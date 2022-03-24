@@ -1,5 +1,13 @@
-import { Card, CardContent, Chip, Stack, SxProps, Typography } from '@mui/material'
-import React from 'react'
+import {
+  Card,
+  CardActions,
+  CardContent,
+  Chip,
+  Stack,
+  SxProps,
+  Typography,
+} from '@mui/material'
+import React, { ReactChild } from 'react'
 import IGroup from '../../models/group'
 import InterestsIcon from '@mui/icons-material/Interests'
 
@@ -7,6 +15,7 @@ interface IProps {
   data: IGroup
   sx?: SxProps
   showContact?: boolean
+  extraActions?: [ReactChild]
 }
 
 const GroupInfo = (props: IProps) => {
@@ -47,6 +56,7 @@ const GroupCard = (props: IProps) => {
       <CardContent>
         <GroupInfo {...props} />
       </CardContent>
+      <CardActions>{props.extraActions}</CardActions>
     </Card>
   )
 }
