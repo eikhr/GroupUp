@@ -19,7 +19,7 @@ import API, { APIError } from '../../API'
 import Group from '../../models/group'
 import ErrorCard from '../layout/errorCard'
 import { Favorite, FavoriteBorder } from '@mui/icons-material'
-import CurrentGroupContext from '../../context/CurrentGroupContext'
+import LoginContext from '../../context/loginContext'
 
 const defaultValues = {
   name: '',
@@ -44,7 +44,7 @@ const Form = () => {
   const [formValues, setFormValues] = useState(defaultValues)
   const [interests, setInterest] = React.useState<string[]>([])
   const [error, setError] = React.useState<string | null>()
-  const { setCurrentGroup } = useContext(CurrentGroupContext)
+  const { authSession, setCurrentGroup } = useContext(LoginContext)
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -72,9 +72,11 @@ const Form = () => {
       contactEmail: formValues.email,
     }
     try {
-      group.id = await API.addGroup(group)
-      setCurrentGroup(group)
-      navigate('/events')
+      if (authSession) {
+        group.id = await API.addGroup(authSession, group)
+        setCurrentGroup(group)
+        navigate('/events')
+      }
     } catch (err: unknown) {
       const apiErr = err as APIError
       setError(`${apiErr.message}, ${apiErr.status}`)

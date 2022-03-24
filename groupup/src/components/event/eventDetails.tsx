@@ -19,7 +19,7 @@ import moment from 'moment'
 import React, { useContext, useState } from 'react'
 import CenteredModalCard from '../layout/centeredModal'
 import API from '../../API'
-import CurrentGroupContext from '../../context/CurrentGroupContext'
+import LoginContext from '../../context/loginContext'
 import { GroupInfo } from '../groups/groupCard'
 
 interface IProps {
@@ -29,7 +29,7 @@ interface IProps {
 }
 
 const EventDetails = ({ event, onNext, onPrevious }: IProps) => {
-  const { currentGroup } = useContext(CurrentGroupContext)
+  const { currentGroup } = useContext(LoginContext)
   const [superlikeLoading, setSuperlikeLoading] = useState(false)
   const [likeLoading, setLikeLoading] = useState(false)
   const arrangingGroup = event.groupsMatched && event.groupsMatched[0]

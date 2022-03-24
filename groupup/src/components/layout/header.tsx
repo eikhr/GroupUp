@@ -1,10 +1,11 @@
 import React, { useContext } from 'react'
 import { AppBar, Box, Button, Container, Toolbar, Typography } from '@mui/material'
 import Logo from './logo'
-import CurrentGroupContext from '../../context/CurrentGroupContext'
+import LoginContext from '../../context/loginContext'
 
 const Header = () => {
-  const { currentGroup, setCurrentGroup } = useContext(CurrentGroupContext)
+  const { authSession, setAuthSession, currentGroup, setCurrentGroup } =
+    useContext(LoginContext)
 
   return (
     <>
@@ -25,31 +26,25 @@ const Header = () => {
               <Logo sx={{ height: 1, textTransform: 'none' }} gold={currentGroup?.gold} />
             </Button>
             <Box sx={{ flexGrow: 1 }} />
-            {currentGroup ? (
+            {authSession && (
               <>
                 <Typography
                   fontSize="large"
                   sx={{ color: 'primary.contrastText', mr: 1 }}
                 >
-                  {currentGroup.name}
+                  {authSession.user.firstName} {currentGroup && currentGroup.name}
                 </Typography>
                 <Button
                   variant="outlined"
                   color="inherit"
-                  onClick={() => setCurrentGroup(null)}
+                  onClick={() => {
+                    setAuthSession(null)
+                    setCurrentGroup(null)
+                  }}
                 >
                   Logg ut
                 </Button>
               </>
-            ) : (
-              <Button
-                component="a"
-                href="/chooseGroup"
-                color="inherit"
-                variant="outlined"
-              >
-                Din gruppe
-              </Button>
             )}
           </Toolbar>
         </Container>

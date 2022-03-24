@@ -2,13 +2,13 @@ import { Card, CardContent, CardMedia, Chip, Stack, Typography } from '@mui/mate
 import React, { useContext } from 'react'
 import EventIcon from '@mui/icons-material/Event'
 import InterestsIcon from '@mui/icons-material/Interests'
-import CurrentGroupContext from '../../context/CurrentGroupContext'
+import LoginContext from '../../context/loginContext'
 import Group from '../../models/group'
 interface IProps {
   group?: Group
 }
 const GroupDetails = ({ group }: IProps) => {
-  const { currentGroup } = useContext(CurrentGroupContext)
+  const { currentGroup } = useContext(LoginContext)
   if (!group) {
     group = currentGroup ?? undefined
   }

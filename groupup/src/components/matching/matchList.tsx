@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import { Card, Typography } from '@mui/material'
 import MatchRequests from './matchRequests'
-import CurrentGroupContext from '../../context/CurrentGroupContext'
+import LoginContext from '../../context/loginContext'
 
 const MatchList = () => {
-  const { currentGroup } = useContext(CurrentGroupContext)
+  const { currentGroup } = useContext(LoginContext)
 
   if (!currentGroup) {
     return (
