@@ -1,19 +1,7 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  CardMedia,
-  Chip,
-  Stack,
-  Typography,
-} from '@mui/material'
-import React, { useContext } from 'react'
-import EventIcon from '@mui/icons-material/Event'
-import InterestsIcon from '@mui/icons-material/Interests'
-import LoginContext from '../../context/loginContext'
+import { Button, Card, CardContent, Stack, Typography } from '@mui/material'
+import React from 'react'
 import User from '../../models/user'
 import Group from '../../models/group'
-import authSession from '../../models/authSession'
 import API from '../../API'
 import AuthSession from '../../models/authSession'
 interface IProps {
@@ -22,11 +10,6 @@ interface IProps {
   myGroup: Group
   onChange: () => void
 }
-
-/*const handleAccept = ({ authSession, user, myGroup, onChange }: IProps) => {
-  authSession && API.acceptMembership(authSession, user, myGroup.id?.toString() || "");
-  onChange()
-}*/
 
 const UserDetails = ({ authSession, user, myGroup, onChange }: IProps) => (
   <Card sx={{ m: 1.5 }}>
@@ -55,18 +38,20 @@ const UserDetails = ({ authSession, user, myGroup, onChange }: IProps) => (
         <Typography variant="body2" color="text">
           Alder: {user.age}
         </Typography>
-        {authSession && (
+      </Stack>
+      {authSession && (
+        <Stack data-testid="description" spacing={1} direction={'row'} sx={{ mt: 2 }}>
           <Button
             variant="outlined"
-            onClick={() => {
-              API.acceptMembership(authSession, user, myGroup.id?.toString() || '')
+            onClick={async () => {
+              await API.acceptMembership(authSession, user, myGroup.id?.toString() || '')
               onChange()
             }}
           >
             Aksepter medlemsforespørsel
           </Button>
-        )}
-      </Stack>
+        </Stack>
+      )}
     </CardContent>
   </Card>
 )

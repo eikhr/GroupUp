@@ -95,15 +95,16 @@ class UserService(
 
     fun acceptMembership(groupId: Long, authUser: User, user: User): User {
         val group = groupService.getGroup(groupId)
-        if (!user.groupMembershipRequests.contains(group))
+        val actualUser = getUser(user.id)
+        if (!actualUser.groupMembershipRequests.contains(group))
             throw IllegalArgumentException("Du har ikke sendt en forespørsel til gruppen")
         if (!group.users.contains(authUser))
             throw IllegalStateException("Du kan ikke legge til medlemmer i en gruppe du ikke er med i")
-        user.groupMembershipRequests.remove(group)
-        group.usersRequestingMembership.remove(user)
-        user.groups.add(group)
-        group.users.add(user)
+        actualUser.groupMembershipRequests.remove(group)
+        group.usersRequestingMembership.remove(actualUser)
+        actualUser.groups.add(group)
+        group.users.add(actualUser)
         groupService.updateGroup(groupId, group)
-        return updateUser(user, user.id)
+        return updateUser(actualUser, user.id)
     }
 }
