@@ -1,6 +1,7 @@
 import Group from './group'
 
 interface User {
+  age: string | number
   id?: number
   username: string
   email: string

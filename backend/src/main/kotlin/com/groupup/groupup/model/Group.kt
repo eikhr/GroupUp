@@ -31,10 +31,20 @@ open class Group {
     open var description: String = ""
 
     @Column
-    open var minAge: Int = MIN_AGE
+    open var minAge: Integer = Integer(MIN_AGE)
+        get() {
+            var minAge = Integer(Integer.MAX_VALUE)
+            users.forEach { user -> if (user.age.toInt() < minAge.toInt()) minAge = user.age }
+            return minAge
+        }
 
     @Column
-    open var maxAge: Int = MAX_AGE
+    open var maxAge: Integer = Integer(MAX_AGE)
+        get() {
+            var maxAge = Integer(Integer.MIN_VALUE)
+            users.forEach { user -> if (user.age.toInt() > maxAge.toInt()) maxAge = user.age }
+            return maxAge
+        }
 
     @Column
     open var contactEmail: String = "testmail@autogen.com"

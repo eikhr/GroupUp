@@ -14,6 +14,7 @@ import kotlin.experimental.and
 
 private const val RADIX = 16
 private const val WEIRD_HEX_BYTE = 0x100
+private const val MIN_AGE = 18
 
 /**
  * Class for representing a user.
@@ -27,15 +28,22 @@ open class User {
     open var id: Long = -1
 
     @Column(unique = true)
-    open lateinit var username: String
+    open var username: String
     @Column
     open lateinit var password: String
     @Column
-    open lateinit var firstName: String
+    open var firstName: String
     @Column
-    open lateinit var lastName: String
+    open var lastName: String
     @Column
-    open lateinit var email: String
+    open var email: String
+    @Column
+    open var age: Integer
+        set(value) {
+            if (value < MIN_AGE)
+                throw IllegalArgumentException("Du må være over $MIN_AGE for å registrere deg.")
+            field = value
+        }
 
     /**
      * Create a new User.
@@ -50,12 +58,14 @@ open class User {
         hash: Boolean,
         firstName: String,
         lastName: String,
-        email: String
+        email: String,
+        age: Integer
     ) : super() {
         this.username = username
         this.firstName = firstName
         this.lastName = lastName
         this.email = email
+        this.age = age
         if (hash) {
             hashAndSetPassword(password)
         } else {
