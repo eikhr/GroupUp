@@ -23,6 +23,11 @@ const ChooseGroup = () => {
       await API.requestMembership(authSession, '' + group.id)
       group.usersRequestingMembership = group.usersRequestingMembership ?? []
       group.usersRequestingMembership.push(authSession.user)
+      setAllGroups(
+        [...(allGroups?.filter((g) => g.id != group.id) ?? []), group].sort((a, b) =>
+          a.name.localeCompare(b.name)
+        )
+      )
     }
   }
 
