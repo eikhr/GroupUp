@@ -96,10 +96,10 @@ const CoverPage = () => {
           <Stack direction="row" spacing={1}>
             {authSession ? (
               <>
-                <Link to="/chooseGroup">
+                <Link to="/chooseGroup" style={{ textDecoration: 'none' }}>
                   <Button variant="outlined">Velg gruppe</Button>
                 </Link>
-                <Link to="/createGroup">
+                <Link to="/createGroup" style={{ textDecoration: 'none' }}>
                   <Button variant="outlined">Lag grupppe</Button>
                 </Link>
               </>

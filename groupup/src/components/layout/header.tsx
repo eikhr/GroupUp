@@ -19,7 +19,7 @@ const Header = () => {
       >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Link to="/">
+            <Link to="/" style={{ textDecoration: 'none' }}>
               <Button
                 variant="text"
                 sx={{ height: 1, width: 'auto', color: 'primary.contrastText' }}

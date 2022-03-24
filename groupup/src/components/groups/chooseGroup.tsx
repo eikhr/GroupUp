@@ -76,7 +76,7 @@ const ChooseGroup = () => {
         ) : (
           <>
             <Typography>Du er ikke medlem av noen grupper enda :(</Typography>
-            <Link to="/createGroup">
+            <Link to="/createGroup" style={{ textDecoration: 'none' }}>
               <Button variant="contained">Lag en ny gruppe</Button>
             </Link>
           </>
