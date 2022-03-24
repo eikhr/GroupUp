@@ -1,4 +1,12 @@
-import { Card, CardContent, CardMedia, Chip, Stack, Typography } from '@mui/material'
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Chip,
+  Stack,
+  Typography,
+  Button,
+} from '@mui/material'
 import React, { useContext } from 'react'
 import EventIcon from '@mui/icons-material/Event'
 import InterestsIcon from '@mui/icons-material/Interests'
@@ -45,21 +53,34 @@ const GroupDetails = ({ group }: IProps) => {
         >
           {group.contactEmail}
         </Typography>
-        <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
-          {group.interests?.map((interest) => (
-            <Chip icon={<InterestsIcon />} key={interest} label={interest} />
-          ))}
-        </Stack>
-        <Stack data-testid="description" spacing={1} direction={'row'} sx={{ mt: 2 }}>
-          <Typography variant="body2" color="text">
-            Aktiviteter:{' '}
-          </Typography>
-          {group.events?.map((event) => (
-            <Chip icon={<EventIcon />} key={event.title} label={event.title} />
-          ))}
+        <Stack direction="column" spacing={1}>
+          <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
+            {group.interests?.map((interest) => (
+              <Chip icon={<InterestsIcon />} key={interest} label={interest} />
+            ))}
+          </Stack>
+          <Stack data-testid="description" spacing={1} direction={'row'} sx={{ mt: 2 }}>
+            <Typography variant="body2" color="text">
+              Aktiviteter:{' '}
+            </Typography>
+            {group.events?.map((event) => (
+              <Chip icon={<EventIcon />} key={event.title} label={event.title} />
+            ))}
+          </Stack>
+          {location.pathname == '/matchReq' ? (
+            <Stack direction="row" spacing={1}>
+              <Button variant="contained" color="success">
+                Godkjenn
+              </Button>
+              <Button variant="contained" color="error">
+                Avslå
+              </Button>
+            </Stack>
+          ) : undefined}
         </Stack>
       </CardContent>
     </Card>
   )
 }
+
 export default GroupDetails

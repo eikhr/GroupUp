@@ -11,7 +11,7 @@ interface IProps {
     hideImage?: boolean
   }
 }
-const EventCard = (props: IProps) => {
+const EventCard = (props: React.PropsWithChildren<IProps>) => {
   moment.locale('nb')
 
   const groups = props.data.groupsMatched
@@ -47,12 +47,15 @@ const EventCard = (props: IProps) => {
         <Typography data-testid="groups" variant="body2" color="text.secondary">
           {arrangingGroup?.name}
         </Typography>
-        <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
-          Gruppen liker: <br />
-          {arrangingGroup?.interests?.map((interest) => (
-            <Chip icon={<InterestsIcon />} key={interest} label={interest} />
-          ))}
-        </Stack>
+        {location.pathname == '/events' ? (
+          <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
+            Gruppen liker: <br />
+            {arrangingGroup?.interests?.map((interest) => (
+              <Chip icon={<InterestsIcon />} key={interest} label={interest} />
+            ))}
+          </Stack>
+        ) : undefined}
+        {props.children}
       </CardContent>
     </Card>
   )

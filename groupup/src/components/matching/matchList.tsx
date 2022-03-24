@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Card, Typography } from '@mui/material'
+import { Typography, Stack } from '@mui/material'
 import MatchRequests from './matchRequests'
 import LoginContext from '../../context/loginContext'
 
@@ -15,9 +15,9 @@ const MatchList = () => {
   }
 
   return (
-    <Card sx={{ m: 1.5 }}>
+    <Stack sx={{ m: 1.5 }}>
       <MatchRequests group={currentGroup} />
-    </Card>
+    </Stack>
   )
 }
 
