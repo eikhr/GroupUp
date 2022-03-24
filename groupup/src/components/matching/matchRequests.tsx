@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import Group from '../../models/group'
+import IEvent from '../../models/event'
 import { Chip, Stack, Modal, Button } from '@mui/material'
 import EventCard from '../event/eventCard'
 import GroupIcon from '@mui/icons-material/Group'
 import CenteredModalCard from '../layout/centeredModal'
 import GroupDetails from '../groups/groupDetails'
+import API from '../../API'
 
 interface IProps {
   group: Group
@@ -12,11 +14,35 @@ interface IProps {
 
 const MatchRequests = ({ group }: IProps) => {
   const [openGroup, setOpenGroup] = useState<Group | null>(null)
+  const [openEvent, setOpenEvent] = useState<IEvent | null>(null)
+
   return (
     <>
       <Modal open={!!openGroup} onClose={() => setOpenGroup(null)}>
         <CenteredModalCard width={800}>
-          <>{openGroup && <GroupDetails group={openGroup} />}</>
+          <>
+            {openGroup && openEvent && (
+              <GroupDetails
+                group={openGroup}
+                onApprove={async () => {
+                  try {
+                    await (openEvent.id &&
+                      API.acceptMatch(openEvent.id, openGroup?.id ?? -1))
+                  } catch (e) {
+                    console.error(e)
+                  }
+                }}
+                onDecline={async () => {
+                  try {
+                    await (openEvent.id &&
+                      API.declineMatch(openEvent.id, openGroup?.id ?? -1))
+                  } catch (e) {
+                    console.error(e)
+                  }
+                }}
+              />
+            )}
+          </>
           <Button />
         </CenteredModalCard>
       </Modal>
@@ -34,7 +60,10 @@ const MatchRequests = ({ group }: IProps) => {
                     label={superlikeGroup.name}
                     color="primary"
                     style={{ backgroundColor: '#DAA520' }}
-                    onClick={() => setOpenGroup(superlikeGroup)}
+                    onClick={() => {
+                      setOpenGroup(superlikeGroup)
+                      setOpenEvent(event)
+                    }}
                     sx={{ cursor: 'pointer' }}
                   />
                 ))}
@@ -49,7 +78,10 @@ const MatchRequests = ({ group }: IProps) => {
                     label={pendingGroup.name}
                     color="primary"
                     variant="filled"
-                    onClick={() => setOpenGroup(pendingGroup)}
+                    onClick={() => {
+                      setOpenGroup(pendingGroup)
+                      setOpenEvent(event)
+                    }}
                     sx={{ cursor: 'pointer' }}
                   />
                 ))}

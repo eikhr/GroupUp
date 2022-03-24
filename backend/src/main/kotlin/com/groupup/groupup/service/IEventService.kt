@@ -68,4 +68,5 @@ interface IEventService {
      * @return The updated event
      */
     fun acceptMatch(event: Event, groupId: Long): Event?
+    fun declineMatch(event: Event, groupId: Long): Event?
 }

@@ -118,6 +118,28 @@ const API = {
 
     return await doRequest(url, options)
   },
+  acceptMatch: async (eventId: number, groupId: number): Promise<void> => {
+    const url = baseUrl + `/events/${eventId}/acceptmatch`
+
+    const options: RequestInit = {
+      method: 'PUT',
+      body: JSON.stringify(eventId),
+      headers: { 'content-type': 'application/json', 'group-id': groupId.toString() },
+    }
+
+    return await doRequest(url, options)
+  },
+  declineMatch: async (eventId: number, groupId: number): Promise<void> => {
+    const url = baseUrl + `/events/${eventId}/acceptmatch`
+
+    const options: RequestInit = {
+      method: 'PUT',
+      body: JSON.stringify(eventId),
+      headers: { 'content-type': 'application/json', 'group-id': groupId.toString() },
+    }
+
+    return await doRequest(url, options)
+  },
   login: async (loginRequest: LoginRequest): Promise<AuthSession> => {
     const url = baseUrl + `/users/login`
 
