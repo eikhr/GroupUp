@@ -53,11 +53,11 @@ class GroupService(
     }
 
     override fun getMinAge(id: Long): Int {
-        return groupRepository.findById(id).get().minAge
+        return groupRepository.findById(id).get().minAge.toInt()
     }
 
     override fun getMaxAge(id: Long): Int {
-        return groupRepository.findById(id).get().maxAge
+        return groupRepository.findById(id).get().maxAge.toInt()
     }
 
     override fun addEventById(group: Group, id: Long): Group {

@@ -1,13 +1,14 @@
-import { Button, CardContent, Modal, Stack, Typography } from '@mui/material'
+import { Button, CardContent, Grid, Modal, Stack, Typography } from '@mui/material'
 import React, { useContext, useState } from 'react'
 import LoginContext from '../../context/loginContext'
 import CenteredModalCard from '../layout/centeredModal'
 import API, { APIError } from '../../API'
 import ErrorCard from '../layout/errorCard'
 import GroupDetails from './groupDetails'
+import UserDetails from './userDetails'
 
 const MyGroup = () => {
-  const { currentGroup } = useContext(LoginContext)
+  const { authSession, currentGroup } = useContext(LoginContext)
   const { setCurrentGroup } = useContext(LoginContext)
   const [open, setOpen] = useState(false)
   const [error, setError] = React.useState<string | null>()
@@ -71,6 +72,24 @@ const MyGroup = () => {
           </Button>
         )}
         <GroupDetails group={currentGroup} />
+        <Grid container spacing={2} justifyContent="center">
+          {currentGroup?.usersRequestingMembership?.map((user) => (
+            <UserDetails
+              user={user}
+              key={user.id}
+              authSession={authSession}
+              myGroup={currentGroup}
+              onChange={async () =>
+                setCurrentGroup(
+                  await API.getAllGroups().then(
+                    (groups) =>
+                      groups.find((group) => group?.id === currentGroup?.id) ?? null
+                  )
+                )
+              }
+            />
+          ))}
+        </Grid>
       </Stack>
     </div>
   )

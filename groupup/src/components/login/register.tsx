@@ -31,10 +31,18 @@ const RegisterModal = (props: IProps) => {
     firstName: '',
     lastName: '',
     password: '',
+    age: '',
   })
 
   const close = () => {
-    setUser({ username: '', email: '', password: '', firstName: '', lastName: '' })
+    setUser({
+      username: '',
+      email: '',
+      password: '',
+      firstName: '',
+      lastName: '',
+      age: '',
+    })
     props.onClose()
   }
 
@@ -65,25 +73,47 @@ const RegisterModal = (props: IProps) => {
               fullWidth
             />
             <TextField
-              id="firstName-input"
-              name="firstName"
-              label="Fornavn"
+              id="email-input"
+              name="email"
+              label="Epost"
               type="text"
               required
-              value={user.firstName}
-              onChange={(evt) => setUser({ ...user, firstName: evt.target.value })}
+              value={user.email}
+              onChange={(evt) => setUser({ ...user, email: evt.target.value })}
               fullWidth
             />
-            <TextField
-              id="lastName-input"
-              name="lastName"
-              label="Etternavn"
-              type="text"
-              required
-              value={user.lastName}
-              onChange={(evt) => setUser({ ...user, lastName: evt.target.value })}
-              fullWidth
-            />
+            <Stack direction="row">
+              <TextField
+                id="firstName-input"
+                name="firstName"
+                label="Fornavn"
+                type="text"
+                required
+                value={user.firstName}
+                onChange={(evt) => setUser({ ...user, firstName: evt.target.value })}
+                fullWidth
+              />
+              <TextField
+                id="lastName-input"
+                name="lastName"
+                label="Etternavn"
+                type="text"
+                required
+                value={user.lastName}
+                onChange={(evt) => setUser({ ...user, lastName: evt.target.value })}
+                fullWidth
+              />
+              <TextField
+                id="age-input"
+                name="age"
+                label="Alder"
+                type="text"
+                required
+                inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
+                value={user.age}
+                onChange={(evt) => setUser({ ...user, age: evt.target.value })}
+              />
+            </Stack>
             <TextField
               id="password-input"
               name="password"
@@ -103,7 +133,7 @@ const RegisterModal = (props: IProps) => {
         </Button>
         <Button
           onClick={() => {
-            props.onRegister(user)
+            props.onRegister({ ...user, age: Number(user.age) })
           }}
         >
           <LoginIcon /> Registerer deg

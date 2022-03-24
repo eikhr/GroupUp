@@ -90,8 +90,8 @@ class GroupControllerTest : WebControllerTestHelper {
         val group = Group()
         group.name = "Test group " + Random.nextFloat().toString()
         group.description = "description " + Random.nextFloat().toString()
-        group.minAge = Random.nextInt(18, 50)
-        group.maxAge = Random.nextInt(51, 99)
+        group.minAge = Integer(Random.nextInt(18, 50))
+        group.maxAge = Integer(Random.nextInt(51, 99))
         return group
     }
 
@@ -124,9 +124,9 @@ class GroupControllerTest : WebControllerTestHelper {
         val group = Group()
         group.name = "testName"
         group.description = "description"
-        group.minAge = 18
-        group.maxAge = 99
-        val user = User("username", "pwd", true, "", "", "email@email.com")
+        group.minAge = Integer(18)
+        group.maxAge = Integer(99)
+        val user = User("username", "pwd", true, "", "", "email@email.com", Integer(18))
         addGroup(user, group)
     }
 
@@ -136,8 +136,8 @@ class GroupControllerTest : WebControllerTestHelper {
         group.id = 123
         group.name = "testName"
         group.description = "description"
-        group.minAge = 18
-        group.maxAge = 99
+        group.minAge = Integer(18)
+        group.maxAge = Integer(99)
         val gottenGroup = getGroupById(group)
 
         assertEquals(group.id, gottenGroup.id)

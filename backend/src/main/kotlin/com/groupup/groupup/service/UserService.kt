@@ -29,7 +29,7 @@ class UserService(
         }
         if (dbUser != null)
             throw IllegalStateException("Du kan ikke registrere flere brukere med samme brukernavn")
-        val createdUser = User(user.username, user.password, true, user.firstName, user.lastName, user.email)
+        val createdUser = User(user.username, user.password, true, user.firstName, user.lastName, user.email, user.age)
         return userRepository.save(createdUser)
     }
 
@@ -85,6 +85,8 @@ class UserService(
     fun requestMembership(groupId: Long, authToken: String): User {
         val group: Group = groupService.getGroup(groupId)
         val user = getUserByToken(authToken)
+        if (group.usersRequestingMembership.contains(user))
+            throw IllegalStateException("You have already requested joining this group")
         group.usersRequestingMembership.add(user)
         user.groupMembershipRequests.add(group)
         groupService.updateGroup(groupId, group)
