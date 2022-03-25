@@ -88,7 +88,7 @@ const ChooseGroup = () => {
       </Typography>
       <Stack spacing={2} alignItems="center">
         {allGroups
-          .filter((allGroup) => !myGroups.includes(allGroup))
+          .filter((group) => !myGroups.map((g) => g.id).includes(group.id))
           .map((group: Group) => {
             const requested = !!(group?.usersRequestingMembership ?? []).find(
               (user) => user.id == authSession?.user.id
