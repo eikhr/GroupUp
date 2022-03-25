@@ -27,8 +27,8 @@ const Matches = () => {
           <Button />
         </CenteredModalCard>
       </Modal>
-      {currentGroup?.events?.map((event) => {
-        <Stack sx={{ m: 1.5 }}>
+      {currentGroup?.events?.map((event) => (
+        <Stack sx={{ m: 1.5 }} key={event.id}>
           <EventCard data={event} options={{ hideImage: true }}>
             <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
               {event.groupsMatched?.map((matchedGroup) => (
@@ -46,7 +46,7 @@ const Matches = () => {
             </Stack>
           </EventCard>
         </Stack>
-      })}
+      ))}
     </>
   )
 }

@@ -15,7 +15,7 @@ import ChooseGroup from './components/groups/chooseGroup'
 import MyGroup from './components/groups/myGroup'
 import AuthSession from './models/authSession'
 import MatchList from './components/matching/matchList'
-import Matches from "./components/matching/matches";
+import Matches from './components/matching/matches'
 
 const App = () => {
   const [authSession, setAuthSession] = useState<AuthSession | null>(null)
