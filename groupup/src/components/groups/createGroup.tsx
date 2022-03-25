@@ -29,7 +29,7 @@ const defaultValues = {
   interests: [''],
   email: '',
 }
-const interestList = [
+export const interestList = [
   'tur',
   'fest',
   'hest',
