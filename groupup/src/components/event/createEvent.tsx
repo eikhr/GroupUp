@@ -6,7 +6,6 @@ import IEvent from '../../models/event'
 import API, { APIError } from '../../API'
 import { useNavigate } from 'react-router-dom'
 import ErrorCard from '../layout/errorCard'
-import Group from '../../models/group'
 import LoginContext from '../../context/loginContext'
 
 const defaultValues = {
