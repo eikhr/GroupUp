@@ -1,14 +1,17 @@
-import { Box, Card, Grid, Modal, Typography } from '@mui/material'
+import { Box, Button, Card, Grid, Modal, Stack, Typography } from '@mui/material'
 import IEvent from '../../models/event'
 import React, { useEffect, useState } from 'react'
 import EventCard from './eventCard'
 import API, { APIError } from '../../API'
 import EventDetails from './eventDetails'
+import InterestsIcon from '@mui/icons-material/Interests'
+import { interestList } from '../groups/createGroup'
 
 const EventList = () => {
   const [events, setEvents] = useState<IEvent[] | null>(null)
   const [error, setError] = useState<APIError | null>(null)
   const [openEvent, setOpenEvent] = useState<IEvent | null>(null)
+  const [interestsFilter, setInterestsFilter] = useState<string[]>([])
 
   useEffect(() => {
     API.getAllEvents()
@@ -34,6 +37,21 @@ const EventList = () => {
     setOpenEvent(events[(openIndex + events.length + (reverse ? -1 : 1)) % events.length])
   }
 
+  const toggleFilter = (interest: string) => {
+    if (interestsFilter.includes(interest))
+      setInterestsFilter(interestsFilter.filter((element) => element != interest))
+    else setInterestsFilter([...interestsFilter, interest])
+  }
+
+  function getEventsFilter(event: IEvent) {
+    if (interestsFilter.length == 0) {
+      return true
+    }
+    return !interestsFilter.some(
+      (interest) => event.groupsMatched[0].interests.indexOf(interest) === -1
+    )
+  }
+
   return (
     <>
       <Modal open={!!openEvent} onClose={() => setOpenEvent(null)}>
@@ -47,15 +65,32 @@ const EventList = () => {
           )}
         </>
       </Modal>
-      <Grid container spacing={2} justifyContent="center">
-        {events.map((event) => (
-          <Grid item key={event.id}>
-            <Box onClick={() => setOpenEvent(event)} sx={{ cursor: 'pointer' }}>
-              <EventCard data={event} />
-            </Box>
-          </Grid>
-        ))}
-      </Grid>
+      <Stack spacing={1}>
+        <Stack direction="row" spacing={1} justifyContent="center">
+          {interestList.map((interest) => (
+            <Button
+              key={interest}
+              size="large"
+              variant="contained"
+              color={interestsFilter.includes(interest) ? 'primary' : 'warning'}
+              onClick={() => toggleFilter(interest)}
+            >
+              <InterestsIcon /> {interest}
+            </Button>
+          ))}
+        </Stack>
+        <Grid container spacing={2} justifyContent="center">
+          {events
+            .filter((event) => getEventsFilter(event))
+            .map((event) => (
+              <Grid item key={event.id}>
+                <Box onClick={() => setOpenEvent(event)} sx={{ cursor: 'pointer' }}>
+                  <EventCard data={event} />
+                </Box>
+              </Grid>
+            ))}
+        </Grid>
+      </Stack>
     </>
   )
 }
