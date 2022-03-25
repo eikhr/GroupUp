@@ -21,13 +21,11 @@ const MyGroup = () => {
     )
   }
 
-  const buyGold = async () => {
+  const buyGold = async (groupId: number) => {
     try {
-      console.log('The boolean was: ', currentGroup.gold)
-      const updated = { ...currentGroup, gold: true }
-      console.log('The boolean is now: ', updated.gold)
+      const group = await API.getGroup(groupId)
+      const updated = { ...group, gold: true }
       await API.updateGroup(updated)
-      setCurrentGroup(updated)
       handleClose()
     } catch (err: unknown) {
       const apiErr = err as APIError
@@ -51,7 +49,10 @@ const MyGroup = () => {
               <Button
                 sx={{ background: '#DAA520', color: '#000000', fontStyle: 'bold' }}
                 size="large"
-                onClick={buyGold}
+                onClick={async () => {
+                  await buyGold(currentGroup.id ?? 0)
+                  setCurrentGroup(await API.getGroup(currentGroup.id ?? 0))
+                }}
               >
                 Godkjenn GULL-medlemskap!
               </Button>

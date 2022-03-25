@@ -40,7 +40,7 @@ const CoverPage = () => {
       setModalError('Du må jo skrive inn passordet! 😠')
       return
     }
-    if (!user.email || !user.email.match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)) {
+    if (!user.email || !user.email.match(/^[\w.]+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)) {
       setModalError('Du må skrive en gyldig epost😠')
       return
     }

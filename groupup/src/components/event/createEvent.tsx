@@ -39,14 +39,16 @@ const Form = () => {
     }
 
     if (currentGroup) {
-      await putGroupWithNewEvent(currentGroup, event)
-      setCurrentGroup(await API.getGroup(currentGroup?.id ?? 0))
+      await putGroupWithNewEvent(currentGroup.id ?? 0, event)
+      setCurrentGroup(await API.getGroup(currentGroup.id ?? 0))
     } else {
       setError('You must choose a group to create event!')
     }
   }
 
-  const putGroupWithNewEvent = async (group: Group, event: IEvent) => {
+  const putGroupWithNewEvent = async (groupId: number, event: IEvent) => {
+    const group = await API.getGroup(groupId)
+
     if (!group.events) {
       group.events = [event]
     } else {
