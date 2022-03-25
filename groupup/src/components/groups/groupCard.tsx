@@ -41,6 +41,12 @@ const GroupInfo = (props: IProps) => {
           {props.data.contactEmail}
         </Typography>
       )}
+      <Typography variant="body1">Medlemmer:</Typography>
+      {props.data.users?.map((user) => (
+        <Typography variant="body2" color="text.secondary" key={user.id}>
+          - {user.firstName} {user.lastName} {props.showContact && `(${user.email})`}
+        </Typography>
+      ))}
       <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
         {props.data.interests.map((interest) => (
           <Chip icon={<InterestsIcon />} key={interest} label={interest} />

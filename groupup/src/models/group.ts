@@ -12,6 +12,7 @@ interface Group {
   events?: IEvent[]
   gold?: boolean
   usersRequestingMembership?: User[]
+  users?: User[]
   pendingMatchRequests?: IEvent[]
   superlikeMatchRequests?: IEvent[]
 }
