@@ -12,6 +12,8 @@ interface Group {
   events?: IEvent[]
   gold?: boolean
   usersRequestingMembership?: User[]
+  pendingMatchRequests?: IEvent[]
+  superlikeMatchRequests?: IEvent[]
 }
 
 export default Group

@@ -40,6 +40,14 @@ const CoverPage = () => {
       setModalError('Du må jo skrive inn passordet! 😠')
       return
     }
+    if (!user.email || !user.email.match(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/)) {
+      setModalError('Du må skrive en gyldig epost😠')
+      return
+    }
+    if (!user.age || user.age < 18) {
+      setModalError('Du må være over 18 for å bruke GroupUp')
+      return
+    }
 
     try {
       const authSession = await API.register(user)

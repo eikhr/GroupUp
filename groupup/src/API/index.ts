@@ -56,6 +56,15 @@ const API = {
 
     return await doRequest(url, options)
   },
+  getGroup: async (id: number): Promise<Group> => {
+    const url = baseUrl + `/groups/${id}`
+
+    const options: RequestInit = {
+      method: 'GET',
+    }
+
+    return await doRequest(url, options)
+  },
   addGroup: async (authSession: AuthSession, group: Group): Promise<number> => {
     const url = baseUrl + '/groups/add'
 
@@ -95,9 +104,10 @@ const API = {
   ): Promise<void> => {
     const url = baseUrl + `/users/acceptmembership/${groupId}`
 
+    console.log('userid: ', user.id, 'groupid:', groupId)
     const options: RequestInit = {
       method: 'POST',
-      body: user.toString(),
+      body: JSON.stringify(user),
       headers: { 'content-type': 'application/json', auth: authSession.token },
     }
 
