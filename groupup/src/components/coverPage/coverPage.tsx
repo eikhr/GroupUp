@@ -6,9 +6,10 @@ import API from '../../API'
 import LoginRequest from '../../models/loginRequest'
 import LoginModal from '../login/loginModal'
 import RegisterModal from '../login/register'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const CoverPage = () => {
+  const navigate = useNavigate()
   const { authSession, setAuthSession, setCurrentGroup } = useContext(LoginContext)
   const [showLogin, setShowLogin] = useState(false)
   const [showRegister, setShowRegister] = useState(false)
@@ -54,6 +55,7 @@ const CoverPage = () => {
       setCurrentGroup(null)
       setAuthSession(authSession)
       onCloseModal()
+      navigate('/chooseGroup')
     } catch (e: unknown) {
       setModalError('' + e)
     }
@@ -74,6 +76,7 @@ const CoverPage = () => {
       setCurrentGroup(null)
       setAuthSession(authSession)
       onCloseModal()
+      navigate('/chooseGroup')
     } catch (e: unknown) {
       setModalError('' + e)
     }
