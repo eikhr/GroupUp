@@ -15,7 +15,7 @@ const defaultValues = {
 }
 
 const Form = () => {
-  const { currentGroup } = useContext(LoginContext)
+  const { currentGroup, setCurrentGroup } = useContext(LoginContext)
   const navigate = useNavigate()
   const [formValues, setFormValues] = useState(defaultValues)
   const [dateValue, setValue] = useState<Date | null>(new Date())
@@ -40,6 +40,7 @@ const Form = () => {
 
     if (currentGroup) {
       await putGroupWithNewEvent(currentGroup, event)
+      setCurrentGroup(await API.getGroup(currentGroup?.id ?? 0))
     } else {
       setError('You must choose a group to create event!')
     }
