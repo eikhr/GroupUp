@@ -16,7 +16,7 @@ private const val DEFAULT_YEAR = 2022
 private const val DEFAULT_MONTH = 4
 private const val DEFAULT_DAY = 13
 private const val TITLE_MIN_LENGTH = 4
-private const val LOCATION_MIN_LENGTH = 1
+// private const val LOCATION_MIN_LENGTH = 1
 
 @Entity
 @Table(name = "events")
