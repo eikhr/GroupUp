@@ -64,14 +64,19 @@ const ChooseGroup = () => {
       <Stack spacing={2} alignItems="center">
         {myGroups && myGroups.length ? (
           myGroups.map((group: Group) => (
-            <Button
-              variant="contained"
+            <GroupCard
+              data={group}
               key={group.id}
-              sx={{ fontSize: 20 }}
-              onClick={() => selectGroup(group)}
-            >
-              {group.name}
-            </Button>
+              extraActions={[
+                <Button
+                  variant="contained"
+                  key={group.id}
+                  onClick={() => selectGroup(group)}
+                >
+                  Velg gruppe
+                </Button>,
+              ]}
+            />
           ))
         ) : (
           <>
@@ -84,7 +89,7 @@ const ChooseGroup = () => {
       </Stack>
 
       <Typography variant="h2" sx={{ textAlign: 'center' }} gutterBottom>
-        Bli med i en eksisterende gruppe
+        Bli med i en annen gruppe
       </Typography>
       <Stack spacing={2} alignItems="center">
         {allGroups
