@@ -52,6 +52,7 @@ const EventDetails = ({ event, onNext, onPrevious }: IProps) => {
     } catch (e) {
       console.error(e)
     }
+    setCurrentGroup(await API.getGroup(currentGroup?.id ?? 0))
     setLikeLoading(false)
   }
 

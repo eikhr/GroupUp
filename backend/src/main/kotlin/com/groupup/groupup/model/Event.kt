@@ -38,13 +38,14 @@ open class Event {
             field = value
         }
 
-    @Column
+    /*@Column
     open var location: String = ""
         set(value) {
             if (value.length < LOCATION_MIN_LENGTH)
                 throw IllegalArgumentException("Location can't be empty\n")
             field = value
         }
+    */
 
     @Column
     open lateinit var description: String
