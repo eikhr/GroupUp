@@ -55,6 +55,12 @@ const GroupDetails = ({ group, onApprove, onDecline }: IProps) => {
         >
           {group.contactEmail}
         </Typography>
+        <Typography variant="body1">Medlemmer:</Typography>
+        {group.users?.map((user) => (
+          <Typography variant="body2" color="text.secondary" key={user.id}>
+            - {user.firstName} {user.lastName} ({user.email})
+          </Typography>
+        ))}
         <Stack direction="column" spacing={1}>
           <Stack direction="row" spacing={1} sx={{ mt: 2 }}>
             {group.interests?.map((interest) => (
