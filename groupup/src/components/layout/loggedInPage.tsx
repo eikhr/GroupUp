@@ -26,7 +26,7 @@ const LoggedInPage = (props: PropsWithChildren<Record<never, never>>) => {
           <Tab label="Opprett aktivitet" value="/addEvent" />
           <Tab label="Alle grupper" value="/allGroups" />
           <Tab label="Min gruppe" value="/myGroup" />
-          <Tab label="Mine matches" value="/matchReq" />
+          <Tab label="Mine matches" value="/matches" />
           <Tab label="Mine forespørsler" value="/matchReq" />
         </Tabs>
       </Paper>
