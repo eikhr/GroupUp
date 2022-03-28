@@ -2,7 +2,7 @@ import { Button, CardContent, Grid, Modal, Stack, Typography } from '@mui/materi
 import React, { useContext, useState } from 'react'
 import LoginContext from '../../context/loginContext'
 import CenteredModalCard from '../layout/centeredModal'
-import API, { APIError } from '../../API'
+import API from '../../API'
 import ErrorCard from '../layout/errorCard'
 import GroupDetails from './groupDetails'
 import UserDetails from './userDetails'
@@ -23,13 +23,10 @@ const MyGroup = () => {
 
   const buyGold = async (groupId: number) => {
     try {
-      const group = await API.getGroup(groupId)
-      const updated = { ...group, gold: true }
-      await API.updateGroup(updated)
+      setCurrentGroup(await API.buyGold(groupId))
       handleClose()
     } catch (err: unknown) {
-      const apiErr = err as APIError
-      setError(`${apiErr.message}, ${apiErr.status}`)
+      setError('' + err)
     }
   }
 

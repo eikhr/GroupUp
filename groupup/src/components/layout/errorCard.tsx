@@ -9,13 +9,14 @@ interface IProps {
 const ErrorCard = (props: IProps) => {
   return (
     <Card
+      data-testid="error"
       sx={{ backgroundColor: 'error.main', color: 'error.contrastText', ...props.sx }}
     >
       <Typography variant="h5" textAlign="center">
         😱 Det har skjedd en feil! 😱
       </Typography>
       <Typography variant="body1" textAlign="center">
-        {props.message}
+        {props.message.substring(0, 100)}
       </Typography>
     </Card>
   )

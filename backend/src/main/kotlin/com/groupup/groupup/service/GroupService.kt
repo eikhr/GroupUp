@@ -43,6 +43,12 @@ class GroupService(
         return group
     }
 
+    override fun buyGold(id: Long): Group {
+        val group = groupRepository.findById(id).get()
+        group.gold = true
+        return groupRepository.saveAndFlush(group)
+    }
+
     override fun removeGroup(id: Long): Boolean {
         groupRepository.deleteById(id)
         return true

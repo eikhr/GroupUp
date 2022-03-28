@@ -30,6 +30,10 @@ class GroupController(private val groupService: GroupService) {
     fun getGroups(): List<Group> {
         return groupService.getGroups()
     }
+    @PostMapping("/buyGold/{id}")
+    fun buyGold(@PathVariable id: Long): Group {
+        return groupService.buyGold(id)
+    }
 
     @DeleteMapping("{id}")
     fun deleteGroup(@PathVariable id: Long): Boolean {

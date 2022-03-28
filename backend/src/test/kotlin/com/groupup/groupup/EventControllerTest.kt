@@ -29,8 +29,6 @@ import kotlin.random.Random
 @AutoConfigureMockMvc
 @WebMvcTest
 class EventControllerTest : WebControllerTestHelper {
-    private fun <Event> anyEvent(): Event = Mockito.any()
-
     @Autowired
     private lateinit var mockMvc: MockMvc
 
@@ -64,22 +62,6 @@ class EventControllerTest : WebControllerTestHelper {
             .andExpect(MockMvcResultMatchers.status().isOk)
             .andReturn()
         return objectMapper.readValue(result.response.contentAsString, object : TypeReference<Event>() {})
-    }
-
-    @Throws(Exception::class)
-    private fun addEvent(event: Event) {
-        val eventJson: String = objectMapper.writeValueAsString(event)
-        Mockito.doReturn(event).`when`(eventService).createEvent(anyEvent())
-        mockMvc.perform(
-            MockMvcRequestBuilders
-                .post(apiUrl("events", "add"))
-                .accept(MediaType.APPLICATION_JSON)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(eventJson)
-        )
-            .andExpect(MockMvcResultMatchers.status().isOk)
-            .andReturn()
-        Mockito.verify(eventService, times(1)).createEvent(anyEvent())
     }
 
     private fun createTestEvent(): Event {
@@ -118,16 +100,6 @@ class EventControllerTest : WebControllerTestHelper {
         val testEvents = listOf(createTestEvent(), createTestEvent(), createTestEvent())
         val events: Collection<Event> = getEvents(testEvents)
         assertEventCollectionsEqual(testEvents, events)
-    }
-
-    @Test
-    fun testAddEvent() {
-        val event = Event()
-        event.title = "testTitle"
-        event.description = "description"
-//        event.location = "location"
-        event.date = GregorianCalendar(2022, 4, 13, 12, 12, 12)
-        addEvent(event)
     }
 
     @Test

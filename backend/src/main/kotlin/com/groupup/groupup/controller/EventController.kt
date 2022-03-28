@@ -29,8 +29,12 @@ class EventController(private val eventService: EventService) {
     }
 
     @PostMapping("/add")
-    fun createEvent(@RequestBody event: Event): Long? {
-        return eventService.createEvent(event).id
+    fun createEvent(
+        @RequestHeader("auth") authToken: String,
+        @RequestHeader("group-id") groupId: Long,
+        @RequestBody event: Event
+    ): Event {
+        return eventService.createEvent(authToken, groupId, event)
     }
 
     @DeleteMapping("/{id}")
@@ -68,5 +72,13 @@ class EventController(private val eventService: EventService) {
         @PathVariable groupId: Long
     ): Event? {
         return eventService.acceptMatch(eventService.getEvent(eventId), groupId)
+    }
+
+    @PutMapping("{eventId}/declinematch/{groupId}")
+    fun declineMatch(
+        @PathVariable eventId: Long,
+        @PathVariable groupId: Long
+    ): Event? {
+        return eventService.declineMatch(eventService.getEvent(eventId), groupId)
     }
 }

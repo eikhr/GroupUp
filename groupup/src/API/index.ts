@@ -7,11 +7,6 @@ import User from '../models/user'
 
 const baseUrl = 'http://localhost:8080/api'
 
-export interface APIError {
-  message: string
-  status: number
-}
-
 const doRequest = async <T>(url: string, options: RequestInit): Promise<T> => {
   const response = await fetch(url, options)
 
@@ -19,7 +14,8 @@ const doRequest = async <T>(url: string, options: RequestInit): Promise<T> => {
   if (response.status >= 200 && response.status < 300) {
     return response.json()
   } else {
-    throw { message: 'Request returned non-2xx response code', status: response.status }
+    const body = await response.json()
+    throw body.message ?? 'Request returned non-2xx response code'
   }
 }
 
@@ -36,13 +32,21 @@ const API = {
       image: getExampleImage(),
     }))
   },
-  addEvent: async (event: IEvent, currentGroup: Group): Promise<IEvent> => {
+  addEvent: async (
+    event: IEvent,
+    currentGroup: Group,
+    authSession: AuthSession
+  ): Promise<IEvent> => {
     const url = baseUrl + '/events/add'
 
     const options: RequestInit = {
       method: 'POST',
       body: JSON.stringify(event),
-      headers: { 'content-type': 'application/json', 'group-id': '' + currentGroup.id },
+      headers: {
+        'content-type': 'application/json',
+        auth: authSession.token,
+        'group-id': '' + currentGroup.id,
+      },
     }
 
     return await doRequest(url, options)
@@ -87,6 +91,15 @@ const API = {
 
     return await doRequest(url, options)
   },
+  buyGold: async (groupId: number): Promise<Group> => {
+    const url = baseUrl + `/groups/buyGold/${groupId}`
+
+    const options: RequestInit = {
+      method: 'POST',
+    }
+
+    return await doRequest(url, options)
+  },
   requestMembership: async (authSession: AuthSession, groupId: string): Promise<void> => {
     const url = baseUrl + `/users/requestmembership/${groupId}`
 
@@ -104,10 +117,9 @@ const API = {
   ): Promise<void> => {
     const url = baseUrl + `/users/acceptmembership/${groupId}`
 
-    console.log('userid: ', user.id, 'groupid:', groupId)
     const options: RequestInit = {
       method: 'POST',
-      body: JSON.stringify(user),
+      body: JSON.stringify(user.id),
       headers: { 'content-type': 'application/json', auth: authSession.token },
     }
 
@@ -129,23 +141,23 @@ const API = {
     return await doRequest(url, options)
   },
   acceptMatch: async (eventId: number, groupId: number): Promise<void> => {
-    const url = baseUrl + `/events/${eventId}/acceptmatch`
+    const url = baseUrl + `/events/${eventId}/acceptmatch/${groupId}`
 
     const options: RequestInit = {
       method: 'PUT',
       body: JSON.stringify(eventId),
-      headers: { 'content-type': 'application/json', 'group-id': groupId.toString() },
+      headers: { 'content-type': 'application/json' },
     }
 
     return await doRequest(url, options)
   },
   declineMatch: async (eventId: number, groupId: number): Promise<void> => {
-    const url = baseUrl + `/events/${eventId}/acceptmatch`
+    const url = baseUrl + `/events/${eventId}/declinematch/${groupId}`
 
     const options: RequestInit = {
       method: 'PUT',
       body: JSON.stringify(eventId),
-      headers: { 'content-type': 'application/json', 'group-id': groupId.toString() },
+      headers: { 'content-type': 'application/json' },
     }
 
     return await doRequest(url, options)

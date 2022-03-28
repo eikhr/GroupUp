@@ -3,7 +3,7 @@ import { Button, Grid, Stack, TextField, Typography } from '@mui/material'
 import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import IEvent from '../../models/event'
-import API, { APIError } from '../../API'
+import API from '../../API'
 import { useNavigate } from 'react-router-dom'
 import ErrorCard from '../layout/errorCard'
 import LoginContext from '../../context/loginContext'
@@ -14,7 +14,7 @@ const defaultValues = {
 }
 
 const Form = () => {
-  const { currentGroup, setCurrentGroup } = useContext(LoginContext)
+  const { currentGroup, setCurrentGroup, authSession } = useContext(LoginContext)
   const navigate = useNavigate()
   const [formValues, setFormValues] = useState(defaultValues)
   const [dateValue, setValue] = useState<Date | null>(new Date())
@@ -38,49 +38,29 @@ const Form = () => {
     }
 
     if (currentGroup) {
-      await putGroupWithNewEvent(currentGroup.id ?? 0, event)
-      setCurrentGroup(await API.getGroup(currentGroup.id ?? 0))
+      await postEvent(event)
     } else {
       setError('You must choose a group to create event!')
     }
   }
 
-  const putGroupWithNewEvent = async (groupId: number, event: IEvent) => {
-    const group = await API.getGroup(groupId)
-
-    if (!group.events) {
-      group.events = [event]
-    } else {
-      group.events.push(event)
-    }
-
-    try {
-      await API.updateGroup(group)
-      navigate('/events')
-    } catch (err: unknown) {
-      const apiErr = err as APIError
-      setError(`${apiErr.message}, ${apiErr.status}`)
-    }
-  }
-
-  /*
   const postEvent = async (event: IEvent) => {
+    if (!currentGroup || !authSession) return
     try {
-      await API.addEvent(event)
+      await API.addEvent(event, currentGroup, authSession)
+      setCurrentGroup(await API.getGroup(currentGroup.id ?? 0))
       navigate('/events')
     } catch (err: unknown) {
-      const apiErr = err as APIError
-      setError(`${apiErr.message}, ${apiErr.status}`)
+      setError('' + err)
     }
   }
-  */
 
   return (
     <form onSubmit={handleSubmit}>
       <Grid container alignItems="center" justifyContent="center">
         <Stack spacing={3}>
           <Typography variant="h2"> Opprett aktivitet </Typography>
-          {error && <ErrorCard message={error + ''} />}
+          {error && <ErrorCard message={error} />}
           <TextField
             id="name-input"
             name="name"
