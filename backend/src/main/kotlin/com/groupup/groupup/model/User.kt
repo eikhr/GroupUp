@@ -55,7 +55,7 @@ open class User {
     constructor(
         username: String,
         password: String,
-        hash: Boolean,
+        hash: Boolean = false,
         firstName: String,
         lastName: String,
         email: String,
