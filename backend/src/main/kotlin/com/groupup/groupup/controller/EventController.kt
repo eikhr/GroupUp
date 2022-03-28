@@ -29,8 +29,12 @@ class EventController(private val eventService: EventService) {
     }
 
     @PostMapping("/add")
-    fun createEvent(@RequestBody event: Event): Long? {
-        return eventService.createEvent(event).id
+    fun createEvent(
+        @RequestHeader("auth") authToken: String,
+        @RequestHeader("group-id") groupId: Long,
+        @RequestBody event: Event
+    ): Event {
+        return eventService.createEvent(authToken, groupId, event)
     }
 
     @DeleteMapping("/{id}")

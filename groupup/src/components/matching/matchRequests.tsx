@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Group from '../../models/group'
 import IEvent from '../../models/event'
 import { Chip, Stack, Modal, Button } from '@mui/material'
@@ -7,12 +7,14 @@ import GroupIcon from '@mui/icons-material/Group'
 import CenteredModalCard from '../layout/centeredModal'
 import GroupDetails from '../groups/groupDetails'
 import API from '../../API'
+import LoginContext from '../../context/loginContext'
 
 interface IProps {
   group: Group
 }
 
 const MatchRequests = ({ group }: IProps) => {
+  const { setCurrentGroup } = useContext(LoginContext)
   const [openGroup, setOpenGroup] = useState<Group | null>(null)
   const [openEvent, setOpenEvent] = useState<IEvent | null>(null)
 
@@ -28,6 +30,8 @@ const MatchRequests = ({ group }: IProps) => {
                   try {
                     await (openEvent.id &&
                       API.acceptMatch(openEvent.id, openGroup?.id ?? -1))
+                    setCurrentGroup(await API.getGroup(group.id ?? -1))
+                    setOpenEvent(null)
                   } catch (e) {
                     console.error(e)
                   }
@@ -36,6 +40,8 @@ const MatchRequests = ({ group }: IProps) => {
                   try {
                     await (openEvent.id &&
                       API.declineMatch(openEvent.id, openGroup?.id ?? -1))
+                    setCurrentGroup(await API.getGroup(group.id ?? -1))
+                    setOpenEvent(null)
                   } catch (e) {
                     console.error(e)
                   }

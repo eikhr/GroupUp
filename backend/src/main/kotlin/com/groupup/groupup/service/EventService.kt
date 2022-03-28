@@ -16,8 +16,24 @@ class EventService(
     @Lazy
     private lateinit var groupService: GroupService
 
-    override fun createEvent(event: Event): Event {
-        return eventRepository.save(event)
+    @Autowired
+    @Lazy
+    private lateinit var userService: UserService
+
+    override fun createEvent(authToken: String, groupId: Long, event: Event): Event {
+        val user = userService.getUserByToken(authToken)
+        val group = groupService.getGroup(groupId)
+
+        if (!group.users.contains(user)) {
+            throw IllegalArgumentException("User is not a member of the group")
+        }
+        event.groupsMatched.add(group)
+        val createdEvent = eventRepository.saveAndFlush(event)
+
+        group.events.add(createdEvent)
+        groupService.updateGroup(group.id, group)
+
+        return createdEvent
     }
 
     override fun getEvents(): List<Event> {

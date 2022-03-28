@@ -14,7 +14,7 @@ const defaultValues = {
 }
 
 const Form = () => {
-  const { currentGroup, setCurrentGroup } = useContext(LoginContext)
+  const { currentGroup, setCurrentGroup, authSession } = useContext(LoginContext)
   const navigate = useNavigate()
   const [formValues, setFormValues] = useState(defaultValues)
   const [dateValue, setValue] = useState<Date | null>(new Date())
@@ -38,41 +38,22 @@ const Form = () => {
     }
 
     if (currentGroup) {
-      await putGroupWithNewEvent(currentGroup.id ?? 0, event)
-      setCurrentGroup(await API.getGroup(currentGroup.id ?? 0))
+      await postEvent(event)
     } else {
       setError('You must choose a group to create event!')
     }
   }
 
-  const putGroupWithNewEvent = async (groupId: number, event: IEvent) => {
-    const group = await API.getGroup(groupId)
-
-    if (!group.events) {
-      group.events = [event]
-    } else {
-      group.events.push(event)
-    }
-
+  const postEvent = async (event: IEvent) => {
+    if (!currentGroup || !authSession) return
     try {
-      await API.updateGroup(group)
+      await API.addEvent(event, currentGroup, authSession)
+      setCurrentGroup(await API.getGroup(currentGroup.id ?? 0))
       navigate('/events')
     } catch (err: unknown) {
       setError('' + err)
     }
   }
-
-  /*
-  const postEvent = async (event: IEvent) => {
-    try {
-      await API.addEvent(event)
-      navigate('/events')
-    } catch (err: unknown) {
-      const apiErr = err as APIError
-      setError(`${apiErr.message}, ${apiErr.status}`)
-    }
-  }
-  */
 
   return (
     <form onSubmit={handleSubmit}>

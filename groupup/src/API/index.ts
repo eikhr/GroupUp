@@ -32,13 +32,21 @@ const API = {
       image: getExampleImage(),
     }))
   },
-  addEvent: async (event: IEvent, currentGroup: Group): Promise<IEvent> => {
+  addEvent: async (
+    event: IEvent,
+    currentGroup: Group,
+    authSession: AuthSession
+  ): Promise<IEvent> => {
     const url = baseUrl + '/events/add'
 
     const options: RequestInit = {
       method: 'POST',
       body: JSON.stringify(event),
-      headers: { 'content-type': 'application/json', 'group-id': '' + currentGroup.id },
+      headers: {
+        'content-type': 'application/json',
+        auth: authSession.token,
+        'group-id': '' + currentGroup.id,
+      },
     }
 
     return await doRequest(url, options)

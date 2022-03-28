@@ -19,7 +19,7 @@ interface IEventService {
      * Creates an event
      * @return The new event
      */
-    fun createEvent(event: Event): Event
+    fun createEvent(authToken: String, groupId: Long, event: Event): Event
 
     /**
      * Overwrites the event at given id
