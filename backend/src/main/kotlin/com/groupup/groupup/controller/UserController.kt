@@ -62,8 +62,8 @@ class UserController(private val userService: UserService) {
     fun acceptMembership(
         @PathVariable groupId: Long,
         @RequestHeader("auth") authToken: String,
-        @RequestBody user: User
+        @RequestBody userId: Long
     ): User {
-        return userService.acceptMembership(groupId, userService.getUserByToken(authToken), user)
+        return userService.acceptMembership(groupId, userService.getUserByToken(authToken), userService.getUser(userId))
     }
 }

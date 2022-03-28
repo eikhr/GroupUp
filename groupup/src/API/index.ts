@@ -100,10 +100,9 @@ const API = {
   ): Promise<void> => {
     const url = baseUrl + `/users/acceptmembership/${groupId}`
 
-    console.log('userid: ', user.id, 'groupid:', groupId)
     const options: RequestInit = {
       method: 'POST',
-      body: JSON.stringify(user),
+      body: JSON.stringify(user.id),
       headers: { 'content-type': 'application/json', auth: authSession.token },
     }
 
