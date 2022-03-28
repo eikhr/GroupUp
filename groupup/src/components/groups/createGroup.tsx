@@ -69,7 +69,7 @@ const Form = () => {
       minAge: 18,
       maxAge: 99,
       interests: interests,
-      contactEmail: formValues.email,
+      contactEmail: authSession?.user?.email ?? 'noemail@doesntexist.com',
     }
     try {
       if (authSession) {
@@ -107,15 +107,6 @@ const Form = () => {
             type="text"
             required
             value={formValues.description}
-            onChange={handleInputChange}
-          />
-          <TextField
-            id="email-input"
-            name="email"
-            label="E-post"
-            type="text"
-            required
-            value={formValues.email}
             onChange={handleInputChange}
           />
           <FormControl>
