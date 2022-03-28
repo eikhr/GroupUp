@@ -31,6 +31,7 @@ const MatchRequests = ({ group }: IProps) => {
                     await (openEvent.id &&
                       API.acceptMatch(openEvent.id, openGroup?.id ?? -1))
                     setCurrentGroup(await API.getGroup(group.id ?? -1))
+                    setOpenGroup(null)
                     setOpenEvent(null)
                   } catch (e) {
                     console.error(e)
