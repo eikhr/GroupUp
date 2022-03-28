@@ -33,6 +33,13 @@ interface IGroupService {
     fun updateGroup(id: Long, group: Group): Group
 
     /**
+     * adds gold to a group
+     * @param id: id of the group to update
+     * @return newly updated group
+     */
+    fun buyGold(id: Long): Group
+
+    /**
      * removes a group
      * @param id: group to remove
      * @return true if successfully deleted

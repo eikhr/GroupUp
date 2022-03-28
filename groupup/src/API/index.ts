@@ -83,6 +83,15 @@ const API = {
 
     return await doRequest(url, options)
   },
+  buyGold: async (groupId: number): Promise<Group> => {
+    const url = baseUrl + `/groups/buyGold/${groupId}`
+
+    const options: RequestInit = {
+      method: 'POST',
+    }
+
+    return await doRequest(url, options)
+  },
   requestMembership: async (authSession: AuthSession, groupId: string): Promise<void> => {
     const url = baseUrl + `/users/requestmembership/${groupId}`
 

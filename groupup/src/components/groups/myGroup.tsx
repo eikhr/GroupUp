@@ -23,9 +23,7 @@ const MyGroup = () => {
 
   const buyGold = async (groupId: number) => {
     try {
-      const group = await API.getGroup(groupId)
-      const updated = { ...group, gold: true }
-      await API.updateGroup(updated)
+      setCurrentGroup(await API.buyGold(groupId))
       handleClose()
     } catch (err: unknown) {
       setError('' + err)
