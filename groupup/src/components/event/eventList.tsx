@@ -1,4 +1,4 @@
-import { Box, Button, Card, Grid, Modal, Stack, Typography } from '@mui/material'
+import { Box, Button, Grid, Modal, Stack, Typography } from '@mui/material'
 import IEvent from '../../models/event'
 import React, { useEffect, useState } from 'react'
 import EventCard from './eventCard'

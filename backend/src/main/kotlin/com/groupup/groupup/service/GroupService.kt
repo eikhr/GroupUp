@@ -45,7 +45,7 @@ class GroupService(
 
     override fun buyGold(id: Long): Group {
         val group = groupRepository.findById(id).get()
-        group.gold = true;
+        group.gold = true
         return groupRepository.saveAndFlush(group)
     }
 

@@ -29,9 +29,11 @@ const GroupList = () => {
   return (
     <>
       <Modal open={!!openGroup} onClose={() => setOpenGroup(null)}>
-        <CenteredModalCard width={800}>
-          <>{openGroup && <GroupDetails group={openGroup} />}</>
-        </CenteredModalCard>
+        <>
+          <CenteredModalCard width={800}>
+            {openGroup && <GroupDetails group={openGroup} />}
+          </CenteredModalCard>
+        </>
       </Modal>
       <Grid container spacing={2} justifyContent="center">
         {groups.map((group) => (
