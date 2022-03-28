@@ -129,23 +129,23 @@ const API = {
     return await doRequest(url, options)
   },
   acceptMatch: async (eventId: number, groupId: number): Promise<void> => {
-    const url = baseUrl + `/events/${eventId}/acceptmatch`
+    const url = baseUrl + `/events/${eventId}/acceptmatch/${groupId}`
 
     const options: RequestInit = {
       method: 'PUT',
       body: JSON.stringify(eventId),
-      headers: { 'content-type': 'application/json', 'group-id': groupId.toString() },
+      headers: { 'content-type': 'application/json' },
     }
 
     return await doRequest(url, options)
   },
   declineMatch: async (eventId: number, groupId: number): Promise<void> => {
-    const url = baseUrl + `/events/${eventId}/acceptmatch`
+    const url = baseUrl + `/events/${eventId}/declinematch/${groupId}`
 
     const options: RequestInit = {
       method: 'PUT',
       body: JSON.stringify(eventId),
-      headers: { 'content-type': 'application/json', 'group-id': groupId.toString() },
+      headers: { 'content-type': 'application/json' },
     }
 
     return await doRequest(url, options)

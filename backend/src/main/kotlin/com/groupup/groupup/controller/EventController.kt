@@ -69,4 +69,12 @@ class EventController(private val eventService: EventService) {
     ): Event? {
         return eventService.acceptMatch(eventService.getEvent(eventId), groupId)
     }
+
+    @PutMapping("{eventId}/declinematch/{groupId}")
+    fun declineMatch(
+        @PathVariable eventId: Long,
+        @PathVariable groupId: Long
+    ): Event? {
+        return eventService.declineMatch(eventService.getEvent(eventId), groupId)
+    }
 }

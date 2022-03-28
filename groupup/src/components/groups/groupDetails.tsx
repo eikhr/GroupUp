@@ -77,10 +77,18 @@ const GroupDetails = ({ group, onApprove, onDecline }: IProps) => {
           </Stack>
           {location.pathname == '/matchReq' ? (
             <Stack direction="row" spacing={1}>
-              <Button variant="contained" color="success" onClick={() => onApprove}>
+              <Button
+                variant="contained"
+                color="success"
+                onClick={() => (onApprove ? onApprove() : true)}
+              >
                 Godkjenn
               </Button>
-              <Button variant="contained" color="error" onClick={() => onDecline}>
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => (onDecline ? onDecline() : false)}
+              >
                 Avslå
               </Button>
             </Stack>
