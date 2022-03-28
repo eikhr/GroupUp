@@ -98,7 +98,7 @@ class UserService(
         val actualUser = getUser(user.id)
         if (!actualUser.groupMembershipRequests.contains(group))
             throw IllegalArgumentException("Du har ikke sendt en forespørsel til gruppen")
-        if (!group.users.contains(authUser))
+        if (!group.users.contains(getUser(authUser.id)))
             throw IllegalStateException("Du kan ikke legge til medlemmer i en gruppe du ikke er med i")
         actualUser.groupMembershipRequests.remove(group)
         group.usersRequestingMembership.remove(actualUser)
