@@ -7,11 +7,6 @@ import User from '../models/user'
 
 const baseUrl = 'http://localhost:8080/api'
 
-export interface APIError {
-  message: string
-  status: number
-}
-
 const doRequest = async <T>(url: string, options: RequestInit): Promise<T> => {
   const response = await fetch(url, options)
 
@@ -19,7 +14,8 @@ const doRequest = async <T>(url: string, options: RequestInit): Promise<T> => {
   if (response.status >= 200 && response.status < 300) {
     return response.json()
   } else {
-    throw { message: 'Request returned non-2xx response code', status: response.status }
+    const body = await response.json()
+    throw body.message ?? 'Request returned non-2xx response code'
   }
 }
 

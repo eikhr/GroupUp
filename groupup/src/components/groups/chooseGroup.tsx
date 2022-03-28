@@ -1,7 +1,7 @@
 import { Button, Card, Stack, Typography } from '@mui/material'
 import Group from '../../models/group'
 import React, { useContext, useEffect, useState } from 'react'
-import API, { APIError } from '../../API'
+import API from '../../API'
 import LoginContext from '../../context/loginContext'
 import { Link, useNavigate } from 'react-router-dom'
 import GroupCard from './groupCard'
@@ -9,7 +9,7 @@ import GroupCard from './groupCard'
 const ChooseGroup = () => {
   const navigate = useNavigate()
   const [allGroups, setAllGroups] = useState<Group[] | null>(null)
-  const [error, setError] = useState<APIError | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const { authSession, setCurrentGroup } = useContext(LoginContext)
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const ChooseGroup = () => {
   useEffect(() => {
     API.getAllGroups()
       .then((groups) => setAllGroups(groups))
-      .catch((error: APIError) => setError(error))
+      .catch((error: string) => setError(error))
   }, [])
 
   if (error) {

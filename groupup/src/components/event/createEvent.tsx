@@ -3,7 +3,7 @@ import { Button, Grid, Stack, TextField, Typography } from '@mui/material'
 import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import IEvent from '../../models/event'
-import API, { APIError } from '../../API'
+import API from '../../API'
 import { useNavigate } from 'react-router-dom'
 import ErrorCard from '../layout/errorCard'
 import LoginContext from '../../context/loginContext'
@@ -58,8 +58,7 @@ const Form = () => {
       await API.updateGroup(group)
       navigate('/events')
     } catch (err: unknown) {
-      const apiErr = err as APIError
-      setError(`${apiErr.message}, ${apiErr.status}`)
+      setError('' + err)
     }
   }
 
@@ -80,7 +79,7 @@ const Form = () => {
       <Grid container alignItems="center" justifyContent="center">
         <Stack spacing={3}>
           <Typography variant="h2"> Opprett aktivitet </Typography>
-          {error && <ErrorCard message={error + ''} />}
+          {error && <ErrorCard message={error} />}
           <TextField
             id="name-input"
             name="name"

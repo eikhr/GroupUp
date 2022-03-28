@@ -15,7 +15,7 @@ import {
 } from '@mui/material'
 import React, { ChangeEvent, FormEvent, useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import API, { APIError } from '../../API'
+import API from '../../API'
 import Group from '../../models/group'
 import ErrorCard from '../layout/errorCard'
 import { Favorite, FavoriteBorder } from '@mui/icons-material'
@@ -78,8 +78,7 @@ const Form = () => {
         navigate('/events')
       }
     } catch (err: unknown) {
-      const apiErr = err as APIError
-      setError(`${apiErr.message}, ${apiErr.status}`)
+      setError('' + err)
     }
   }
 

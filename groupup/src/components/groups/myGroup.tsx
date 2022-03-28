@@ -2,7 +2,7 @@ import { Button, CardContent, Grid, Modal, Stack, Typography } from '@mui/materi
 import React, { useContext, useState } from 'react'
 import LoginContext from '../../context/loginContext'
 import CenteredModalCard from '../layout/centeredModal'
-import API, { APIError } from '../../API'
+import API from '../../API'
 import ErrorCard from '../layout/errorCard'
 import GroupDetails from './groupDetails'
 import UserDetails from './userDetails'
@@ -28,8 +28,7 @@ const MyGroup = () => {
       await API.updateGroup(updated)
       handleClose()
     } catch (err: unknown) {
-      const apiErr = err as APIError
-      setError(`${apiErr.message}, ${apiErr.status}`)
+      setError('' + err)
     }
   }
 

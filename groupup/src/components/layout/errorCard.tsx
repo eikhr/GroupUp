@@ -15,7 +15,7 @@ const ErrorCard = (props: IProps) => {
         😱 Det har skjedd en feil! 😱
       </Typography>
       <Typography variant="body1" textAlign="center">
-        {props.message}
+        {props.message.substring(0, 100)}
       </Typography>
     </Card>
   )

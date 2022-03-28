@@ -1,28 +1,25 @@
-import { Box, Card, Grid, Modal, Typography } from '@mui/material'
+import { Box, Grid, Modal, Typography } from '@mui/material'
 import Group from '../../models/group'
 import React, { useEffect, useState } from 'react'
 import GroupCard from './groupCard'
-import API, { APIError } from '../../API'
+import API from '../../API'
 import GroupDetails from './groupDetails'
 import CenteredModalCard from '../layout/centeredModal'
+import ErrorCard from '../layout/errorCard'
 
 const GroupList = () => {
   const [groups, setGroups] = useState<Group[] | null>(null)
-  const [error, setError] = useState<APIError | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const [openGroup, setOpenGroup] = useState<Group | null>(null)
 
   useEffect(() => {
     API.getAllGroups()
       .then((groups) => setGroups(groups))
-      .catch((error: APIError) => setError(error))
+      .catch((error: string) => setError(error))
   }, [])
 
   if (error) {
-    return (
-      <Card data-testid="error" sx={{ backgroundColor: 'error.light' }}>
-        <Typography variant="h5">Error</Typography>
-      </Card>
-    )
+    return <ErrorCard message={error} />
   }
 
   if (!groups) {

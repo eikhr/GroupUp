@@ -2,29 +2,26 @@ import { Box, Button, Card, Grid, Modal, Stack, Typography } from '@mui/material
 import IEvent from '../../models/event'
 import React, { useEffect, useState } from 'react'
 import EventCard from './eventCard'
-import API, { APIError } from '../../API'
+import API from '../../API'
 import EventDetails from './eventDetails'
 import InterestsIcon from '@mui/icons-material/Interests'
 import { interestList } from '../groups/createGroup'
+import ErrorCard from '../layout/errorCard'
 
 const EventList = () => {
   const [events, setEvents] = useState<IEvent[] | null>(null)
-  const [error, setError] = useState<APIError | null>(null)
+  const [error, setError] = useState<string | null>(null)
   const [openEvent, setOpenEvent] = useState<IEvent | null>(null)
   const [interestsFilter, setInterestsFilter] = useState<string[]>([])
 
   useEffect(() => {
     API.getAllEvents()
       .then((events) => setEvents(events))
-      .catch((error: APIError) => setError(error))
+      .catch((error: string) => setError(error))
   }, [])
 
   if (error) {
-    return (
-      <Card data-testid="error" sx={{ backgroundColor: 'error.light' }}>
-        <Typography variant="h5">Error</Typography>
-      </Card>
-    )
+    return <ErrorCard message={error} />
   }
 
   if (!events) {
