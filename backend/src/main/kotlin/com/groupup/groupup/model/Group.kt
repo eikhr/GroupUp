@@ -103,6 +103,6 @@ open class Group {
         joinColumns = [JoinColumn(name = "group_id", referencedColumnName = "id")],
         inverseJoinColumns = [JoinColumn(name = "user_id", referencedColumnName = "id")]
     )
-    @JsonIgnoreProperties("groupMembershipRequests")
+    @JsonIgnoreProperties("groupMembershipRequests", "groups")
     open var usersRequestingMembership: MutableList<User> = mutableListOf()
 }

@@ -97,6 +97,6 @@ open class User {
     open var groups: MutableList<Group> = mutableListOf()
 
     @ManyToMany(mappedBy = "usersRequestingMembership")
-    @JsonIgnoreProperties("usersRequestingMembership", "events")
+    @JsonIgnoreProperties("usersRequestingMembership", "events", "pendingMatchRequests", "superlikeMatchRequests")
     open var groupMembershipRequests: MutableList<Group> = mutableListOf()
 }
