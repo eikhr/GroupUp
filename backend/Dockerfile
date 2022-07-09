@@ -1,3 +1,5 @@
+# syntax=docker/dockerfile:1.2
+
 FROM maven:3.8-openjdk-18 as builder
 
 WORKDIR /app
