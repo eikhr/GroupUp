@@ -5,7 +5,7 @@ import LoginRequest from '../models/loginRequest'
 import AuthSession from '../models/authSession'
 import User from '../models/user'
 
-const baseUrl = 'http://localhost:8080/api'
+const baseUrl = '/api'
 
 const doRequest = async <T>(url: string, options: RequestInit): Promise<T> => {
   const response = await fetch(url, options)
