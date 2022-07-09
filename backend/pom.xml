@@ -15,7 +15,7 @@
 	<description>En plattform med hensikt å fasilitere for nye sosiale bekjentskap. Prosjekt i TDT4140</description>
 	<properties>
 		<java.version>17</java.version>
-		<kotlin.version>1.6.10</kotlin.version>
+		<kotlin.version>1.7.10</kotlin.version>
 	</properties>
 
 	<dependencies>
