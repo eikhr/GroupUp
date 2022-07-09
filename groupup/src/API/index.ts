@@ -5,7 +5,7 @@ import LoginRequest from '../models/loginRequest'
 import AuthSession from '../models/authSession'
 import User from '../models/user'
 
-const baseUrl = '/api'
+const baseUrl = process.env.REACT_APP_API_URL ?? '/api'
 
 const doRequest = async <T>(url: string, options: RequestInit): Promise<T> => {
   const response = await fetch(url, options)
